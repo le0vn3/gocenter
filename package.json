@@ -1,7 +1,6 @@
 {
   "name": "gocenter",
   "version": "1.0.0",
-  "description": "GO CENTER — Serveurs dédiés & Cloud Storage",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
