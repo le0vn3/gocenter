@@ -191,16 +191,18 @@ body.gate-active > #top-banner{visibility:hidden}
 .fw-item img{width:40px;height:40px;object-fit:contain}
 .fw-item svg{width:40px;height:40px}
 
-/* ============ 4 CARTES ============ */
+/* ============ 4 CARTES (2 colonnes décalées, sans chevauchement) ============ */
 .cards-2col{display:grid;grid-template-columns:1fr;gap:20px}
-@media(min-width:768px){.cards-2col{grid-template-columns:1fr 1fr}}
-/* Disposition irrégulière des 4 grandes cartes */
 @media(min-width:768px){
-  .cards-2col .big-card:nth-child(1){margin-top:0}
-  .cards-2col .big-card:nth-child(2){margin-top:70px}
-  .cards-2col .big-card:nth-child(3){margin-top:-30px}
-  .cards-2col .big-card:nth-child(4){margin-top:40px}
+  .cards-2col{grid-template-columns:1fr 1fr;gap:20px;align-items:start}
 }
+.cards-col{display:flex;flex-direction:column;gap:20px}
+@media(min-width:768px){
+  .cards-col-b{padding-top:80px}
+  .cards-col-a .big-card:nth-child(2){margin-top:20px}
+  .cards-col-b .big-card:nth-child(2){margin-top:40px}
+}
+
 .big-card{padding:46px 40px;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--card);transition:all .3s;position:relative;overflow:hidden}
 .big-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
 .big-card:hover{background:var(--card-2);border-color:rgba(167,139,250,.28);transform:translateY(-4px)}
@@ -470,7 +472,6 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   .fw-item svg{width:34px;height:34px}
   .sec-icon{width:48px;height:48px}
   .sec-icon img{width:26px;height:26px}
-  .cards-2col .big-card:nth-child(n){margin-top:0}
 }
 </style>
 </head>
@@ -820,59 +821,65 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= 4 CARTES (disposition irrégulière + vrais logos) ================= -->
+<!-- ================= 4 CARTES (2 colonnes décalées, sans chevauchement) ================= -->
 <section class="section">
   <div class="section-inner">
     <h2 class="section-huge">Déployez des serveurs <span class="accent-grad">sans aucune opération</span>.</h2>
     <div class="cards-2col">
 
-      <!-- CARTE 1 -->
-      <div class="big-card">
-        <h3>Hébergement intuitif et réseau privé pour vos services web</h3>
-        <p>Déployez en un clic vos serveurs web, bases de données, tâches cron et flux de travail. Réseau privé inclus.</p>
-        <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <div class="mock-card-mini">
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/nginx" alt="Nginx"></span><span class="lbl">web-server</span><span class="badge badge-green">● Live</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></span><span class="lbl">database-postgres</span><span class="badge badge-purple">● Pro</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/redis" alt="Redis"></span><span class="lbl">worker-queue</span><span class="badge badge-green">● Live</span></div>
+      <!-- Colonne gauche -->
+      <div class="cards-col cards-col-a">
+
+        <div class="big-card">
+          <h3>Hébergement intuitif et réseau privé pour vos services web</h3>
+          <p>Déployez en un clic vos serveurs web, bases de données, tâches cron et flux de travail. Réseau privé inclus.</p>
+          <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+          <div class="mock-card-mini">
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/nginx" alt="Nginx"></span><span class="lbl">web-server</span><span class="badge badge-green">● Live</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></span><span class="lbl">database-postgres</span><span class="badge badge-purple">● Pro</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/redis" alt="Redis"></span><span class="lbl">worker-queue</span><span class="badge badge-green">● Live</span></div>
+          </div>
         </div>
+
+        <div class="big-card">
+          <h3>Mise à l'échelle automatique basée sur la charge</h3>
+          <p>Capable de gérer des pics de trafic multipliés par 100 et plus. Assurez le bon fonctionnement de vos charges de travail lors des pics viraux.</p>
+          <a href="#offers" class="btn-link">Documentation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+          <div class="mock-card-mini">
+            <div class="row"><span class="head">CONFIGURATION DE CALCUL</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/kubernetes" alt="Kubernetes"></span><span class="lbl">64 CŒURS DE PROCESSEUR</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/docker" alt="Docker"></span><span class="lbl">512 GO DE RAM</span></div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- CARTE 2 -->
-      <div class="big-card">
-        <h3>Aperçus complets pour chaque demande de fusion</h3>
-        <p>Itérez rapidement grâce à des aperçus éphémères de l'architecture complète de votre application pour chaque modification.</p>
-        <a href="#offers" class="btn-link">Documentation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <div class="mock-card-mini">
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/github" alt="GitHub"></span><span class="lbl" style="color:#a78bfa">PR #129 → aperçu actif</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel"></span><span class="lbl">web — disponible</span><span class="badge badge-green">✓</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js"></span><span class="lbl">api — disponible</span><span class="badge badge-green">✓</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></span><span class="lbl">database — disponible</span><span class="badge badge-green">✓</span></div>
-        </div>
-      </div>
+      <!-- Colonne droite (décalée vers le bas) -->
+      <div class="cards-col cards-col-b">
 
-      <!-- CARTE 3 -->
-      <div class="big-card">
-        <h3>Mise à l'échelle automatique basée sur la charge</h3>
-        <p>Capable de gérer des pics de trafic multipliés par 100 et plus. Assurez le bon fonctionnement de vos charges de travail lors des pics viraux.</p>
-        <a href="#offers" class="btn-link">Documentation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <div class="mock-card-mini">
-          <div class="row"><span class="head">CONFIGURATION DE CALCUL</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/kubernetes" alt="Kubernetes"></span><span class="lbl">64 CŒURS DE PROCESSEUR</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/docker" alt="Docker"></span><span class="lbl">512 GO DE RAM</span></div>
+        <div class="big-card">
+          <h3>Aperçus complets pour chaque demande de fusion</h3>
+          <p>Itérez rapidement grâce à des aperçus éphémères de l'architecture complète de votre application pour chaque modification.</p>
+          <a href="#offers" class="btn-link">Documentation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+          <div class="mock-card-mini">
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/github" alt="GitHub"></span><span class="lbl" style="color:#a78bfa">PR #129 → aperçu actif</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel"></span><span class="lbl">web — disponible</span><span class="badge badge-green">✓</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js"></span><span class="lbl">api — disponible</span><span class="badge badge-green">✓</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></span><span class="lbl">database — disponible</span><span class="badge badge-green">✓</span></div>
+          </div>
         </div>
-      </div>
 
-      <!-- CARTE 4 -->
-      <div class="big-card">
-        <h3>Stockage objet S3-compatible, sans limite</h3>
-        <p>Stockez, versionnez et servez vos fichiers via une API S3 standard. Trafic illimité, requêtes illimitées dès 250 Go, réplication multi-zones et restauration point-in-time incluses.</p>
-        <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <div class="mock-card-mini">
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/amazonaws" alt="AWS S3"></span><span class="lbl">bucket-media — 480 Go</span><span class="badge badge-green">● Actif</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/minio" alt="MinIO"></span><span class="lbl">bucket-backups — 1,2 To</span><span class="badge badge-green">● Actif</span></div>
-          <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></span><span class="lbl">réplication 3 zones</span><span class="badge badge-purple">● Sync</span></div>
+        <div class="big-card">
+          <h3>Stockage objet S3-compatible, sans limite</h3>
+          <p>Stockez, versionnez et servez vos fichiers via une API S3 standard. Trafic illimité, requêtes illimitées dès 250 Go, réplication multi-zones et restauration point-in-time incluses.</p>
+          <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+          <div class="mock-card-mini">
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/amazonaws" alt="AWS S3"></span><span class="lbl">bucket-media — 480 Go</span><span class="badge badge-green">● Actif</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/minio" alt="MinIO"></span><span class="lbl">bucket-backups — 1,2 To</span><span class="badge badge-green">● Actif</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></span><span class="lbl">réplication 3 zones</span><span class="badge badge-purple">● Sync</span></div>
+          </div>
         </div>
+
       </div>
 
     </div>
