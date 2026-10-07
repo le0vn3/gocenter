@@ -1,9 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-/* ============================================================
-   Charge les secrets depuis /etc/secrets/gocenter.env (Render)
-   ============================================================ */
 (function loadSecretFile(){
   const ENV_PATH = '/etc/secrets/gocenter.env';
   try {
@@ -28,9 +25,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const HTML_PATH = path.join(__dirname, 'public', 'index.html');
 
-/* ============================================================
-   ANTI-DDOS serveur
-   ============================================================ */
 const DDOS_CONFIG = {
   WINDOW_MS: 60000,
   MAX_REQUESTS: 120,
