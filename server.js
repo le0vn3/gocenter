@@ -1,1457 +1,207 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#000000">
-<title>GO CENTER — Serveurs dédiés & Cloud Storage</title>
-<meta name="description" content="GO CENTER — Serveurs dédiés et cloud storage S3-compatible. Meilleurs prix, paiement sécurisé.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='8' y='20' width='84' height='20' rx='3' fill='%237c3aed'/%3E%3Crect x='8' y='44' width='84' height='20' rx='3' fill='%237c3aed'/%3E%3Crect x='8' y='68' width='84' height='20' rx='3' fill='%237c3aed'/%3E%3Ccircle cx='78' cy='30' r='4' fill='%2334d9a4'/%3E%3C/svg%3E">
+const fs = require('fs');
+const path = require('path');
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{font-size:15px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#000;color:#fff;-webkit-font-smoothing:antialiased;min-height:100dvh;overflow-x:hidden;line-height:1.5}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-img{display:block;max-width:100%}
-::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
-::-webkit-scrollbar-track{background:#000}
-
-/* ===== SECURITY GATE ===== */
-#security-gate{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease, visibility .5s ease}
-#security-gate.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.gate-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);pointer-events:none}
-.gate-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(124,58,237,.18),transparent 62%);pointer-events:none}
-.gate-card{position:relative;background:#0c0c10;border:1px solid rgba(124,58,237,.35);border-radius:14px;max-width:520px;width:100%;padding:52px 44px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(124,58,237,.15);animation:gateIn .5s cubic-bezier(.4,0,.2,1) both}
-@keyframes gateIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-.gate-logo{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:32px}
-.gate-logo svg{width:32px;height:32px}
-.gate-shield{width:76px;height:76px;margin:0 auto 26px;display:grid;place-items:center;background:rgba(124,58,237,.15);border:1px solid rgba(167,139,250,.4);border-radius:12px;box-shadow:0 0 0 1px rgba(255,255,255,.04) inset,0 6px 20px rgba(124,58,237,.25)}
-.gate-shield svg{width:38px;height:38px;color:#c4b5fd}
-.gate-card h1{font-size:clamp(24px,3.5vw,28px);font-weight:600;letter-spacing:-.03em;line-height:1.25;margin-bottom:12px;color:#fff}
-.gate-card p{font-size:.94rem;color:#a1a1aa;line-height:1.6;margin-bottom:30px;max-width:380px;margin-left:auto;margin-right:auto}
-.gate-card p strong{color:#fff;font-weight:600}
-.cf-wrap{display:flex;justify-content:center;margin:0 auto 22px;padding:10px;background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.2);border-radius:10px;width:fit-content;overflow:hidden}
-.cf-wrap iframe{border-radius:6px !important;display:block}
-.cf-turnstile{border-radius:6px;overflow:hidden}
-.gate-status{display:flex;align-items:center;justify-content:center;gap:10px;font-size:.8rem;color:#71717a;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
-.gate-status svg{width:14px;height:14px;color:#4ade80;flex-shrink:0}
-.gate-status .cf-brand{display:inline-flex;align-items:center;gap:6px;color:#f97316;font-weight:600}
-.gate-status .cf-brand svg{color:#f97316}
-.gate-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);padding:16px 20px;border-radius:8px;color:#fca5a5;font-size:.85rem;line-height:1.5;margin-bottom:22px}
-
-/* ===== BANNIÈRE ===== */
-#top-banner{background:linear-gradient(90deg,#4c1d95,#7c3aed,#4c1d95);color:#fff;padding:10px 20px;text-align:center;font-size:.82rem;font-weight:500;letter-spacing:-.005em}
-#top-banner a{text-decoration:underline;text-underline-offset:2px;font-weight:600}
-
-/* ===== NAVBAR ===== */
-#navbar{height:64px;padding:0 24px;background:#000;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.06)}
-.nav-left{display:flex;align-items:center;gap:40px;height:100%}
-.nav-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;letter-spacing:-.02em}
-.nav-brand-mark{width:26px;height:26px}
-.nav-links{display:flex;align-items:center;gap:32px;height:100%}
-.nav-links a{font-size:.9rem;font-weight:500;color:#e5e5e5;transition:color .2s;letter-spacing:-.005em}
-.nav-links a:hover{color:#fff}
-.nav-right{display:flex;align-items:center;gap:24px}
-.nav-migrate{font-size:.88rem;font-weight:500;color:#e5e5e5}
-.nav-migrate:hover{color:#fff}
-.btn-nav-white{background:#fff;color:#000;padding:14px 28px;font-size:.9rem;font-weight:600;letter-spacing:-.005em;transition:all .2s;height:64px;display:flex;align-items:center;margin-right:-24px;padding-right:24px}
-.btn-nav-white:hover{background:#e5e5e5}
-@media(max-width:900px){.nav-links,.nav-migrate{display:none}.btn-nav-white{padding:12px 20px;height:auto;margin-right:0}}
-
-/* ===== HERO ===== */
-#hero{position:relative;padding:100px 24px;overflow:hidden;background:#000}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);background-size:66px 66px;mask-image:radial-gradient(ellipse 70% 90% at 70% 50%, black 30%, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 70% 90% at 70% 50%, black 30%, transparent 80%);pointer-events:none}
-.hero-glow{position:absolute;top:-20%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(124,58,237,.2),transparent 60%);pointer-events:none}
-.hero-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:60px;align-items:center;position:relative}
-@media(min-width:1024px){.hero-inner{grid-template-columns:1.1fr 1fr;gap:80px}}
-.hero-copy h1{font-size:clamp(48px,7vw,90px);font-weight:600;line-height:1.02;letter-spacing:-.045em;margin-bottom:36px;color:#fff;max-width:640px}
-.hero-copy h1 .cursor{display:inline-block;width:44px;height:44px;background:rgba(124,58,237,.5);vertical-align:middle;margin-left:8px;border-radius:4px;animation:blink 1.2s steps(2,start) infinite}
-@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
-.hero-copy p{font-size:clamp(16px,1.5vw,20px);color:#d4d4d8;line-height:1.5;max-width:520px;margin-bottom:44px;letter-spacing:-.01em}
-.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:32px}
-.btn-hero{display:inline-flex;align-items:center;gap:8px;padding:18px 28px;font-size:.95rem;font-weight:600;letter-spacing:-.005em;transition:all .2s;border:1px solid transparent;border-radius:6px}
-.btn-hero.primary{background:#fff;color:#000;border-color:#fff}
-.btn-hero.primary:hover{background:#e5e5e5;border-color:#e5e5e5}
-.btn-hero.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.2)}
-.btn-hero.ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.04)}
-.btn-hero svg{width:14px;height:14px;transition:transform .2s}
-.btn-hero:hover svg{transform:translateX(3px)}
-.hero-pay{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:.8rem;color:#71717a;margin-bottom:16px}
-.hero-pay-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;color:#52525b}
-.hero-pay-badges{display:flex;gap:8px;flex-wrap:wrap}
-.pay-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;font-size:.75rem;font-weight:600;border:1px solid rgba(255,255,255,.1);border-radius:5px;background:rgba(255,255,255,.02);transition:all .2s}
-.pay-badge:hover{border-color:rgba(167,139,250,.4);background:rgba(124,58,237,.08)}
-.pay-badge svg{width:14px;height:14px;flex-shrink:0}
-.hero-secure{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;color:#71717a;padding:8px 14px;border:1px solid rgba(249,115,22,.2);background:rgba(249,115,22,.05);border-radius:5px;width:fit-content}
-.hero-secure svg{width:14px;height:14px;color:#f97316;flex-shrink:0}
-.hero-secure strong{color:#fff;font-weight:600}
-.hero-mockup{position:relative;background:#0a0a0a;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;box-shadow:0 40px 80px rgba(124,58,237,.15), 0 0 0 1px rgba(255,255,255,.02);animation:floatMock 6s ease-in-out infinite}
-@keyframes floatMock{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.mock-terminal{background:#0a0a0a;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:8px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem}
-.mock-terminal .dot{width:10px;height:10px;border-radius:50%}
-.mock-terminal .dot.r{background:#ff5f57}
-.mock-terminal .dot.y{background:#febc2e}
-.mock-terminal .dot.g{background:#28c840}
-.mock-terminal .title{margin-left:12px;color:#71717a;font-size:.78rem}
-.mock-body{padding:24px}
-.mock-line{display:flex;align-items:center;gap:10px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.85rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.mock-line:last-child{border-bottom:none}
-.mock-prompt{color:#7c3aed;font-weight:600}
-.mock-cmd{color:#e5e5e5}
-.mock-ok{color:#28c840;margin-left:auto;font-size:.78rem}
-.mock-time{color:#52525b;font-size:.72rem;margin-left:12px}
-.mock-label{font-size:.68rem;color:#71717a;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;font-weight:600}
-.mock-panels{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.mock-panel{background:#111;border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:5px}
-.mock-panel h4{font-size:.75rem;font-weight:600;margin-bottom:10px;color:#e5e5e5;display:flex;align-items:center;gap:6px}
-.mock-panel h4::before{content:'';width:6px;height:6px;background:#7c3aed;border-radius:50%}
-.mock-bars{display:flex;align-items:flex-end;gap:3px;height:40px}
-.mock-bar{flex:1;background:#7c3aed;border-radius:2px;opacity:.6}
-
-/* ===== SECTIONS ===== */
-.section{position:relative;padding:110px 24px;background:#000;border-top:1px solid rgba(255,255,255,.06)}
-.section-inner{max-width:1400px;margin:0 auto}
-.section-huge{font-size:clamp(40px,6vw,80px);font-weight:600;letter-spacing:-.045em;line-height:1.03;color:#fff;margin-bottom:60px;max-width:900px}
-.section-huge .muted{color:#71717a}
-.section-huge .accent-grad{background:linear-gradient(90deg,#7c3aed,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-/* ===== 3 ÉTAPES ===== */
-.steps-grid{display:grid;grid-template-columns:1fr;gap:48px;margin-top:80px}
-@media(min-width:768px){.steps-grid{grid-template-columns:repeat(3,1fr);gap:40px}}
-.step{display:flex;flex-direction:column;gap:20px}
-.step-num{width:40px;height:40px;background:#7c3aed;color:#fff;display:grid;place-items:center;font-size:1rem;font-weight:700;border-radius:5px}
-.step h3{font-size:clamp(22px,2.2vw,30px);font-weight:600;letter-spacing:-.03em;line-height:1.1;color:#fff}
-.step p{font-size:.95rem;color:#a1a1aa;line-height:1.55;letter-spacing:-.005em}
-.step-visual{margin-top:24px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:#0a0a0a;padding:18px;min-height:220px}
-.step-mock-row{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:.82rem;border-radius:5px;color:#a1a1aa;margin-bottom:4px}
-.step-mock-row svg{width:14px;height:14px;color:#71717a;flex-shrink:0}
-.step-mock-row.active{background:linear-gradient(90deg,rgba(124,58,237,.4),rgba(124,58,237,.1));color:#fff;border-left:3px solid #a78bfa;border-radius:5px}
-.step-mock-row .check{margin-left:auto;color:#a78bfa;font-size:.85rem}
-.mock-form-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.82rem}
-.mock-form-row label{color:#71717a;min-width:100px;font-weight:500}
-.mock-form-input{flex:1;background:#111;border:1px solid rgba(255,255,255,.06);padding:8px 12px;font-family:'SF Mono',Menlo,monospace;font-size:.78rem;color:#e5e5e5;border-radius:5px}
-.mock-logs{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.72rem;line-height:1.7;color:#a1a1aa}
-.mock-logs .ok{color:#4ade80}
-.mock-logs .warn{color:#fbbf24}
-.mock-logs .dim{color:#52525b}
-
-/* ===== LOGOS ===== */
-.split-grid{display:grid;grid-template-columns:1fr;gap:60px;align-items:center}
-@media(min-width:900px){.split-grid{grid-template-columns:1fr 1.2fr;gap:80px}}
-.split-text h2{font-size:clamp(32px,4vw,54px);font-weight:600;letter-spacing:-.04em;line-height:1.05;margin-bottom:28px;color:#fff}
-.split-text p{font-size:1.05rem;color:#a1a1aa;line-height:1.6;letter-spacing:-.01em;margin-bottom:20px}
-.split-text .btn-link{display:inline-flex;align-items:center;gap:8px;color:#fff;font-size:.95rem;font-weight:500;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.2);transition:all .2s}
-.split-text .btn-link:hover{border-color:#a78bfa;color:#a78bfa}
-.split-text .btn-link svg{width:14px;height:14px;transition:transform .2s}
-.split-text .btn-link:hover svg{transform:translateX(4px)}
-.marquee-wrap{position:relative;overflow:hidden;padding:20px 0;mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent)}
-.marquee-row{display:flex;width:max-content;gap:14px;margin-bottom:14px}
-.marquee-row:last-child{margin-bottom:0}
-.marquee-set{display:flex;gap:14px;flex-shrink:0}
-.marquee-row.ltr .marquee-set{animation:scrollLeft 40s linear infinite}
-.marquee-row.rtl .marquee-set{animation:scrollRight 40s linear infinite}
-@keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-100%)}}
-@keyframes scrollRight{from{transform:translateX(-100%)}to{transform:translateX(0)}}
-.fw-item{width:78px;height:78px;flex-shrink:0;display:grid;place-items:center;border-radius:8px;background:linear-gradient(135deg,#4c1d95,#7c3aed);transition:transform .3s;position:relative;overflow:hidden}
-.fw-item:hover{transform:scale(1.08);z-index:2}
-.fw-item img{width:42px;height:42px;object-fit:contain;filter:brightness(0) invert(1)}
-.fw-item.v2{background:linear-gradient(135deg,#18181b,#27272a)}
-.fw-item.v3{background:linear-gradient(135deg,#166534,#22c55e)}
-.fw-item.v4{background:linear-gradient(135deg,#1e3a8a,#3b82f6)}
-.fw-item.v5{background:linear-gradient(135deg,#831843,#ec4899)}
-.fw-item.v6{background:linear-gradient(135deg,#4a1d1f,#a0522d)}
-.fw-item.v7{background:linear-gradient(135deg,#0c4a6e,#0ea5e9)}
-.fw-item.v8{background:linear-gradient(135deg,#78350f,#f59e0b)}
-
-/* ===== 4 CARTES ===== */
-.cards-2col{display:grid;grid-template-columns:1fr;border-top:1px solid rgba(255,255,255,.06);border-left:1px solid rgba(255,255,255,.06)}
-@media(min-width:768px){.cards-2col{grid-template-columns:1fr 1fr}}
-.big-card{padding:60px 44px;border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:#000;transition:background .3s;position:relative;border-radius:8px}
-.big-card:hover{background:#0a0a0a}
-.big-card h3{font-size:clamp(24px,2.6vw,36px);font-weight:600;letter-spacing:-.035em;line-height:1.1;margin-bottom:24px;color:#fff}
-.big-card p{font-size:.95rem;color:#a1a1aa;line-height:1.6;margin-bottom:20px}
-.big-card .btn-link{color:#a78bfa;font-size:.9rem;font-weight:500;display:inline-flex;align-items:center;gap:6px}
-.big-card .btn-link svg{width:12px;height:12px}
-.mock-card-mini{margin-top:28px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:#0a0a0a;padding:16px;font-family:'SF Mono',Menlo,monospace;font-size:.72rem}
-.mock-card-mini .row{display:flex;align-items:center;gap:8px;padding:6px 0;color:#a1a1aa}
-.mock-card-mini .row .badge{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:600}
-.badge-green{background:rgba(34,197,94,.15);color:#4ade80}
-.badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
-
-/* ===== SÉCURITÉ ===== */
-.sec-grid{display:grid;grid-template-columns:1fr;gap:56px 44px;margin-top:80px}
-@media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
-@media(min-width:1024px){.sec-grid{grid-template-columns:repeat(3,1fr)}}
-.sec-card{display:flex;flex-direction:column;gap:20px}
-.sec-icon{width:56px;height:56px;background:#7c3aed;display:grid;place-items:center;border-radius:8px;position:relative}
-.sec-icon::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);border-radius:8px}
-.sec-icon svg{width:24px;height:24px;color:#fff;position:relative;z-index:1}
-.sec-card h3{font-size:1.15rem;font-weight:600;letter-spacing:-.02em;color:#fff;line-height:1.3}
-.sec-card p{font-size:.9rem;color:#a1a1aa;line-height:1.55;letter-spacing:-.005em}
-
-/* ===== OFFRES ===== */
-#offers{padding:80px 24px;background:#000;border-top:1px solid rgba(255,255,255,.06)}
-.offers-inner{max-width:1400px;margin:0 auto}
-.offers-header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:48px;flex-wrap:wrap}
-.offers-header h2{font-size:clamp(32px,4vw,54px);font-weight:600;letter-spacing:-.04em;line-height:1.05;color:#fff}
-.offers-header p{font-size:.95rem;color:#a1a1aa;max-width:400px}
-.tabs{display:flex;border:1px solid rgba(255,255,255,.1);margin-bottom:40px;border-radius:8px;overflow:hidden}
-.tab{flex:1;padding:22px 24px;background:#fff;color:#000;font-size:.95rem;font-weight:500;letter-spacing:-.005em;display:flex;align-items:center;gap:12px;transition:all .25s;border-right:1px solid rgba(0,0,0,.1);cursor:pointer;text-align:left}
-.tab:last-child{border-right:none}
-.tab:hover{background:#f0f0f0}
-.tab.on{background:#7c3aed;color:#fff}
-.tab .tab-ico{width:36px;height:36px;display:grid;place-items:center;background:rgba(0,0,0,.08);border-radius:5px;flex-shrink:0;font-size:1.05rem;transition:background .25s}
-.tab.on .tab-ico{background:rgba(255,255,255,.2)}
-.tab .tab-info{display:flex;flex-direction:column;gap:3px;min-width:0}
-.tab .tab-lbl{font-size:.95rem;font-weight:600}
-.tab .tab-sub{font-size:.74rem;opacity:.65}
-.tab.on .tab-sub{opacity:.9}
-.carousel{position:relative;display:none}
-.carousel.on{display:block;animation:fadeUp .4s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.carousel-viewport{overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:8px}
-.carousel-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.carousel-slide{min-width:100%;padding:0}
-.plan{background:#0a0a0a;padding:60px 56px;display:grid;grid-template-columns:1fr;gap:40px;border-radius:8px}
-@media(min-width:768px){.plan{grid-template-columns:1fr 1fr;gap:60px;align-items:start}}
-.plan-left h3{font-size:clamp(36px,4vw,56px);font-weight:600;letter-spacing:-.045em;line-height:1;margin-bottom:24px;color:#fff;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.plan-tag{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:6px 12px;border-radius:5px}
-.plan-tag.popular{background:#7c3aed;color:#fff}
-.plan-tag.best{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.4)}
-.plan-tag.new{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3)}
-.plan-specs{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
-.plan-spec{display:flex;align-items:center;gap:14px;font-size:1rem;color:#d4d4d8}
-.plan-spec .ico{width:40px;height:40px;background:rgba(124,58,237,.12);color:#a78bfa;display:grid;place-items:center;border-radius:6px;flex-shrink:0;font-size:1rem}
-.plan-spec strong{color:#fff;font-weight:600}
-.plan-right{display:flex;flex-direction:column;justify-content:center}
-.plan-price{font-size:clamp(60px,8vw,110px);font-weight:700;letter-spacing:-.05em;line-height:1;color:#fff;margin-bottom:8px;display:flex;align-items:baseline;gap:6px}
-.plan-price .per{font-size:1.1rem;font-weight:400;color:#71717a;letter-spacing:-.01em}
-.plan-annual{font-size:.9rem;color:#a1a1aa;margin-bottom:32px;min-height:24px;display:flex;align-items:center;gap:8px}
-.plan-annual .badge{background:rgba(34,197,94,.12);color:#4ade80;padding:3px 10px;border-radius:5px;font-size:.72rem;font-weight:600;letter-spacing:.03em}
-.btn-plan{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:20px 32px;background:#fff;color:#000;font-size:1rem;font-weight:600;letter-spacing:-.005em;transition:all .2s;width:100%;border-radius:6px}
-.btn-plan:hover{background:#e5e5e5}
-.btn-plan svg{width:16px;height:16px}
-.carousel-nav{display:flex;align-items:center;justify-content:space-between;margin-top:24px;border-top:1px solid rgba(255,255,255,.08);padding-top:24px}
-.carousel-arrows{display:flex;gap:8px}
-.btn-arrow{width:48px;height:48px;background:#fff;color:#000;border:1px solid #fff;display:grid;place-items:center;transition:all .2s;cursor:pointer;border-radius:6px}
-.btn-arrow:hover{background:#d4d4d4;border-color:#d4d4d4}
-.btn-arrow:active{transform:scale(.95)}
-.btn-arrow svg{width:20px;height:20px}
-.carousel-info{display:flex;align-items:center;gap:20px;font-size:.88rem;color:#71717a}
-.carousel-dots{display:flex;gap:6px}
-.dot{width:24px;height:3px;background:rgba(255,255,255,.15);border:none;padding:0;cursor:pointer;transition:all .2s;border-radius:2px}
-.dot.active{background:#fff}
-.dot:hover:not(.active){background:rgba(255,255,255,.4)}
-.carousel-counter{font-family:'SF Mono',Menlo,monospace;font-size:.78rem}
-.carousel-counter strong{color:#fff;font-weight:600}
-@media(max-width:768px){.plan{padding:40px 28px}.tab{padding:16px 14px;flex-direction:column;text-align:center;gap:6px}.tab .tab-info{align-items:center}.tab .tab-sub{display:none}}
-
-/* ===== COMPARATIF ===== */
-#compare{padding:100px 24px;background:#000;border-top:1px solid rgba(255,255,255,.06)}
-.compare-inner{max-width:1400px;margin:0 auto}
-.compare-rows{display:flex;flex-direction:column;gap:24px;margin-top:60px}
-.compare-row{display:grid;grid-template-columns:120px 1fr 100px;gap:24px;align-items:center;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.06)}
-.compare-row:last-child{border-bottom:none}
-.compare-brand{font-size:.95rem;font-weight:500;color:#a1a1aa;display:flex;align-items:center;gap:10px}
-.compare-brand .dot-brand{width:10px;height:10px;border-radius:2px}
-.compare-bar{height:32px;background:rgba(255,255,255,.03);position:relative;overflow:hidden;border-radius:5px}
-.compare-fill{height:100%;transform-origin:left;transition:width 1s cubic-bezier(.4,0,.2,1);border-radius:5px}
-.compare-fill.animated{animation:barGrow 1.2s cubic-bezier(.4,0,.2,1) both}
-@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.compare-row.gocenter .compare-brand{color:#fff;font-weight:600}
-.compare-row.gocenter .compare-bar{background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3)}
-.compare-row.gocenter .compare-fill{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
-.compare-price{font-size:1.1rem;font-weight:600;color:#fff;text-align:right;font-family:'SF Mono',Menlo,monospace;letter-spacing:-.02em}
-.compare-row.gocenter .compare-price{color:#a78bfa}
-@media(max-width:600px){.compare-row{grid-template-columns:80px 1fr 80px;gap:12px}.compare-brand{font-size:.78rem}.compare-price{font-size:.9rem}}
-
-/* ===== PAIEMENT ===== */
-#payment{padding:100px 24px;background:#000;border-top:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden}
-#payment::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(124,58,237,.08),transparent 65%);pointer-events:none}
-.payment-inner{max-width:1400px;margin:0 auto;position:relative}
-.payment-header{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:64px;align-items:end}
-@media(min-width:768px){.payment-header{grid-template-columns:1fr auto;gap:60px}}
-.payment-header h2{font-size:clamp(38px,5.5vw,68px);font-weight:600;letter-spacing:-.045em;line-height:1.05;color:#fff}
-.payment-header .pay-label{font-size:.78rem;text-transform:uppercase;letter-spacing:.15em;color:#a78bfa;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.payment-header .pay-label::before{content:'';width:32px;height:1px;background:#a78bfa}
-.payment-header .pay-desc{color:#a1a1aa;font-size:.95rem;max-width:380px;line-height:1.6;padding-bottom:8px}
-.pay-grid{display:grid;grid-template-columns:1fr;gap:20px}
-@media(min-width:600px){.pay-grid{grid-template-columns:1fr 1fr}}
-@media(min-width:1024px){.pay-grid{grid-template-columns:repeat(2,1fr);max-width:860px;margin:0 auto}}
-.pay-card{padding:40px 36px;border:1px solid rgba(255,255,255,.08);background:#0a0a0a;border-radius:8px;display:flex;flex-direction:column;gap:18px;transition:all .3s;position:relative;overflow:hidden}
-.pay-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
-.pay-card:hover{border-color:rgba(167,139,250,.3);background:#0f0f12;transform:translateY(-4px)}
-.pay-card:hover::before{opacity:1}
-.pay-icon{width:64px;height:64px;border-radius:6px;display:grid;place-items:center;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);transition:all .3s}
-.pay-card:hover .pay-icon{background:rgba(124,58,237,.2);border-color:rgba(167,139,250,.5);transform:scale(1.05)}
-.pay-icon svg{width:30px;height:30px;color:#a78bfa}
-.pay-icon.paypal svg{color:#0070ba}
-.pay-icon.crypto svg{color:#f7931a}
-.pay-card h3{font-size:1.25rem;font-weight:600;color:#fff;letter-spacing:-.02em;line-height:1.3}
-.pay-card p{font-size:.9rem;color:#a1a1aa;line-height:1.6;margin:0}
-.pay-card .pay-tag{display:inline-block;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;padding:5px 10px;border-radius:5px;margin-top:auto;width:fit-content}
-.pay-tag.fast{background:rgba(34,197,94,.12);color:#4ade80}
-.pay-tag.popular-tag{background:rgba(167,139,250,.15);color:#a78bfa}
-.pay-note{margin-top:40px;padding:24px 28px;border:1px solid rgba(255,255,255,.06);background:rgba(124,58,237,.04);border-radius:8px;display:flex;align-items:flex-start;gap:16px;font-size:.88rem;color:#a1a1aa;line-height:1.65;max-width:860px;margin-left:auto;margin-right:auto}
-.pay-note svg{width:20px;height:20px;color:#a78bfa;flex-shrink:0;margin-top:2px}
-.pay-note strong{color:#fff;font-weight:600}
-
-/* ===== FAQ ===== */
-#faq{padding:120px 24px;background:#000;border-top:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden}
-#faq::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(124,58,237,.08),transparent 60%);pointer-events:none}
-.faq-inner{max-width:1100px;margin:0 auto;position:relative}
-.faq-header{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:80px;align-items:end}
-@media(min-width:768px){.faq-header{grid-template-columns:1fr auto;gap:60px}}
-.faq-header h2{font-size:clamp(40px,6vw,72px);font-weight:600;letter-spacing:-.045em;line-height:1;color:#fff}
-.faq-header .faq-label{font-size:.78rem;text-transform:uppercase;letter-spacing:.15em;color:#a78bfa;font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.faq-header .faq-label::before{content:'';width:32px;height:1px;background:#a78bfa}
-.faq-header .faq-desc{color:#a1a1aa;font-size:.95rem;max-width:380px;line-height:1.6;padding-bottom:8px}
-.faq-header .faq-desc a{color:#a78bfa;border-bottom:1px solid rgba(167,139,250,.4)}
-.faq-list{display:flex;flex-direction:column;gap:0}
-.faq-item{border-top:1px solid rgba(255,255,255,.08);transition:all .3s;position:relative}
-.faq-item:last-child{border-bottom:1px solid rgba(255,255,255,.08)}
-.faq-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#7c3aed,#a78bfa);border-radius:2px;transform:scaleY(0);transform-origin:top;transition:transform .4s cubic-bezier(.4,0,.2,1)}
-.faq-item.open::before{transform:scaleY(1)}
-.faq-q{padding:32px 40px 32px 0;font-size:clamp(18px,2vw,24px);font-weight:500;letter-spacing:-.02em;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;width:100%;text-align:left;transition:color .2s, padding .3s;line-height:1.3}
-.faq-item.open .faq-q{padding-left:24px;color:#a78bfa}
-.faq-q:hover{padding-left:24px;color:#a78bfa}
-.faq-q .faq-num{font-family:'SF Mono',Menlo,monospace;font-size:.78rem;color:#52525b;font-weight:500;flex-shrink:0;min-width:32px}
-.faq-item.open .faq-q .faq-num,.faq-q:hover .faq-num{color:#a78bfa}
-.faq-q .chev{width:40px;height:40px;border:1px solid rgba(255,255,255,.15);border-radius:8px;display:grid;place-items:center;transition:all .35s;color:#fff;flex-shrink:0;position:relative}
-.faq-q .chev::before,.faq-q .chev::after{content:'';position:absolute;background:currentColor;transition:transform .35s}
-.faq-q .chev::before{width:12px;height:1.5px}
-.faq-q .chev::after{width:1.5px;height:12px}
-.faq-item.open .faq-q .chev{background:#7c3aed;border-color:#7c3aed;transform:rotate(180deg)}
-.faq-item.open .faq-q .chev::after{transform:scaleY(0)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .5s;color:#a1a1aa;font-size:1rem;line-height:1.7}
-.faq-a-inner{padding:0 80px 36px 56px;max-width:900px}
-.faq-item.open .faq-a{max-height:600px}
-@media(max-width:768px){.faq-q{padding:24px 0;font-size:1.05rem;gap:16px}.faq-q .faq-num{display:none}.faq-item.open .faq-q,.faq-q:hover{padding-left:16px}.faq-q .chev{width:32px;height:32px}.faq-q .chev::before{width:10px}.faq-q .chev::after{height:10px}.faq-a-inner{padding:0 16px 28px 16px;font-size:.92rem}}
-
-/* ===== CTA FINAL ===== */
-#final-cta{padding:140px 24px;background:#000;position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,.06)}
-.final-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);background-size:66px 66px;mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 80%)}
-.final-inner{max-width:900px;margin:0 auto;position:relative;z-index:1;text-align:center}
-.final-inner h2{font-size:clamp(36px,6vw,72px);font-weight:600;letter-spacing:-.045em;line-height:1.05;margin-bottom:24px;color:#fff}
-.final-inner p{font-size:clamp(15px,1.6vw,20px);color:#a1a1aa;margin-bottom:44px;letter-spacing:-.01em}
-.btn-final{display:inline-flex;align-items:center;gap:10px;padding:22px 36px;background:#fff;color:#000;font-size:1rem;font-weight:600;letter-spacing:-.005em;transition:all .2s;border-radius:6px}
-.btn-final:hover{background:#e5e5e5}
-.btn-final svg{width:16px;height:16px}
-
-/* ===== FOOTER ===== */
-footer{padding:80px 24px 40px;background:#000;border-top:1px solid rgba(255,255,255,.06)}
-.footer-inner{max-width:1400px;margin:0 auto}
-.footer-top{display:grid;grid-template-columns:1fr;gap:60px;margin-bottom:60px}
-@media(min-width:768px){.footer-top{grid-template-columns:2fr 1fr 1fr 1fr}}
-.footer-brand-col{display:flex;flex-direction:column;gap:20px}
-.footer-brand{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
-.footer-brand-mark{width:26px;height:26px}
-.footer-brand-col p{font-size:.88rem;color:#71717a;line-height:1.6;max-width:340px}
-.footer-col h4{font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#fff;margin-bottom:20px}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
-.footer-col a{font-size:.88rem;color:#a1a1aa;transition:color .2s;cursor:pointer}
-.footer-col a:hover{color:#fff}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;font-size:.8rem;color:#52525b}
-.footer-social{display:flex;gap:20px;align-items:center}
-.footer-social a:hover{color:#fff}
-.footer-cf{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:#71717a;transition:color .2s}
-.footer-cf:hover{color:#f97316}
-.footer-cf svg{width:14px;height:14px;color:#f97316}
-
-/* ===== LEGAL MODAL - SANS BLUR ===== */
-#legal-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.9);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
-#legal-overlay.on{display:flex;animation:fadeIn .2s ease both}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-#legal-modal{background:#0c0c10;border:1px solid rgba(255,255,255,.1);border-radius:12px;max-width:860px;width:100%;position:relative;padding:52px 52px 44px;box-shadow:0 30px 80px rgba(0,0,0,.7);animation:slideUp .3s cubic-bezier(.4,0,.2,1) both}
-@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-#legal-modal .legal-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#a78bfa;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-#legal-modal .legal-label::before{content:'';width:24px;height:1px;background:#a78bfa}
-#legal-modal h2{font-size:clamp(26px,3.2vw,38px);font-weight:600;letter-spacing:-.035em;line-height:1.15;color:#fff;margin-bottom:8px}
-#legal-modal .legal-updated{font-size:.78rem;color:#52525b;margin-bottom:32px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.08)}
-#legal-modal .legal-body{font-size:.92rem;line-height:1.75;color:#a1a1aa;max-height:62vh;overflow-y:auto;padding-right:12px}
-#legal-modal .legal-body h3{color:#fff;font-size:1.02rem;font-weight:600;margin:24px 0 10px;letter-spacing:-.02em}
-#legal-modal .legal-body h3:first-child{margin-top:0}
-#legal-modal .legal-body p{margin-bottom:14px}
-#legal-modal .legal-body ul{margin:0 0 14px 22px;display:flex;flex-direction:column;gap:6px}
-#legal-modal .legal-body li{line-height:1.65}
-#legal-modal .legal-body strong{color:#e5e5e5;font-weight:600}
-#legal-modal .legal-body a{color:#a78bfa;border-bottom:1px solid rgba(167,139,250,.35);word-break:break-word}
-#legal-modal .legal-body a:hover{border-color:#a78bfa}
-#legal-modal .legal-body::-webkit-scrollbar{width:6px}
-#legal-modal .legal-body::-webkit-scrollbar-thumb{background:rgba(124,58,237,.4);border-radius:3px}
-.legal-close{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:8px;border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;color:#fff;transition:all .2s;background:rgba(255,255,255,.03)}
-.legal-close:hover{background:#7c3aed;border-color:#7c3aed}
-.legal-close svg{width:16px;height:16px}
-@media(max-width:640px){#legal-modal{padding:40px 20px 30px;border-radius:10px}#legal-modal .legal-body{font-size:.86rem;max-height:70vh}.legal-close{top:10px;right:10px;width:34px;height:34px;border-radius:6px}}
-
-@media(max-width:600px){
-  .section{padding:70px 20px}
-  #hero{padding:60px 20px 70px}
-  #offers{padding:60px 20px}
-  #compare{padding:60px 20px}
-  #payment{padding:60px 20px}
-  #faq{padding:70px 20px}
-  #final-cta{padding:80px 20px}
-  .plan{padding:32px 22px}
-  .big-card{padding:40px 24px}
-  .pay-card{padding:28px 24px}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .gate-card{padding:44px 26px 34px}
-}
-</style>
-</head>
-<body>
-
-<!-- SECURITY GATE -->
-<div id="security-gate">
-  <div class="gate-grid"></div>
-  <div class="gate-glow"></div>
-  <div class="gate-card">
-    <div class="gate-logo">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="20" width="84" height="20" rx="3" fill="#7c3aed"/>
-        <rect x="8" y="44" width="84" height="20" rx="3" fill="#7c3aed"/>
-        <rect x="8" y="68" width="84" height="20" rx="3" fill="#7c3aed"/>
-        <circle cx="78" cy="30" r="4" fill="#34d9a4"/>
-      </svg>
-      <span>GO CENTER</span>
-    </div>
-    <div class="gate-shield">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/>
-        <path d="M9 12l2 2 4-4"/>
-      </svg>
-    </div>
-    <h1>Vérification de sécurité</h1>
-    <p>Nous vérifions que vous êtes bien un <strong>humain</strong> avant d'accéder au site. Cette étape protège contre les attaques DDoS et les bots.</p>
-
-    <div class="cf-wrap" id="cf-wrap">
-      <div class="cf-turnstile"
-           data-sitekey="__TURNSTILE_SITE_KEY__"
-           data-theme="dark"
-           data-size="flexible"
-           data-callback="onTurnstileSuccess"
-           data-error-callback="onTurnstileError"
-           data-expired-callback="onTurnstileExpired"></div>
-    </div>
-
-    <div class="gate-status">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/></svg>
-      Protection anti-DDoS —
-      <span class="cf-brand">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2.5c-.7 0-1.3.2-1.9.5C13.6 1.8 12.4 1 11 1 8.6 1 6.6 2.8 6.1 5.1c-.1 0-.3-.1-.4-.1C3.6 5 2 6.6 2 8.6c0 .8.3 1.5.7 2.1C1.5 11.3.8 12.6.8 14c0 2.3 1.6 4.2 3.8 4.7.4 1.9 2.1 3.3 4.1 3.3 1.2 0 2.3-.5 3.1-1.3.6.3 1.3.5 2 .5 2.4 0 4.4-1.9 4.4-4.3 0-.6-.1-1.2-.4-1.7 1.4-.7 2.4-2.1 2.4-3.8 0-2.3-1.9-4.2-4.2-4.2-.2 0-.4 0-.6.1.3-.7.5-1.5.5-2.3 0-2.6-2.1-4.5-4.4-4.5z"/></svg>
-        Cloudflare Turnstile
-      </span>
-    </div>
-  </div>
-</div>
-
-<!-- BANNIÈRE -->
-<div id="top-banner">
-  🔥 Offres serveurs & cloud storage à prix imbattables — <a href="__DISCORD_URL__" target="_blank" rel="noopener">Rejoins le Discord maintenant</a>
-</div>
-
-<!-- NAVBAR -->
-<header id="navbar">
-  <div class="nav-left">
-    <a class="nav-brand" href="#">
-      <svg class="nav-brand-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="20" width="84" height="20" rx="3" fill="#7c3aed"/>
-        <rect x="8" y="44" width="84" height="20" rx="3" fill="#7c3aed"/>
-        <rect x="8" y="68" width="84" height="20" rx="3" fill="#7c3aed"/>
-        <circle cx="78" cy="30" r="4" fill="#34d9a4"/>
-        <circle cx="78" cy="54" r="4" fill="#a78bfa"/>
-        <circle cx="78" cy="78" r="4" fill="#7c3aed"/>
-      </svg>
-      <span>GO CENTER</span>
-    </a>
-    <nav class="nav-links">
-      <a href="#offers">Offres</a>
-      <a href="#compare">Comparatif</a>
-      <a href="#payment">Paiement</a>
-      <a href="#security">Sécurité</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-  </div>
-  <div class="nav-right">
-    <a href="__DISCORD_URL__" target="_blank" rel="noopener" class="nav-migrate">Nous contacter</a>
-    <a href="#offers" class="btn-nav-white">Commander</a>
-  </div>
-</header>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div class="hero-copy">
-      <h1>Votre voie la plus rapide vers la production<span class="cursor"></span></h1>
-      <p>Une infrastructure intuitive pour faire évoluer n'importe quelle application, de votre premier utilisateur jusqu'au milliardième.</p>
-      <div class="hero-cta">
-        <a href="#offers" class="btn-hero primary">Commander un serveur<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <a href="#compare" class="btn-hero ghost">Comparer les prix<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-      </div>
-      <div class="hero-pay">
-        <span class="hero-pay-label">Paiement</span>
-        <div class="hero-pay-badges">
-          <span class="pay-badge"><svg viewBox="0 0 24 24" fill="currentColor" style="color:#0070ba"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>PayPal</span>
-          <span class="pay-badge"><svg viewBox="0 0 24 24" fill="currentColor" style="color:#f7931a"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.328-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-.01-.003-1.815-.45-.35 1.407s.975.225.955.238c.535.136.63.486.615.766l-.62 2.485c.04.007.086.02.14.04l-.144-.036-.87 3.48c-.066.163-.233.407-.607.314.015.02-.955-.238-.955-.238l-.66 1.508 1.71.425c.32.08.634.163.942.24l-.54 2.19 1.32.33.54-2.165c.36.1.71.19 1.05.276l-.54 2.15 1.32.33.54-2.18c2.22.42 3.89.25 4.596-1.757.566-1.617-.03-2.55-1.198-3.16.85-.196 1.492-.756 1.66-1.91z"/></svg>Crypto</span>
-        </div>
-      </div>
-      <div class="hero-secure">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2.5c-.7 0-1.3.2-1.9.5C13.6 1.8 12.4 1 11 1 8.6 1 6.6 2.8 6.1 5.1c-.1 0-.3-.1-.4-.1C3.6 5 2 6.6 2 8.6c0 .8.3 1.5.7 2.1C1.5 11.3.8 12.6.8 14c0 2.3 1.6 4.2 3.8 4.7.4 1.9 2.1 3.3 4.1 3.3 1.2 0 2.3-.5 3.1-1.3.6.3 1.3.5 2 .5 2.4 0 4.4-1.9 4.4-4.3 0-.6-.1-1.2-.4-1.7 1.4-.7 2.4-2.1 2.4-3.8 0-2.3-1.9-4.2-4.2-4.2-.2 0-.4 0-.6.1.3-.7.5-1.5.5-2.3 0-2.6-2.1-4.5-4.4-4.5z"/></svg>
-        Protégé par <strong>Cloudflare</strong> — Anti-DDoS & Turnstile
-      </div>
-    </div>
-
-    <div class="hero-mockup">
-      <div class="mock-terminal">
-        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        <span class="title">gocenter — deploy — bash</span>
-      </div>
-      <div class="mock-body">
-        <div class="mock-label">Déploiement en cours</div>
-        <div class="mock-line"><span class="mock-prompt">$</span><span class="mock-cmd">gocenter deploy --server VANTA</span><span class="mock-ok">✓ actif</span></div>
-        <div class="mock-line"><span class="mock-prompt">$</span><span class="mock-cmd">statut : en ligne</span><span class="mock-time">2.4s</span></div>
-        <div class="mock-panels">
-          <div class="mock-panel"><h4>CPU</h4><div class="mock-bars"><div class="mock-bar" style="height:40%"></div><div class="mock-bar" style="height:70%"></div><div class="mock-bar" style="height:55%"></div><div class="mock-bar" style="height:85%"></div><div class="mock-bar" style="height:60%"></div><div class="mock-bar" style="height:90%"></div><div class="mock-bar" style="height:45%"></div></div></div>
-          <div class="mock-panel"><h4>RAM</h4><div class="mock-bars"><div class="mock-bar" style="height:30%"></div><div class="mock-bar" style="height:50%"></div><div class="mock-bar" style="height:65%"></div><div class="mock-bar" style="height:40%"></div><div class="mock-bar" style="height:75%"></div><div class="mock-bar" style="height:55%"></div><div class="mock-bar" style="height:80%"></div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 3 ÉTAPES -->
-<section class="section" id="features">
-  <div class="section-inner">
-    <h2 class="section-huge">Clique, clique, terminé.</h2>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Sélectionnez un serveur</h3>
-        <p>Choisissez la configuration adaptée à vos besoins : processeur, RAM, stockage. Du plus petit au plus puissant.</p>
-        <div class="step-visual">
-          <div class="step-mock-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="1"/><rect x="3" y="13" width="18" height="7" rx="1"/></svg>NEXA — 4 Go<span class="check">✓</span></div>
-          <div class="step-mock-row active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="1"/><rect x="3" y="13" width="18" height="7" rx="1"/></svg>VANTA — 16 Go<span class="check">✓</span></div>
-          <div class="step-mock-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="1"/><rect x="3" y="13" width="18" height="7" rx="1"/></svg>ATLAS — 32 Go<span class="check">✓</span></div>
-          <div class="step-mock-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="1"/><rect x="3" y="13" width="18" height="7" rx="1"/></svg>QUANTUM — 64 Go<span class="check">✓</span></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Configurez vos options</h3>
-        <p>Personnalisez votre machine : système d'exploitation, localisation, bande passante. Tout est prêt en quelques clics.</p>
-        <div class="step-visual">
-          <div class="mock-form-row"><label>Serveur</label><div class="mock-form-input">VANTA</div></div>
-          <div class="mock-form-row"><label>OS</label><div class="mock-form-input">Ubuntu 24.04</div></div>
-          <div class="mock-form-row"><label>Région</label><div class="mock-form-input">Paris (FR)</div></div>
-          <div class="mock-form-row"><label>Réseau</label><div class="mock-form-input">1 Gbps</div></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Le serveur est prêt</h3>
-        <p>Votre infrastructure est déployée en quelques minutes. Accès root, IP dédiée, monitoring inclus.</p>
-        <div class="step-visual">
-          <div class="mock-logs">
-<span class="dim">→ init server VANTA</span><br>
-<span class="warn">→ provisioning...</span><br>
-<span class="ok">✓ réseau configuré</span><br>
-<span class="ok">✓ stockage monté</span><br>
-<span class="ok">✓ serveur en ligne</span><br>
-<span class="dim">→ ip: 51.83.xx.xx</span><br>
-<span class="ok">✓ prêt à l'emploi</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LOGOS SCROLL -->
-<section class="section" style="border-top:1px solid rgba(255,255,255,.06)">
-  <div class="section-inner">
-    <div class="split-grid">
-      <div class="split-text">
-        <h2>Quel que soit votre système d'exploitation, il s'exécute sur GO CENTER.</h2>
-        <p>Nous supportons toutes les distributions Linux populaires et les principaux environnements d'exécution. Ubuntu, Debian, CentOS, Windows Server, Proxmox — tout est prêt à être déployé.</p>
-        <a href="#offers" class="btn-link">Afficher les modèles<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-      </div>
-      <div class="split-visual">
-        <div class="marquee-wrap">
-          <div class="marquee-row ltr">
-            <div class="marquee-set">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub"></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/docker/ffffff" alt="Docker"></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/kubernetes/ffffff" alt="Kubernetes"></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/python/ffffff" alt="Python"></div>
-              <div class="fw-item v5"><img src="https://cdn.simpleicons.org/nodedotjs/ffffff" alt="Node.js"></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/go/ffffff" alt="Go"></div>
-              <div class="fw-item v6"><img src="https://cdn.simpleicons.org/rust/ffffff" alt="Rust"></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/ubuntu/ffffff" alt="Ubuntu"></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/debian/ffffff" alt="Debian"></div>
-              <div class="fw-item v8"><img src="https://cdn.simpleicons.org/nginx/ffffff" alt="Nginx"></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/postgresql/ffffff" alt="PostgreSQL"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/redis/ffffff" alt="Redis"></div>
-              <div class="fw-item v5"><img src="https://cdn.simpleicons.org/mongodb/ffffff" alt="MongoDB"></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/react/ffffff" alt="React"></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/vuedotjs/ffffff" alt="Vue.js"></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/angular/ffffff" alt="Angular"></div>
-              <div class="fw-item v6"><img src="https://cdn.simpleicons.org/php/ffffff" alt="PHP"></div>
-              <div class="fw-item v8"><img src="https://cdn.simpleicons.org/openjdk/ffffff" alt="Java"></div>
-            </div>
-            <div class="marquee-set" aria-hidden="true">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/github/ffffff" alt=""></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/docker/ffffff" alt=""></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/kubernetes/ffffff" alt=""></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/python/ffffff" alt=""></div>
-              <div class="fw-item v5"><img src="https://cdn.simpleicons.org/nodedotjs/ffffff" alt=""></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/go/ffffff" alt=""></div>
-              <div class="fw-item v6"><img src="https://cdn.simpleicons.org/rust/ffffff" alt=""></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/ubuntu/ffffff" alt=""></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/debian/ffffff" alt=""></div>
-              <div class="fw-item v8"><img src="https://cdn.simpleicons.org/nginx/ffffff" alt=""></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/postgresql/ffffff" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/redis/ffffff" alt=""></div>
-              <div class="fw-item v5"><img src="https://cdn.simpleicons.org/mongodb/ffffff" alt=""></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/react/ffffff" alt=""></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/vuedotjs/ffffff" alt=""></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/angular/ffffff" alt=""></div>
-              <div class="fw-item v6"><img src="https://cdn.simpleicons.org/php/ffffff" alt=""></div>
-              <div class="fw-item v8"><img src="https://cdn.simpleicons.org/openjdk/ffffff" alt=""></div>
-            </div>
-          </div>
-          <div class="marquee-row rtl">
-            <div class="marquee-set">
-              <div class="fw-item v5"><img src="https://cdn.simpleicons.org/ruby/ffffff" alt="Ruby"></div>
-              <div class="fw-item v8"><img src="https://cdn.simpleicons.org/bun/ffffff" alt="Bun"></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/deno/ffffff" alt="Deno"></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/cloudflare/ffffff" alt="Cloudflare"></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/digitalocean/ffffff" alt="DigitalOcean"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/linux/ffffff" alt="Linux"></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/archlinux/ffffff" alt="Arch Linux"></div>
-              <div class="fw-item v6"><img src="https://cdn.simpleicons.org/centos/ffffff" alt="CentOS"></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/ansible/ffffff" alt="Ansible"></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/terraform/ffffff" alt="Terraform"></div>
-              <div class="fw-item v5"><img src="https://cdn.simpleicons.org/gitlab/ffffff" alt="GitLab"></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/grafana/ffffff" alt="Grafana"></div>
-              <div class="fw-item v8"><img src="https://cdn.simpleicons.org/prometheus/ffffff" alt="Prometheus"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/mysql/ffffff" alt="MySQL"></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/sqlite/ffffff" alt="SQLite"></div>
-              <div class="fw-item v6"><img src="https://cdn.simpleicons.org/apache/ffffff" alt="Apache"></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/caddy/ffffff" alt="Caddy"></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/fedora/ffffff" alt="Fedora"></div>
-            </div>
-            <div class="marquee-set" aria-hidden="true">
-              <div class="fw-item v5"><img src="https://cdn.simpleicons.org/ruby/ffffff" alt=""></div>
-              <div class="fw-item v8"><img src="https://cdn.simpleicons.org/bun/ffffff" alt=""></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/deno/ffffff" alt=""></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/cloudflare/ffffff" alt=""></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/digitalocean/ffffff" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/linux/ffffff" alt=""></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/archlinux/ffffff" alt=""></div>
-              <div class="fw-item v6"><img src="https://cdn.simpleicons.org/centos/ffffff" alt=""></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/ansible/ffffff" alt=""></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/terraform/ffffff" alt=""></div>
-              <div class="fw-item v5"><img src="https://cdn.simpleicons.org/gitlab/ffffff" alt=""></div>
-              <div class="fw-item v3"><img src="https://cdn.simpleicons.org/grafana/ffffff" alt=""></div>
-              <div class="fw-item v8"><img src="https://cdn.simpleicons.org/prometheus/ffffff" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/mysql/ffffff" alt=""></div>
-              <div class="fw-item v4"><img src="https://cdn.simpleicons.org/sqlite/ffffff" alt=""></div>
-              <div class="fw-item v6"><img src="https://cdn.simpleicons.org/apache/ffffff" alt=""></div>
-              <div class="fw-item v2"><img src="https://cdn.simpleicons.org/caddy/ffffff" alt=""></div>
-              <div class="fw-item v7"><img src="https://cdn.simpleicons.org/fedora/ffffff" alt=""></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4 CARTES -->
-<section style="padding:0">
-  <div class="section-inner" style="max-width:1400px;margin:0 auto;padding:0 24px">
-    <h2 class="section-huge" style="padding-top:100px">Déployez des serveurs <span class="accent-grad">sans aucune opération</span>.</h2>
-  </div>
-  <div class="section-inner" style="max-width:1400px;margin:0 auto;padding:0 24px">
-    <div class="cards-2col" style="border-left:none;border-right:none">
-      <div class="big-card">
-        <h3>Hébergement intuitif et réseau privé pour vos services web</h3>
-        <p>Déployez en un clic vos serveurs web, bases de données, tâches cron et flux de travail. Réseau privé inclus.</p>
-        <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <div class="mock-card-mini">
-          <div class="row"><span class="badge badge-green">● Live</span> web-server</div>
-          <div class="row"><span class="badge badge-purple">● Pro</span> database-postgres</div>
-          <div class="row"><span class="badge badge-green">● Live</span> worker-queue</div>
-        </div>
-      </div>
-      <div class="big-card">
-        <h3>Aperçus complets pour chaque demande de fusion</h3>
-        <p>Itérez rapidement grâce à des aperçus éphémères de l'architecture complète de votre application pour chaque modification.</p>
-        <a href="#offers" class="btn-link">Documentation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <div class="mock-card-mini">
-          <div class="row"><span style="color:#a78bfa">PR #129</span> → aperçu actif</div>
-          <div class="row"><span class="badge badge-green">✓</span> web — disponible</div>
-          <div class="row"><span class="badge badge-green">✓</span> api — disponible</div>
-          <div class="row"><span class="badge badge-green">✓</span> database — disponible</div>
-        </div>
-      </div>
-      <div class="big-card">
-        <h3>Mise à l'échelle automatique basée sur la charge</h3>
-        <p>Capable de gérer des pics de trafic multipliés par 100 et plus. Assurez le bon fonctionnement de vos charges de travail lors des pics viraux.</p>
-        <a href="#offers" class="btn-link">Documentation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <div class="mock-card-mini">
-          <div class="row" style="justify-content:space-between"><span>CONFIGURATION DE CALCUL</span><span class="badge badge-purple">●</span></div>
-          <div class="row" style="color:#fff;font-weight:600">64 CŒURS DE PROCESSEUR</div>
-          <div class="row" style="color:#fff;font-weight:600">512 GO DE RAM</div>
-        </div>
-      </div>
-      <div class="big-card">
-        <h3>Stockage objet S3-compatible, sans limite</h3>
-        <p>Stockez, versionnez et servez vos fichiers via une API S3 standard. Trafic illimité, requêtes illimitées dès 250 Go, réplication multi-zones et restauration point-in-time incluses.</p>
-        <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-        <div class="mock-card-mini">
-          <div class="row"><span class="badge badge-green">● Actif</span> bucket-media — 480 Go</div>
-          <div class="row"><span class="badge badge-green">● Actif</span> bucket-backups — 1,2 To</div>
-          <div class="row"><span class="badge badge-purple">● Sync</span> réplication 3 zones</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SÉCURITÉ -->
-<section class="section" id="security" style="border-top:1px solid rgba(255,255,255,.06)">
-  <div class="section-inner">
-    <h2 class="section-huge">Restez sécurisé et résilient par défaut.<br><span class="muted" style="font-size:.6em;display:block;margin-top:16px;letter-spacing:-.03em">Concevoir des produits, pas la conformité.</span></h2>
-    <div class="sec-grid">
-      <div class="sec-card"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3>Réseautage privé</h3><p>Sécurisez le trafic interne hors d'Internet public sans la complexité d'un VPC.</p></div>
-      <div class="sec-card"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/></svg></div><h3>Protection DDoS intégrée</h3><p>Protégez tous vos services contre les attaques sans configuration ni modules complémentaires.</p></div>
-      <div class="sec-card"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div><h3>Conformité gérée</h3><p>Répondez aux exigences des normes SOC 2 Type 2, HIPAA, ISO 27001 et RGPD sans frais supplémentaires.</p></div>
-      <div class="sec-card"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="7" y2="9"/><line x1="11" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="7" y2="13"/><line x1="11" y1="13" x2="17" y2="13"/></svg></div><h3>Contrôles d'audit</h3><p>Journalisation et surveillance intégrées des audits pour les événements de la plateforme.</p></div>
-      <div class="sec-card"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3>Chiffrement au repos</h3><p>Chiffrement AES-256 pour le stockage objet, les bases de données, les sauvegardes et les secrets.</p></div>
-      <div class="sec-card"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div><h3>Identification unique de l'utilisateur</h3><p>Contrôlez les services et les ressources grâce au contrôle d'accès basé sur les rôles.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- OFFRES -->
-<section id="offers">
-  <div class="offers-inner">
-    <div class="offers-header">
-      <h2>Nos offres</h2>
-      <p>Du plus petit serveur au cloud storage haute capacité. Tous les prix sont HT, par mois.</p>
-    </div>
-    <div class="tabs">
-      <button class="tab on" data-panel="srv"><span class="tab-ico">🖥️</span><span class="tab-info"><span class="tab-lbl">Serveurs dédiés</span><span class="tab-sub">7 configurations disponibles</span></span></button>
-      <button class="tab" data-panel="cs"><span class="tab-ico">☁️</span><span class="tab-info"><span class="tab-lbl">Cloud Storage</span><span class="tab-sub">6 paliers de stockage objet</span></span></button>
-    </div>
-    <div class="carousel on" id="carousel-srv">
-      <div class="carousel-viewport"><div class="carousel-track" id="track-srv"></div></div>
-      <div class="carousel-nav">
-        <div class="carousel-arrows">
-          <button class="btn-arrow" id="srv-prev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <button class="btn-arrow" id="srv-next" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-        </div>
-        <div class="carousel-info">
-          <div class="carousel-dots" id="dots-srv"></div>
-          <span class="carousel-counter" id="counter-srv"></span>
-        </div>
-      </div>
-    </div>
-    <div class="carousel" id="carousel-cs">
-      <div class="carousel-viewport"><div class="carousel-track" id="track-cs"></div></div>
-      <div class="carousel-nav">
-        <div class="carousel-arrows">
-          <button class="btn-arrow" id="cs-prev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <button class="btn-arrow" id="cs-next" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-        </div>
-        <div class="carousel-info">
-          <div class="carousel-dots" id="dots-cs"></div>
-          <span class="carousel-counter" id="counter-cs"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPARATIF -->
-<section id="compare">
-  <div class="compare-inner">
-    <h2 class="section-huge">Comparatif avec le marché</h2>
-    <p style="font-size:1.05rem;color:#a1a1aa;max-width:640px;margin-top:-30px;margin-bottom:0;line-height:1.6">Nos prix vs les leaders du secteur (OVH, Hetzner, Scaleway, Contabo) — à configuration équivalente.</p>
-    <div style="margin-top:60px">
-      <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#71717a;font-weight:600;margin-bottom:20px">Serveur 8c / 16 Go / 240 Go NVMe</div>
-      <div class="compare-rows" id="compare-srv"></div>
-    </div>
-    <div style="margin-top:80px">
-      <div style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#71717a;font-weight:600;margin-bottom:20px">Cloud Storage 1 To / Trafic illimité</div>
-      <div class="compare-rows" id="compare-cs"></div>
-    </div>
-  </div>
-</section>
-
-<!-- PAIEMENT -->
-<section id="payment">
-  <div class="payment-inner">
-    <div class="payment-header">
-      <div>
-        <div class="pay-label">Moyens de paiement</div>
-        <h2>Payez comme vous voulez.</h2>
-      </div>
-      <p class="pay-desc">Tous les paiements sont sécurisés et chiffrés. Aucune donnée bancaire n'est stockée de notre côté.</p>
-    </div>
-    <div class="pay-grid">
-      <div class="pay-card">
-        <div class="pay-icon paypal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg></div>
-        <h3>PayPal</h3>
-        <p>Paiement instantané via votre compte PayPal ou carte bancaire. Protection acheteur incluse, aucun frais supplémentaires.</p>
-        <span class="pay-tag fast">Instantané</span>
-      </div>
-      <div class="pay-card">
-        <div class="pay-icon crypto"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.328-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-.01-.003-1.815-.45-.35 1.407s.975.225.955.238c.535.136.63.486.615.766l-.62 2.485c.04.007.086.02.14.04l-.144-.036-.87 3.48c-.066.163-.233.407-.607.314.015.02-.955-.238-.955-.238l-.66 1.508 1.71.425c.32.08.634.163.942.24l-.54 2.19 1.32.33.54-2.165c.36.1.71.19 1.05.276l-.54 2.15 1.32.33.54-2.18c2.22.42 3.89.25 4.596-1.757.566-1.617-.03-2.55-1.198-3.16.85-.196 1.492-.756 1.66-1.91z"/></svg></div>
-        <h3>Crypto-monnaies</h3>
-        <p>BTC, ETH, USDT, USDC, LTC et plus encore. Paiement anonyme et international, sans frais de conversion.</p>
-        <span class="pay-tag popular-tag">Populaire</span>
-      </div>
-    </div>
-    <div class="pay-note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
-      <div><strong>Sécurité des paiements.</strong> Toutes les transactions sont chiffrées en SSL/TLS et traitées par des prestataires certifiés <strong>PCI-DSS</strong>. GO CENTER ne stocke aucune donnée bancaire sur ses serveurs.</div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="faq-inner">
-    <div class="faq-header">
-      <div>
-        <div class="faq-label">FAQ</div>
-        <h2>Questions fréquentes</h2>
-      </div>
-      <p class="faq-desc">Tout ce qu'il faut savoir avant de commander. Une autre question ? <a href="__DISCORD_URL__" target="_blank" rel="noopener">Contacte-nous sur Discord</a>.</p>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">01</span><span style="flex:1">Combien de temps prend le déploiement d'un serveur ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Le déploiement prend en général entre <strong style="color:#fff">5 et 30 minutes</strong> après validation du paiement. Pour les configurations sur mesure, on te communique un délai précis avant de commander. Les buckets Cloud Storage, eux, sont disponibles <strong style="color:#fff">instantanément</strong>.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">02</span><span style="flex:1">Puis-je upgrader mon serveur ou mon stockage plus tard ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Absolument. Tu peux <strong style="color:#fff">upgrader ou downgrader</strong> ta configuration à tout moment depuis ton espace client ou en contactant le support. Le changement est effectif au prochain cycle de facturation, sans perte de données.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">03</span><span style="flex:1">Y a-t-il un engagement minimum ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Non, <strong style="color:#fff">aucun engagement</strong>. Tu peux résilier à tout moment. Les offres mensuelles sont sans durée minimale, et l'annuel (avec −25%) reste optionnel.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">04</span><span style="flex:1">Quelle est la différence entre un serveur dédié et le Cloud Storage ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Un <strong style="color:#fff">serveur dédié</strong> est une machine avec cœurs, RAM et stockage dédiés, sur laquelle tu exécutes tes applications. Le <strong style="color:#fff">Cloud Storage</strong> est un espace de stockage objet distribué, accessible via une API <strong style="color:#fff">S3-compatible</strong> — idéal pour les médias, sauvegardes, assets statiques et données froides. Les deux se combinent parfaitement.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">05</span><span style="flex:1">Quels moyens de paiement acceptez-vous ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Nous acceptons <strong style="color:#fff">PayPal</strong> et les <strong style="color:#fff">crypto-monnaies</strong> (BTC, ETH, USDT, USDC, LTC...). Tous les paiements sont traités via des prestataires certifiés PCI-DSS. Aucune donnée bancaire n'est stockée de notre côté — transactions chiffrées SSL/TLS.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">06</span><span style="flex:1">Les serveurs sont-ils protégés contre les attaques DDoS ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Oui, <strong style="color:#fff">tous nos serveurs</strong> sont protégés par un filtrage anti-DDoS réseau en amont. Aucune configuration de ta part n'est nécessaire, la protection est active dès le déploiement. Le site est également protégé par <strong style="color:#fff">Cloudflare</strong> (anti-DDoS + Turnstile anti-bot).</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">07</span><span style="flex:1">Quel système d'exploitation puis-je installer ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Tu peux choisir parmi <strong style="color:#fff">Ubuntu, Debian, CentOS, Arch, Fedora</strong> et bien d'autres. Windows Server et Proxmox sont aussi disponibles. Si tu as besoin d'une distribution spécifique, demande-nous.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">08</span><span style="flex:1">Proposez-vous un essai gratuit ou une garantie satisfait ou remboursé ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">On propose une <strong style="color:#fff">garantie 7 jours</strong> satisfait ou remboursé sur toutes nos offres. Si le service ne te convient pas, contacte-nous dans les 7 jours pour un remboursement complet.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">09</span><span style="flex:1">Où sont hébergées les données ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Nos serveurs et buckets sont hébergés en <strong style="color:#fff">France (Paris)</strong> dans des datacenters Tier III certifiés. Le Cloud Storage est répliqué sur <strong style="color:#fff">plusieurs zones</strong> pour la redondance. Besoin d'une autre localisation ? Contacte-nous.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">10</span><span style="flex:1">Y a-t-il une limite de bande passante, de trafic ou de requêtes ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Chaque serveur dispose d'une bande passante <strong style="color:#fff">1 Gbps garantie</strong> avec trafic illimité. Sur le Cloud Storage, le <strong style="color:#fff">trafic est également illimité</strong> sur tous les paliers — aucune facturation au volume, aucune surprise. Côté requêtes : <strong style="color:#fff">500 requêtes/mois</strong> sur NOVA (100 Go), puis <strong style="color:#fff">requêtes illimitées</strong> à partir de CORE (250 Go).</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">11</span><span style="flex:1">Comment vous contacter en cas de problème ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Le support est disponible <strong style="color:#fff">24/7 sur Discord</strong>. Ouvre un ticket dans le salon support, un membre de l'équipe te répond en général en moins de 30 minutes. Support prioritaire pour les clients Pro.</div></div></div>
-      <div class="faq-item"><button class="faq-q"><span class="faq-num">12</span><span style="flex:1">Puis-je obtenir une facture pour ma comptabilité ?</span><span class="chev"></span></button><div class="faq-a"><div class="faq-a-inner">Oui, une <strong style="color:#fff">facture PDF</strong> est générée automatiquement à chaque paiement. Elle est disponible sur demande et peut être adaptée pour les entreprises (TVA, mentions légales, numéro de TVA intracommunautaire).</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA FINAL -->
-<section id="final-cta">
-  <div class="final-grid"></div>
-  <div class="final-inner">
-    <h2>Commencez à créer avec GO CENTER</h2>
-    <p>Zéro opération, zéro surprise.</p>
-    <a href="__DISCORD_URL__" target="_blank" rel="noopener" class="btn-final">Déployer votre serveur maintenant<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand-col">
-        <div class="footer-brand">
-          <svg class="footer-brand-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <rect x="8" y="20" width="84" height="20" rx="3" fill="#7c3aed"/>
-            <rect x="8" y="44" width="84" height="20" rx="3" fill="#7c3aed"/>
-            <rect x="8" y="68" width="84" height="20" rx="3" fill="#7c3aed"/>
-            <circle cx="78" cy="30" r="4" fill="#34d9a4"/>
-          </svg>
-          GO CENTER
-        </div>
-        <p>Hébergement de serveurs dédiés et cloud storage S3-compatible haute performance. Les meilleurs prix du marché, sans compromis sur la qualité.</p>
-      </div>
-      <div class="footer-col"><h4>Produit</h4><ul><li><a href="#offers">Serveurs dédiés</a></li><li><a href="#offers">Cloud Storage</a></li><li><a href="#compare">Comparatif</a></li><li><a href="#payment">Paiement</a></li></ul></div>
-      <div class="footer-col"><h4>Ressources</h4><ul><li><a href="#faq">FAQ</a></li><li><a href="#security">Sécurité</a></li><li><a href="#" data-legal="sla">SLA / Disponibilité</a></li><li><a href="#" data-legal="mentions">Mentions légales</a></li></ul></div>
-      <div class="footer-col"><h4>Légal</h4><ul><li><a href="#" data-legal="cgv">CGV</a></li><li><a href="#" data-legal="cgu">CGU</a></li><li><a href="#" data-legal="confidentialite">Confidentialité</a></li><li><a href="#" data-legal="cookies">Cookies</a></li><li><a href="#" data-legal="remboursement">Remboursement</a></li><li><a href="#" data-legal="resiliation">Résiliation</a></li></ul></div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 GO CENTER — Tous droits réservés.</span>
-      <div class="footer-social">
-        <a href="__DISCORD_URL__" target="_blank" rel="noopener">Discord</a>
-        <a href="https://www.cloudflare.com" target="_blank" rel="noopener" class="footer-cf">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2.5c-.7 0-1.3.2-1.9.5C13.6 1.8 12.4 1 11 1 8.6 1 6.6 2.8 6.1 5.1c-.1 0-.3-.1-.4-.1C3.6 5 2 6.6 2 8.6c0 .8.3 1.5.7 2.1C1.5 11.3.8 12.6.8 14c0 2.3 1.6 4.2 3.8 4.7.4 1.9 2.1 3.3 4.1 3.3 1.2 0 2.3-.5 3.1-1.3.6.3 1.3.5 2 .5 2.4 0 4.4-1.9 4.4-4.3 0-.6-.1-1.2-.4-1.7 1.4-.7 2.4-2.1 2.4-3.8 0-2.3-1.9-4.2-4.2-4.2-.2 0-.4 0-.6.1.3-.7.5-1.5.5-2.3 0-2.6-2.1-4.5-4.4-4.5z"/></svg>
-          Protégé par Cloudflare
-        </a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- MODALE LÉGALE -->
-<div id="legal-overlay" role="dialog" aria-modal="true">
-  <div id="legal-modal">
-    <button class="legal-close" id="legal-close-btn" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <div class="legal-label" id="legal-label">Document légal</div>
-    <h2 id="legal-title">Titre</h2>
-    <div class="legal-updated" id="legal-updated">Dernière mise à jour : 7 octobre 2026</div>
-    <div class="legal-body" id="legal-body"></div>
-  </div>
-</div>
-
-<script>
-const CONFIG = {
-  DISCORD_URL: '__DISCORD_URL__',
-  TURNSTILE_SITE_KEY: '__TURNSTILE_SITE_KEY__',
-  SECURITY: {
-    MAX_PAGE_LOADS_PER_HOUR: 50,
-    MAX_CLICKS_PER_10S: 25,
-    BLOCK_DURATION_MS: 3600000
+/* ============================================================
+   Charge les secrets depuis /etc/secrets/gocenter.env (Render)
+   ============================================================ */
+(function loadSecretFile(){
+  const ENV_PATH = '/etc/secrets/gocenter.env';
+  try {
+    if (!fs.existsSync(ENV_PATH)) return;
+    const content = fs.readFileSync(ENV_PATH, 'utf8');
+    content.split('\n').forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) return;
+      const idx = trimmed.indexOf('=');
+      if (idx === -1) return;
+      process.env[trimmed.slice(0, idx).trim()] = trimmed.slice(idx + 1).trim();
+    });
+    console.log('✓ Secrets chargés depuis', ENV_PATH);
+  } catch (err) {
+    console.warn('⚠️  Erreur secrets :', err.message);
   }
+})();
+
+const express = require('express');
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+const HTML_PATH = path.join(__dirname, 'public', 'index.html');
+
+/* ============================================================
+   ANTI-DDOS serveur
+   ============================================================ */
+const DDOS_CONFIG = {
+  WINDOW_MS: 60000,
+  MAX_REQUESTS: 120,
+  MAX_CONCURRENT: 30,
+  BLOCK_DURATION_MS: 900000,
+  SUSPICIOUS_UA_PATTERNS: [
+    /curl/i, /wget/i, /python-requests/i, /scrapy/i,
+    /masscan/i, /nmap/i, /nikto/i, /sqlmap/i, /hydra/i
+  ],
+  BLOCKED_PATHS: [
+    /^\/\.env/, /^\/\.git/, /^\/wp-admin/, /^\/wp-login/,
+    /^\/phpmyadmin/, /^\/admin\.php/, /^\/xmlrpc\.php/,
+    /^\/\.aws/, /^\/\.ssh/, /^\/backup/, /^\/config/
+  ]
 };
 
-(function antiFloodGuard(){
-  const KEY_LOADS = 'gc_page_loads';
-  const KEY_BLOCK = 'gc_blocked_until';
+const ipTracker = new Map();
+const blockedIPs = new Map();
+
+setInterval(() => {
   const now = Date.now();
-  const blockedUntil = parseInt(localStorage.getItem(KEY_BLOCK) || '0', 10);
-  if(blockedUntil > now){
-    const minutes = Math.ceil((blockedUntil - now) / 60000);
-    document.documentElement.innerHTML = `<body style="background:#000;color:#fff;font-family:system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center;margin:0"><div style="max-width:480px"><h1 style="font-size:24px;margin-bottom:16px;color:#a78bfa">⚠️ Accès temporairement bloqué</h1><p style="color:#a1a1aa;line-height:1.6">Trop de requêtes. Réessayez dans <strong style="color:#fff">${minutes} min</strong>.</p></div></body>`;
-    throw new Error('Blocked');
+  for (const [ip, data] of ipTracker) {
+    if (now - data.firstReq > DDOS_CONFIG.WINDOW_MS) ipTracker.delete(ip);
   }
-  let loads = [];
-  try { loads = JSON.parse(localStorage.getItem(KEY_LOADS) || '[]'); } catch(e){ loads = []; }
-  loads = loads.filter(t => now - t < 3600000);
-  loads.push(now);
-  localStorage.setItem(KEY_LOADS, JSON.stringify(loads));
-  if(loads.length > CONFIG.SECURITY.MAX_PAGE_LOADS_PER_HOUR){
-    localStorage.setItem(KEY_BLOCK, String(now + CONFIG.SECURITY.BLOCK_DURATION_MS));
-    location.reload();
-    return;
+  for (const [ip, until] of blockedIPs) {
+    if (now > until) blockedIPs.delete(ip);
   }
-  let clickTimes = [];
-  document.addEventListener('click', () => {
-    const t = Date.now();
-    clickTimes = clickTimes.filter(x => t - x < 10000);
-    clickTimes.push(t);
-    if(clickTimes.length > CONFIG.SECURITY.MAX_CLICKS_PER_10S){
-      localStorage.setItem(KEY_BLOCK, String(t + CONFIG.SECURITY.BLOCK_DURATION_MS));
-      location.reload();
+}, 60000);
+
+function getClientIP(req){
+  return (
+    req.headers['cf-connecting-ip'] ||
+    req.headers['x-real-ip'] ||
+    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    req.ip ||
+    req.connection?.remoteAddress ||
+    'unknown'
+  );
+}
+
+function antiDDoS(req, res, next){
+  const ip = getClientIP(req);
+  const now = Date.now();
+  const ua = req.headers['user-agent'] || '';
+  const p = req.path;
+
+  if(blockedIPs.has(ip)){
+    const until = blockedIPs.get(ip);
+    if(now < until){
+      const retry = Math.ceil((until - now) / 1000);
+      res.set('Retry-After', String(retry));
+      return res.status(429).send('Too Many Requests');
+    } else {
+      blockedIPs.delete(ip);
     }
-  }, { passive: true });
-})();
+  }
 
-(function initGate(){
-  const gate = document.getElementById('security-gate');
-  if(sessionStorage.getItem('gc_verified') === 'true'){
-    gate.classList.add('hidden');
-    setTimeout(() => { gate.style.display = 'none'; }, 500);
+  if(DDOS_CONFIG.BLOCKED_PATHS.some(rx => rx.test(p))){
+    console.warn(`[anti-ddos] Scanner : ${ip} → ${p}`);
+    blockedIPs.set(ip, now + DDOS_CONFIG.BLOCK_DURATION_MS);
+    return res.status(403).send('Forbidden');
+  }
+
+  if(DDOS_CONFIG.SUSPICIOUS_UA_PATTERNS.some(rx => rx.test(ua))){
+    console.warn(`[anti-ddos] UA suspect : ${ip} → ${ua.substring(0, 60)}`);
+    blockedIPs.set(ip, now + DDOS_CONFIG.BLOCK_DURATION_MS);
+    return res.status(403).send('Forbidden');
+  }
+
+  let track = ipTracker.get(ip);
+  if(!track || (now - track.firstReq) > DDOS_CONFIG.WINDOW_MS){
+    track = { count: 0, firstReq: now, concurrent: 0 };
+    ipTracker.set(ip, track);
+  }
+
+  track.count++;
+  track.concurrent++;
+
+  if(track.count > DDOS_CONFIG.MAX_REQUESTS){
+    console.warn(`[anti-ddos] Rate limit : ${ip} (${track.count} req/min)`);
+    blockedIPs.set(ip, now + DDOS_CONFIG.BLOCK_DURATION_MS);
+    return res.status(429).send('Too Many Requests');
+  }
+
+  if(track.concurrent > DDOS_CONFIG.MAX_CONCURRENT){
+    return res.status(429).send('Too many concurrent connections');
+  }
+
+  const ratio = track.count / DDOS_CONFIG.MAX_REQUESTS;
+  if(ratio > 0.7){
+    const delay = Math.floor((ratio - 0.7) * 1000);
+    setTimeout(() => {
+      track.concurrent--;
+      next();
+    }, delay);
     return;
   }
-  document.body.style.overflow = 'hidden';
-})();
 
-window.onTurnstileSuccess = async function(token){
+  res.on('finish', () => { track.concurrent--; });
+  res.on('close', () => { track.concurrent--; });
+  next();
+}
+
+app.use(antiDDoS);
+
+app.use((req, res, next) => {
+  res.set('X-Content-Type-Options', 'nosniff');
+  res.set('X-Frame-Options', 'SAMEORIGIN');
+  res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  res.set('X-XSS-Protection', '1; mode=block');
+  next();
+});
+
+function injectEnv(html){
+  const vars = {
+    TURNSTILE_SITE_KEY: process.env.TURNSTILE_SITE_KEY || '',
+    DISCORD_URL:        process.env.DISCORD_URL        || 'https://discord.com'
+  };
+  return html.replace(/__([A-Z][A-Z0-9_]+)__/g, (match, key) => {
+    if(vars[key] !== undefined) return vars[key];
+    console.warn(`[env] Variable manquante : ${key}`);
+    return match;
+  });
+}
+
+app.use(express.json({ limit: '4kb' }));
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', ts: Date.now(), ips: ipTracker.size, blocked: blockedIPs.size });
+});
+
+app.post('/api/verify', async (req, res) => {
+  const { token } = req.body;
+  if(!token) return res.status(400).json({ ok: false, error: 'no_token' });
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if(!secret){
+    console.error('[verify] TURNSTILE_SECRET_KEY manquante');
+    return res.status(500).json({ ok: false, error: 'server_misconfigured' });
+  }
   try {
-    const r = await fetch('/api/verify', {
+    const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token })
+      body: JSON.stringify({ secret, response: token, remoteip: getClientIP(req) })
     });
     const data = await r.json();
-    if(!data.ok){ window.onTurnstileError('verify_failed'); return; }
-    sessionStorage.setItem('gc_verified', 'true');
-    sessionStorage.setItem('gc_token', token);
-    const gate = document.getElementById('security-gate');
-    gate.classList.add('hidden');
-    document.body.style.overflow = '';
-    setTimeout(() => { gate.style.display = 'none'; }, 500);
-  } catch (e) { window.onTurnstileError('network_error'); }
-};
-window.onTurnstileError = function(errCode){
-  console.warn('Turnstile error:', errCode);
-  const wrap = document.getElementById('cf-wrap');
-  if(wrap) wrap.innerHTML = `<div class="gate-error">Impossible de charger la vérification. Codes fréquents : réseau bloqué, VPN/proxy, adblock.</div>`;
-};
-window.onTurnstileExpired = function(){ sessionStorage.removeItem('gc_verified'); };
-
-const SRV_OFFERS = [
-  { name:'NEXA',    specs:[{i:'⚙️',t:'<strong>2 cœurs</strong> CPU'},{i:'🧠',t:'<strong>4 Go</strong> RAM'},{i:'💾',t:'<strong>60 Go</strong> NVMe'}],    price:8.99,   annual:'80,90',    tag:null },
-  { name:'AERO',    specs:[{i:'⚙️',t:'<strong>4 cœurs</strong> CPU'},{i:'🧠',t:'<strong>8 Go</strong> RAM'},{i:'💾',t:'<strong>120 Go</strong> NVMe'}],   price:20.99,  annual:'188,90',   tag:null },
-  { name:'VANTA',   specs:[{i:'⚙️',t:'<strong>8 cœurs</strong> CPU'},{i:'🧠',t:'<strong>16 Go</strong> RAM'},{i:'💾',t:'<strong>240 Go</strong> NVMe'}],  price:40.99,  annual:'368,90',   tag:{l:'Populaire',c:'popular'} },
-  { name:'ORBIT',   specs:[{i:'⚙️',t:'<strong>12 cœurs</strong> CPU'},{i:'🧠',t:'<strong>24 Go</strong> RAM'},{i:'💾',t:'<strong>360 Go</strong> NVMe'}],  price:65.99,  annual:'593,90',   tag:null },
-  { name:'ATLAS',   specs:[{i:'⚙️',t:'<strong>16 cœurs</strong> CPU'},{i:'🧠',t:'<strong>32 Go</strong> RAM'},{i:'💾',t:'<strong>500 Go</strong> NVMe'}],  price:85.99,  annual:'773,90',   tag:null },
-  { name:'TITAN',   specs:[{i:'⚙️',t:'<strong>24 cœurs</strong> CPU'},{i:'🧠',t:'<strong>48 Go</strong> RAM'},{i:'💾',t:'<strong>750 Go</strong> NVMe'}],  price:145.99, annual:'1 313,90', tag:{l:'Best-seller',c:'best'} },
-  { name:'QUANTUM', specs:[{i:'⚙️',t:'<strong>32 cœurs</strong> CPU'},{i:'🧠',t:'<strong>64 Go</strong> RAM'},{i:'💾',t:'<strong>1 To</strong> NVMe'}],     price:235.99, annual:'2 123,90', tag:{l:'Nouveau',c:'new'} }
-];
-
-const CS_OFFERS = [
-  { name:'NOVA',   specs:[{i:'💾',t:'<strong>100 Go</strong> NVMe'},{i:'🌐',t:'<strong>Trafic illimité</strong>'},{i:'⚡',t:'<strong>500</strong> requêtes / mois'}], price:2.99,  annual:'26,90',  tag:null },
-  { name:'CORE',   specs:[{i:'💾',t:'<strong>250 Go</strong> NVMe'},{i:'🌐',t:'<strong>Trafic illimité</strong>'},{i:'⚡',t:'<strong>Requêtes illimitées</strong>'}], price:4.99,  annual:'44,90',  tag:null },
-  { name:'PULSE',  specs:[{i:'💾',t:'<strong>500 Go</strong> NVMe'},{i:'🌐',t:'<strong>Trafic illimité</strong>'},{i:'⚡',t:'<strong>Requêtes illimitées</strong>'}], price:7.99,  annual:'71,90',  tag:{l:'Populaire',c:'popular'} },
-  { name:'PRIME',  specs:[{i:'💾',t:'<strong>1 To</strong> NVMe'},{i:'🌐',t:'<strong>Trafic illimité</strong>'},{i:'⚡',t:'<strong>Requêtes illimitées</strong>'}], price:12.99, annual:'116,90', tag:null },
-  { name:'VECTOR', specs:[{i:'💾',t:'<strong>3 To</strong> NVMe'},{i:'🌐',t:'<strong>Trafic illimité</strong>'},{i:'⚡',t:'<strong>Requêtes illimitées</strong>'}], price:25.99, annual:'233,90', tag:null },
-  { name:'TITAN',  specs:[{i:'💾',t:'<strong>5 To</strong> NVMe'},{i:'🌐',t:'<strong>Trafic illimité</strong>'},{i:'⚡',t:'<strong>Requêtes illimitées</strong>'}], price:40.99, annual:'368,90', tag:{l:'Best-seller',c:'best'} }
-];
-
-function buildPlan(o){
-  const tagHtml = o.tag ? `<span class="plan-tag ${o.tag.c}">${o.tag.l}</span>` : '';
-  const annualHtml = o.annual ? `<div class="plan-annual"><span class="badge">−25%</span>Annuel : ${o.annual} €</div>` : `<div class="plan-annual"></div>`;
-  return `<div class="plan"><div class="plan-left"><h3>${o.name}${tagHtml}</h3><div class="plan-specs">${o.specs.map(s=>`<div class="plan-spec"><span class="ico">${s.i}</span><span>${s.t}</span></div>`).join('')}</div></div><div class="plan-right"><div class="plan-price"><span>${o.price.toFixed(2).replace('.',',')}€</span><span class="per">/ mois</span></div>${annualHtml}<a href="${CONFIG.DISCORD_URL}" target="_blank" rel="noopener" class="btn-plan">Commander<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></a></div></div>`;
-}
-
-function createCarousel(id, offers){
-  const track = document.getElementById('track-' + id);
-  const dotsEl = document.getElementById('dots-' + id);
-  const counterEl = document.getElementById('counter-' + id);
-  const btnPrev = document.getElementById(id + '-prev');
-  const btnNext = document.getElementById(id + '-next');
-  let currentIndex = 0;
-  track.innerHTML = offers.map(o => `<div class="carousel-slide">${buildPlan(o)}</div>`).join('');
-  function render(){
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    dotsEl.innerHTML = offers.map((_, i) => `<button class="dot ${i === currentIndex ? 'active' : ''}" data-index="${i}"></button>`).join('');
-    counterEl.innerHTML = `<strong>${String(currentIndex + 1).padStart(2, '0')}</strong> / ${String(offers.length).padStart(2, '0')}`;
-    dotsEl.querySelectorAll('.dot').forEach(dot => {
-      dot.addEventListener('click', () => { currentIndex = parseInt(dot.dataset.index); render(); });
-    });
+    console.log('[verify]', data.success ? '✓ valid' : '✗ invalid');
+    return res.json({ ok: data.success, data });
+  } catch (e) {
+    console.error('[verify]', e.message);
+    return res.status(500).json({ ok: false, error: 'server_error' });
   }
-  function next(){ currentIndex = currentIndex === offers.length - 1 ? 0 : currentIndex + 1; render(); }
-  function prev(){ currentIndex = currentIndex === 0 ? offers.length - 1 : currentIndex - 1; render(); }
-  btnNext.addEventListener('click', next);
-  btnPrev.addEventListener('click', prev);
-  const viewport = track.parentElement;
-  let touchStartX = 0;
-  viewport.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  viewport.addEventListener('touchend', e => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if(Math.abs(diff) > 50){ if(diff > 0) next(); else prev(); }
-  }, { passive: true });
-  render();
-}
+});
 
-createCarousel('srv', SRV_OFFERS);
-createCarousel('cs', CS_OFFERS);
-
-(function(){
-  const tabs = document.querySelectorAll('.tab');
-  const cSrv = document.getElementById('carousel-srv');
-  const cCs = document.getElementById('carousel-cs');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('on'));
-      tab.classList.add('on');
-      if(tab.dataset.panel === 'srv'){ cSrv.classList.add('on'); cCs.classList.remove('on'); }
-      else { cCs.classList.add('on'); cSrv.classList.remove('on'); }
-    });
-  });
-})();
-
-const COMPARE_SRV = [
-  { brand:'GO CENTER', price:40.99, color:'#7c3aed', self:true },
-  { brand:'Hetzner',   price:49.00, color:'#d50c2d' },
-  { brand:'Contabo',   price:54.99, color:'#00b8a9' },
-  { brand:'OVH',       price:59.99, color:'#3b5998' },
-  { brand:'Scaleway',  price:69.99, color:'#a78bfa' }
-];
-const COMPARE_CS = [
-  { brand:'GO CENTER', price:12.99, color:'#7c3aed', self:true },
-  { brand:'Hetzner',   price:17.90, color:'#d50c2d' },
-  { brand:'Contabo',   price:19.99, color:'#00b8a9' },
-  { brand:'OVH',       price:24.99, color:'#3b5998' },
-  { brand:'Scaleway',  price:29.99, color:'#a78bfa' }
-];
-
-function renderCompare(id, data){
-  const wrap = document.getElementById(id);
-  if(!wrap) return;
-  const max = Math.max(...data.map(d=>d.price));
-  wrap.innerHTML = data.map(d => `<div class="compare-row${d.self?' gocenter':''}"><div class="compare-brand"><span class="dot-brand" style="background:${d.color}"></span>${d.brand}</div><div class="compare-bar"><div class="compare-fill" style="width:${(d.price/max)*100}%;background:${d.self?'linear-gradient(90deg,#7c3aed,#a78bfa)':d.color};"></div></div><div class="compare-price">${d.price.toFixed(2).replace('.',',')}€</div></div>`).join('');
-}
-renderCompare('compare-srv', COMPARE_SRV);
-renderCompare('compare-cs', COMPARE_CS);
-
-(function(){
-  let done = false;
-  function trigger(){
-    if(done) return;
-    const section = document.getElementById('compare');
-    if(!section) return;
-    const rect = section.getBoundingClientRect();
-    if(rect.top < window.innerHeight * 0.85 && rect.bottom > 0){
-      done = true;
-      document.querySelectorAll('.compare-fill').forEach((el, i) => {
-        setTimeout(() => el.classList.add('animated'), i * 80);
-      });
-    }
+app.get('*', (req, res) => {
+  try {
+    const html = fs.readFileSync(HTML_PATH, 'utf8');
+    res.set('Content-Type', 'text/html; charset=utf-8');
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.send(injectEnv(html));
+  } catch (err) {
+    console.error('[error]', err);
+    res.status(500).send('Erreur serveur');
   }
-  window.addEventListener('scroll', trigger, { passive: true });
-  trigger();
-})();
-
-document.querySelectorAll('.faq-q').forEach(q => {
-  q.addEventListener('click', () => {
-    const item = q.parentElement;
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if(!wasOpen) item.classList.add('open');
-  });
 });
 
-const LEGAL = {
-  cgv: { label:'Conditions Générales de Vente', title:'CGV', body:`
-    <h3>Préambule</h3>
-    <p>Les présentes Conditions Générales de Vente (ci-après « CGV ») régissent la relation commerciale entre <strong>GO CENTER</strong> (« le Prestataire ») et toute personne physique ou morale (« le Client ») souscrivant à ses services.</p>
-    <p>Elles s'appliquent à toute commande passée via notre serveur Discord. Le Client déclare avoir lu et accepté sans réserve l'intégralité des présentes avant validation.</p>
-
-    <h3>Article 1 — Définitions</h3>
-    <ul>
-      <li><strong>Prestataire</strong> : GO CENTER.</li>
-      <li><strong>Client</strong> : personne souscrivant à un service.</li>
-      <li><strong>Service</strong> : serveur dédié ou espace Cloud Storage.</li>
-      <li><strong>KYC</strong> : vérification d'identité.</li>
-    </ul>
-
-    <h3>Article 2 — Services</h3>
-    <ul>
-      <li>Serveurs dédiés : NEXA, AERO, VANTA, ORBIT, ATLAS, TITAN, QUANTUM</li>
-      <li>Cloud Storage S3 : NOVA, CORE, PULSE, PRIME, VECTOR, TITAN</li>
-      <li>Services annexes : réseau privé, anti-DDoS, sauvegardes, monitoring, support 24/7.</li>
-    </ul>
-
-    <h3>Article 3 — Commande</h3>
-    <p>La commande s'effectue exclusivement sur Discord via un ticket. Le Client sélectionne sa configuration, valide le devis, et procède au paiement. La commande devient ferme dès réception intégrale du paiement.</p>
-
-    <h3>Article 4 — Tarifs et paiement</h3>
-    <p>Les prix sont exprimés en euros, <strong>hors taxes (HT)</strong>. Moyens de paiement acceptés :</p>
-    <ul>
-      <li><strong>PayPal</strong> — paiement instantané, protection acheteur.</li>
-      <li><strong>Crypto-monnaies</strong> — BTC, ETH, USDT, USDC, LTC, autres sur demande.</li>
-    </ul>
-    <p>Le défaut de paiement entraîne la suspension du service après relance restée sans réponse sous 48h.</p>
-
-    <h3>Article 5 — Mise en service</h3>
-    <p>Déploiement des serveurs dédiés sous 5 à 30 minutes après paiement. Buckets Cloud Storage disponibles immédiatement.</p>
-
-    <h3>Article 6 — Obligations du Client</h3>
-    <p>Le Client s'engage à ne pas utiliser les services pour : contenus illicites, attaques informatiques (DDoS, brute-force), hébergement de malwares, minage non autorisé, spam, contrefaçon. Il doit respecter la législation française et européenne, garantir la sécurité de ses accès, et se soumettre à toute demande KYC sous 48h.</p>
-    <p><strong>Toute violation entraîne la suspension immédiate sans remboursement.</strong></p>
-
-    <h3>Article 7 — Responsabilité</h3>
-    <p>Le Prestataire est soumis à une obligation de moyens. Sa responsabilité est limitée au montant effectivement payé par le Client au cours des 12 derniers mois. Il ne peut être tenu responsable en cas de force majeure, usage frauduleux, mauvaise configuration, ou indisponibilité imputable à un tiers.</p>
-
-    <h3>Article 8 — Droit de rétractation</h3>
-    <p>Conformément à l'article <strong>L.221-28 du Code de la consommation</strong>, pas de rétractation pour services pleinement exécutés. Garantie commerciale satisfait ou remboursé de 7 jours accordée.</p>
-
-    <h3>Article 9 — Résiliation</h3>
-    <p>Sans engagement. Résiliation à tout moment via ticket. Effet en fin de période de facturation.</p>
-
-    <h3>Article 10 — Propriété intellectuelle</h3>
-    <p>La marque GO CENTER, ses logos, interfaces et code source sont la propriété exclusive du Prestataire. Toute reproduction constitue une contrefaçon sanctionnée par les articles <strong>L.335-2 et suivants du Code de la propriété intellectuelle</strong>.</p>
-
-    <h3>Article 11 — Données personnelles</h3>
-    <p>Traitement décrit dans notre Politique de confidentialité, conforme au RGPD.</p>
-
-    <h3>Article 12 — Force majeure</h3>
-    <p>Le Prestataire ne saurait être tenu responsable en cas d'événement de force majeure (art. 1218 Code civil).</p>
-
-    <h3>Article 13 — Modification des CGV</h3>
-    <p>Le Prestataire peut modifier ces CGV. Information via Discord 15 jours avant entrée en vigueur.</p>
-
-    <h3>Article 14 — Droit applicable et juridiction</h3>
-    <p>Droit français. Solution amiable prioritaire. Tribunaux français seuls compétents.</p>
-  `},
-
-  cgu: { label:"Conditions Générales d'Utilisation", title:'CGU', body:`
-    <h3>Article 1 — Objet</h3>
-    <p>Les présentes CGU définissent les conditions d'accès et d'utilisation des services GO CENTER.</p>
-
-    <h3>Article 2 — Accès</h3>
-    <p>Accès via Discord officiel et espace client dédié. L'utilisateur est seul responsable de la confidentialité de ses identifiants.</p>
-
-    <h3>Article 3 — Usage acceptable</h3>
-    <p>Il est <strong>strictement interdit</strong> d'utiliser nos services pour :</p>
-    <ul>
-      <li><strong>Contenus illicites</strong> : pédopornographie, apologie du terrorisme, incitation à la haine, contrefaçon, diffamation ;</li>
-      <li><strong>Attaques informatiques</strong> : DDoS, brute-force, scan massif, exploitation de failles ;</li>
-      <li><strong>Hébergement malveillant</strong> : botnets, malwares, ransomwares, phishing ;</li>
-      <li><strong>Minage cryptographique</strong> sans autorisation ;</li>
-      <li><strong>Spam</strong> ou envois non sollicités en masse ;</li>
-      <li><strong>Contournement</strong> des protections ou quotas ;</li>
-      <li><strong>Usurpation d'identité</strong> ;</li>
-      <li><strong>Violation</strong> de propriété intellectuelle.</li>
-    </ul>
-    <p><strong>Toute violation entraîne résiliation immédiate sans remboursement et signalement aux autorités si requis.</strong></p>
-
-    <h3>Article 4 — Contenus hébergés</h3>
-    <p>Le Client est <strong>seul responsable</strong> des contenus hébergés et garantit le Prestataire contre toute réclamation de tiers.</p>
-
-    <h3>Article 5 — Disponibilité</h3>
-    <p>Disponibilité de <strong>99,9 %</strong> (voir SLA). Maintenance planifiée notifiée 48h à l'avance.</p>
-
-    <h3>Article 6 — Suspension</h3>
-    <p>GO CENTER peut suspendre ou résilier un compte en cas de : non-paiement, violation des CGU, usage frauduleux, comportement abusif, réquisition judiciaire.</p>
-
-    <h3>Article 7 — Protection anti-DDoS</h3>
-    <p>Accès protégé par <strong>Cloudflare</strong> (mitigation L3/L4/L7, WAF, rate limiting) et <strong>Turnstile</strong>. Contournement interdit.</p>
-
-    <h3>Article 8 — Propriété intellectuelle</h3>
-    <p>Contrefaçon sanctionnée par les articles <strong>L.335-2 et suivants du Code de la propriété intellectuelle</strong>.</p>
-
-    <h3>Article 9 — Responsabilité</h3>
-    <p>L'utilisateur indemnise GO CENTER de toute conséquence résultant d'un usage non conforme.</p>
-
-    <h3>Article 10 — Modification</h3>
-    <p>GO CENTER peut modifier ces CGU avec notification.</p>
-
-    <h3>Article 11 — Droit applicable</h3>
-    <p>Droit français. Tribunaux français compétents.</p>
-  `},
-
-  confidentialite: { label:'Politique de confidentialité', title:'Politique de confidentialité', body:`
-    <h3>1. Responsable du traitement</h3>
-    <p><strong>GO CENTER</strong>, joignable sur Discord.</p>
-
-    <h3>2. Données collectées</h3>
-    <ul>
-      <li>Identifiant Discord, pseudo, email ;</li>
-      <li>Informations de facturation ;</li>
-      <li>Historique commandes / paiements ;</li>
-      <li>IP, logs de connexion, métadonnées ;</li>
-      <li>Contenu des tickets support ;</li>
-      <li>Token de vérification Turnstile.</li>
-    </ul>
-
-    <h3>3. Finalités</h3>
-    <ul>
-      <li>Exécution du contrat ;</li>
-      <li>Gestion client et support ;</li>
-      <li>Facturation et obligations comptables ;</li>
-      <li>Lutte contre la fraude et sécurité ;</li>
-      <li>Amélioration des services.</li>
-    </ul>
-
-    <h3>4. Base légale (RGPD art. 6)</h3>
-    <ul>
-      <li>Exécution du contrat (6.1.b) ;</li>
-      <li>Obligations légales (6.1.c) ;</li>
-      <li>Intérêt légitime sécurité (6.1.f) ;</li>
-      <li>Consentement cookies (6.1.a).</li>
-    </ul>
-
-    <h3>5. Durée de conservation</h3>
-    <ul>
-      <li>Compte : relation + 3 ans ;</li>
-      <li>Facturation : 10 ans ;</li>
-      <li>Logs : 12 mois max.</li>
-    </ul>
-
-    <h3>6. Destinataires</h3>
-    <p>Jamais revendues. Transmises aux sous-traitants (hébergeur, paiement, Cloudflare) dans le strict cadre du service.</p>
-
-    <h3>7. Vos droits</h3>
-    <p>Accès, rectification, effacement, limitation, portabilité, opposition, retrait du consentement. Contact : Discord. Réclamation CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a>).</p>
-
-    <h3>8. Transferts hors UE</h3>
-    <p>Données hébergées en France. Aucun transfert sans garanties appropriées (clauses contractuelles types).</p>
-
-    <h3>9. Sécurité</h3>
-    <p>Chiffrement, contrôle d'accès, journalisation, protection Cloudflare.</p>
-  `},
-
-  cookies: { label:'Politique des cookies', title:'Politique des cookies', body:`
-    <h3>1. Qu'est-ce qu'un cookie ?</h3>
-    <p>Fichier déposé sur votre terminal lors de la navigation pour conserver des informations.</p>
-
-    <h3>2. Cookies utilisés</h3>
-    <p><strong>Strictement nécessaires</strong> — fonctionnement du site (session, sécurité).</p>
-    <p><strong>Analytiques</strong> — mesure d'audience anonymisée (consentement requis).</p>
-    <p><strong>Sécurité (Cloudflare)</strong> — anti-DDoS, anti-bot, Turnstile. Strictement nécessaires.</p>
-    <p><strong>Tiers</strong> — Discord, prestataire de paiement.</p>
-
-    <h3>3. Gestion</h3>
-    <p>Configurable dans votre navigateur. Refus possible mais altère l'expérience.</p>
-    <p>Plus d'infos : <a href="https://www.cnil.fr/fr/cookies-et-autres-traceurs" target="_blank" rel="noopener">cnil.fr</a>.</p>
-
-    <h3>4. Durée</h3>
-    <p>Maximum 13 mois (recommandation CNIL).</p>
-
-    <h3>5. Cloudflare Turnstile</h3>
-    <p>Vérifie que vous êtes humain. Peut déposer un cookie technique et collecter IP/user-agent. Politique : <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com</a>.</p>
-
-    <h3>6. Consentement</h3>
-    <p>Navigation = acceptation des cookies strictement nécessaires et de sécurité.</p>
-  `},
-
-  mentions: { label:'Mentions légales', title:'Mentions légales', body:`
-    <h3>Éditeur</h3>
-    <p><strong>GO CENTER</strong> — Contact via Discord officiel.</p>
-
-    <h3>Directeur de la publication</h3>
-    <p>Le responsable légal de GO CENTER.</p>
-
-    <h3>Hébergement</h3>
-    <p>France, datacenters Tier III certifiés. Protection Cloudflare.</p>
-
-    <h3>Propriété intellectuelle</h3>
-    <p>Tout le contenu est propriété exclusive. Contrefaçon sanctionnée par les articles <strong>L.335-2 et suivants du Code de la propriété intellectuelle</strong>.</p>
-
-    <h3>Responsabilité</h3>
-    <p>GO CENTER ne peut garantir l'absence d'erreurs et décline toute responsabilité quant à l'usage des informations.</p>
-
-    <h3>Liens hypertextes</h3>
-    <p>Aucun contrôle sur les sites tiers liés (Discord, Cloudflare, prestataires).</p>
-
-    <h3>Litiges</h3>
-    <p>Droit français, tribunaux français compétents.</p>
-
-    <h3>Signalement de contenu illicite</h3>
-    <p>Contact via Discord. Traitement dans les plus brefs délais (LCEN).</p>
-  `},
-
-  remboursement: { label:'Politique de remboursement', title:'Politique de remboursement', body:`
-    <h3>1. Garantie 7 jours</h3>
-    <p><strong>Satisfait ou remboursé de 7 jours calendaires</strong> à compter de la mise en service, pour toute première commande.</p>
-
-    <h3>2. Éligibilité</h3>
-    <ul>
-      <li>Demande dans les 7 jours ;</li>
-      <li>Pas de violation CGV/CGU ;</li>
-      <li>Usage non anormal du service.</li>
-    </ul>
-
-    <h3>3. Modalités</h3>
-    <p>Demande par ticket Discord. Remboursement sous <strong>14 jours ouvrés</strong> sur le moyen de paiement initial (PayPal ou crypto).</p>
-
-    <h3>4. Exclusions</h3>
-    <ul>
-      <li>Renouvellements ;</li>
-      <li>Configurations sur mesure ;</li>
-      <li>Services consommés au-delà du 1er mois ;</li>
-      <li>Frais de setup ;</li>
-      <li>Services suspendus pour violation.</li>
-    </ul>
-
-    <h3>5. Droit de rétractation</h3>
-    <p>Conformément à l'article <strong>L.221-28</strong>, pas de rétractation pour services pleinement exécutés. Garantie commerciale 7 jours plus favorable.</p>
-
-    <h3>6. Litiges</h3>
-    <p>Solution amiable prioritaire. Sinon médiateur de la consommation ou tribunaux français.</p>
-  `},
-
-  resiliation: { label:'Politique de résiliation', title:'Politique de résiliation', body:`
-    <h3>1. Sans engagement</h3>
-    <p>Résiliation à tout moment, sans pénalité.</p>
-
-    <h3>2. Modalités</h3>
-    <p>Ticket Discord ou tout autre moyen écrit accepté par le support.</p>
-
-    <h3>3. Prise d'effet</h3>
-    <p>Fin de la période de facturation en cours. Pas de remboursement au prorata (sauf garantie 7 jours).</p>
-
-    <h3>4. Conservation des données</h3>
-    <p>Conservées <strong>7 jours</strong> puis supprimées définitivement. Exportez avant.</p>
-
-    <h3>5. Résiliation par GO CENTER</h3>
-    <p>Possible sans indemnité en cas de violation CGV/CGU, non-paiement, usage illicite, ou réquisition judiciaire.</p>
-
-    <h3>6. Restitution matériel</h3>
-    <p>Services avec matériel physique : restitution aux frais du Client.</p>
-  `},
-
-  sla: { label:'SLA / Disponibilité', title:'SLA — Niveau de service', body:`
-    <h3>1. Engagement</h3>
-    <ul>
-      <li><strong>99,9 %</strong> — serveurs dédiés & Cloud Storage standards ;</li>
-      <li><strong>99,95 %</strong> — offres Pro et supérieures.</li>
-    </ul>
-
-    <h3>2. Exclusions</h3>
-    <ul>
-      <li>Maintenance notifiée 48h avant ;</li>
-      <li>Indisponibilités imputables au Client ;</li>
-      <li>Force majeure ;</li>
-      <li>Pannes d'opérateurs tiers ;</li>
-      <li>Suspensions pour violation.</li>
-    </ul>
-
-    <h3>3. Compensation</h3>
-    <ul>
-      <li>99,0–99,9 % : <strong>10 %</strong> ;</li>
-      <li>95,0–99,0 % : <strong>25 %</strong> ;</li>
-      <li>&lt; 95,0 % : <strong>50 %</strong>.</li>
-    </ul>
-    <p>Demande dans les 30 jours, via ticket Discord. Plafond 50% du montant mensuel.</p>
-
-    <h3>4. Support 24/7 Discord</h3>
-    <ul>
-      <li>Standard : sous 4h ouvrées ;</li>
-      <li>Pro : sous 1h ;</li>
-      <li>Entreprise : sous 30 min.</li>
-    </ul>
-
-    <h3>5. Maintenance planifiée</h3>
-    <p>Annoncée 48h à l'avance sur Discord.</p>
-
-    <h3>6. Protection anti-DDoS</h3>
-    <p>Cloudflare L3/L4/L7 + WAF + rate limiting + Turnstile anti-bot + <strong>anti-DDoS applicatif intégré</strong> (rate limiting IP, honeypot, blocage scanners).</p>
-
-    <h3>7. Sauvegardes</h3>
-    <p>Quotidiennes (rétention 7 jours) standards, toutes les 6h (rétention 30 jours) Pro+.</p>
-  `}
-};
-
-const overlay = document.getElementById('legal-overlay');
-const modalTitle = document.getElementById('legal-title');
-const modalLabel = document.getElementById('legal-label');
-const modalBody = document.getElementById('legal-body');
-const modalUpd = document.getElementById('legal-updated');
-const closeBtn = document.getElementById('legal-close-btn');
-
-function openLegal(key){
-  const doc = LEGAL[key];
-  if(!doc) return;
-  modalLabel.textContent = doc.label;
-  modalTitle.textContent = doc.title;
-  modalBody.innerHTML = doc.body;
-  modalUpd.textContent = 'Dernière mise à jour : 7 octobre 2026';
-  overlay.classList.add('on');
-  document.body.style.overflow = 'hidden';
-  modalBody.scrollTop = 0;
-}
-
-function closeLegal(){
-  overlay.classList.remove('on');
-  document.body.style.overflow = '';
-}
-
-document.querySelectorAll('[data-legal]').forEach(el => {
-  el.addEventListener('click', (e) => {
-    e.preventDefault();
-    openLegal(el.dataset.legal);
-  });
+app.listen(PORT, () => {
+  console.log(`🚀 GO CENTER démarré sur le port ${PORT}`);
+  console.log(`   TURNSTILE_SITE_KEY   : ${process.env.TURNSTILE_SITE_KEY   ? '✓' : '✗ MANQUANT'}`);
+  console.log(`   TURNSTILE_SECRET_KEY : ${process.env.TURNSTILE_SECRET_KEY ? '✓' : '✗ MANQUANT'}`);
+  console.log(`   DISCORD_URL          : ${process.env.DISCORD_URL          ? '✓' : '✗ MANQUANT'}`);
+  console.log(`   Anti-DDoS            : ✓ actif (${DDOS_CONFIG.MAX_REQUESTS} req/min max)`);
 });
-
-closeBtn.addEventListener('click', closeLegal);
-overlay.addEventListener('click', (e) => { if(e.target === overlay) closeLegal(); });
-document.addEventListener('keydown', (e) => {
-  if(e.key === 'Escape' && overlay.classList.contains('on')) closeLegal();
-});
-</script>
-</body>
-</html>
