@@ -37,30 +37,33 @@ svg{display:block}
 .gate-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);pointer-events:none}
 .gate-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:820px;height:820px;background:radial-gradient(circle,rgba(124,58,237,.24),transparent 62%);pointer-events:none;animation:pulseGlow 5s ease-in-out infinite}
 @keyframes pulseGlow{0%,100%{opacity:.8;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
-.gate-card{position:relative;background:linear-gradient(180deg,#101014 0%,#08080a 100%);border:1px solid rgba(124,58,237,.28);border-radius:var(--r-2xl);max-width:520px;width:100%;padding:44px 44px 36px;text-align:center;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 40px 100px rgba(124,58,237,.28),0 0 90px rgba(124,58,237,.14);animation:gateIn .6s cubic-bezier(.4,0,.2,1) both}
+.gate-card{position:relative;background:linear-gradient(180deg,#101014 0%,#08080a 100%);border:1px solid rgba(124,58,237,.28);border-radius:var(--r-2xl);max-width:520px;width:100%;padding:38px 44px 30px;text-align:center;overflow:visible;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 40px 100px rgba(124,58,237,.28),0 0 90px rgba(124,58,237,.14);animation:gateIn .6s cubic-bezier(.4,0,.2,1) both}
 @keyframes gateIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
-.gate-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg, transparent 0deg, rgba(124,58,237,.10) 90deg, transparent 180deg, rgba(167,139,250,.10) 270deg, transparent 360deg);animation:rotateGlow 14s linear infinite;pointer-events:none;z-index:0}
+.gate-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg, transparent 0deg, rgba(124,58,237,.10) 90deg, transparent 180deg, rgba(167,139,250,.10) 270deg, transparent 360deg);animation:rotateGlow 14s linear infinite;pointer-events:none;z-index:0;border-radius:var(--r-2xl)}
 @keyframes rotateGlow{to{transform:rotate(360deg)}}
 .gate-card > *{position:relative;z-index:1}
-.gate-logo{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:26px}
+.gate-logo{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:22px}
 .gate-logo svg{width:34px;height:34px}
-.gate-shield{width:76px;height:76px;margin:0 auto 22px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(124,58,237,.32),rgba(124,58,237,.08));border:1px solid rgba(167,139,250,.45);border-radius:24px;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 10px 28px rgba(124,58,237,.35);animation:shieldFloat 3s ease-in-out infinite}
+.gate-shield{width:72px;height:72px;margin:0 auto 20px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(124,58,237,.32),rgba(124,58,237,.08));border:1px solid rgba(167,139,250,.45);border-radius:24px;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 10px 28px rgba(124,58,237,.35);animation:shieldFloat 3s ease-in-out infinite}
 @keyframes shieldFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.gate-shield svg{width:36px;height:36px;color:#c4b5fd}
-.gate-card h1{font-size:clamp(23px,3.3vw,28px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin-bottom:12px;background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.gate-card p{font-size:.93rem;color:#a1a1aa;line-height:1.55;margin-bottom:18px;max-width:380px;margin-left:auto;margin-right:auto}
+.gate-shield svg{width:34px;height:34px;color:#c4b5fd}
+.gate-card h1{font-size:clamp(22px,3.2vw,27px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gate-card p{font-size:.92rem;color:#a1a1aa;line-height:1.55;margin-bottom:6px;max-width:380px;margin-left:auto;margin-right:auto}
 .gate-card p strong{color:#fff;font-weight:600}
 
-/* CAPTCHA — taille normal, remonté un peu */
-.cf-wrap{display:flex;justify-content:center;align-items:center;margin:-10px auto 22px;padding:16px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:var(--r-lg);width:100%;max-width:400px;min-height:94px;overflow:visible;box-shadow:0 6px 26px rgba(124,58,237,.14)}
+/* CAPTCHA — premier plan, collé sous la description */
+.cf-wrap{display:flex;justify-content:center;align-items:center;margin:-30px auto 0;padding:12px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:var(--r-lg);width:100%;max-width:380px;min-height:86px;overflow:visible;position:relative;z-index:5;box-shadow:0 6px 26px rgba(124,58,237,.14)}
 .cf-wrap iframe{border-radius:var(--r-sm) !important;display:block;max-width:100%}
-.cf-turnstile{border-radius:var(--r-sm);overflow:hidden;display:flex;justify-content:center}
+.cf-turnstile{border-radius:var(--r-sm);overflow:hidden;display:flex;justify-content:center;position:relative;z-index:6}
 
-.gate-status{display:flex;align-items:center;justify-content:center;gap:10px;font-size:.8rem;color:#71717a;padding-top:18px;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
+/* Trait séparateur après le captcha */
+.gate-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,.5),transparent);margin:20px 0 16px}
+
+.gate-status{display:flex;align-items:center;justify-content:center;gap:10px;font-size:.78rem;color:#71717a;flex-wrap:wrap}
 .gate-status > svg{width:14px;height:14px;color:#4ade80;flex-shrink:0}
 .gate-status .cf-brand{display:inline-flex;align-items:center;gap:6px;color:#f97316;font-weight:600}
 .gate-status .cf-brand svg{width:14px;height:14px;color:#f97316}
-.gate-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);padding:16px 20px;border-radius:var(--r-md);color:#fca5a5;font-size:.85rem;line-height:1.5;margin-bottom:24px}
+.gate-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);padding:16px 20px;border-radius:var(--r-md);color:#fca5a5;font-size:.85rem;line-height:1.5;margin-top:18px}
 
 body.gate-active{overflow:hidden}
 body.gate-active main,
@@ -186,10 +189,18 @@ body.gate-active > #top-banner{visibility:hidden}
 .fw-item{width:76px;height:76px;flex-shrink:0;display:grid;place-items:center;border-radius:20px;background:#fff;transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;box-shadow:0 6px 20px rgba(0,0,0,.45)}
 .fw-item:hover{transform:translateY(-5px) scale(1.06);box-shadow:0 14px 32px rgba(124,58,237,.35);z-index:2}
 .fw-item img{width:40px;height:40px;object-fit:contain}
+.fw-item svg{width:40px;height:40px}
 
 /* ============ 4 CARTES ============ */
 .cards-2col{display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:768px){.cards-2col{grid-template-columns:1fr 1fr}}
+/* Disposition irrégulière des 4 grandes cartes */
+@media(min-width:768px){
+  .cards-2col .big-card:nth-child(1){margin-top:0}
+  .cards-2col .big-card:nth-child(2){margin-top:70px}
+  .cards-2col .big-card:nth-child(3){margin-top:-30px}
+  .cards-2col .big-card:nth-child(4){margin-top:40px}
+}
 .big-card{padding:46px 40px;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--card);transition:all .3s;position:relative;overflow:hidden}
 .big-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
 .big-card:hover{background:var(--card-2);border-color:rgba(167,139,250,.28);transform:translateY(-4px)}
@@ -211,9 +222,8 @@ body.gate-active > #top-banner{visibility:hidden}
 .mock-card-mini .row .head{font-size:.62rem;color:#71717a;letter-spacing:.08em;font-weight:600}
 .badge-green{background:rgba(34,197,94,.15);color:#4ade80}
 .badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
-.badge-amber{background:rgba(251,191,36,.15);color:#fbbf24}
 
-/* ============ SÉCURITÉ — avec vrais logos ============ */
+/* ============ SÉCURITÉ — vrais logos ============ */
 .sec-grid{display:grid;grid-template-columns:1fr;gap:32px 24px;margin-top:80px}
 @media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){.sec-grid{grid-template-columns:repeat(3,1fr)}}
@@ -426,6 +436,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 .tech-item:hover{border-color:rgba(167,139,250,.4);background:rgba(124,58,237,.08);transform:translateY(-3px)}
 .tech-item .tech-logo{width:46px;height:46px;display:grid;place-items:center;background:#fff;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.4);overflow:hidden}
 .tech-item .tech-logo img{width:26px;height:26px;object-fit:contain}
+.tech-item .tech-logo svg{width:26px;height:26px}
 .tech-item span{font-size:.76rem;font-weight:500;color:#d4d4d8;text-align:center;letter-spacing:-.005em;line-height:1.3}
 
 @media(max-width:640px){
@@ -452,12 +463,14 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   .big-card{padding:36px 24px}
   .pay-card{padding:28px 24px}
   .footer-bottom{flex-direction:column;text-align:center}
-  .gate-card{padding:36px 20px 28px;border-radius:24px}
-  .cf-wrap{padding:12px;min-height:84px;margin-top:-6px}
+  .gate-card{padding:32px 20px 26px;border-radius:24px}
+  .cf-wrap{padding:10px;min-height:80px;margin-top:-20px}
   .fw-item{width:64px;height:64px;border-radius:16px}
   .fw-item img{width:34px;height:34px}
+  .fw-item svg{width:34px;height:34px}
   .sec-icon{width:48px;height:48px}
   .sec-icon img{width:26px;height:26px}
+  .cards-2col .big-card:nth-child(n){margin-top:0}
 }
 </style>
 </head>
@@ -495,6 +508,8 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
            data-error-callback="onTurnstileError"
            data-expired-callback="onTurnstileExpired"></div>
     </div>
+
+    <div class="gate-divider"></div>
 
     <div class="gate-status">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/></svg>
@@ -660,7 +675,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
               <div class="fw-item"><img src="https://cdn.simpleicons.org/typescript" alt="TypeScript"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/html5" alt="HTML5"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/css3" alt="CSS3"></div>
+              <div class="fw-item"><svg viewBox="0 0 24 24" width="40" height="40" fill="#1572B6" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/sass" alt="Sass"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind"></div>
             </div>
@@ -686,7 +701,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
               <div class="fw-item"><img src="https://cdn.simpleicons.org/typescript" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/javascript" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/html5" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/css3" alt=""></div>
+              <div class="fw-item"><svg viewBox="0 0 24 24" width="40" height="40" fill="#1572B6" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/sass" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/tailwindcss" alt=""></div>
             </div>
@@ -805,7 +820,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= 4 CARTES (avec vrais logos) ================= -->
+<!-- ================= 4 CARTES (disposition irrégulière + vrais logos) ================= -->
 <section class="section">
   <div class="section-inner">
     <h2 class="section-huge">Déployez des serveurs <span class="accent-grad">sans aucune opération</span>.</h2>
@@ -864,7 +879,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= SÉCURITÉ (avec vrais logos) ================= -->
+<!-- ================= SÉCURITÉ (vrais logos) ================= -->
 <section class="section" id="security">
   <div class="section-inner">
     <h2 class="section-huge">Restez sécurisé et résilient par défaut.<br><span class="muted" style="font-size:.6em;display:block;margin-top:16px;letter-spacing:-.03em">Concevoir des produits, pas la conformité.</span></h2>
@@ -1209,7 +1224,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vite" alt="Vite"></div><span>Vite</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript"></div><span>JavaScript</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/html5" alt="HTML5"></div><span>HTML5</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/css3" alt="CSS3"></div><span>CSS3</span></div>
+          <div class="tech-item"><div class="tech-logo"><svg viewBox="0 0 24 24" width="26" height="26" fill="#1572B6"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div><span>CSS3</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/sass" alt="Sass"></div><span>Sass</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind"></div><span>Tailwind</span></div>
         </div>
