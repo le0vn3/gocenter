@@ -35,8 +35,8 @@ const HTML_PATH = path.join(__dirname, 'public', 'index.html');
 // Configuration de la protection
 const DDOS_CONFIG = {
   WINDOW_MS: 60000,              // Fenêtre de 1 minute
-  MAX_REQUESTS: 120,             // Max 120 requêtes/min par IP
-  MAX_CONCURRENT: 30,            // Max 30 connexions simultanées par IP
+  MAX_REQUESTS: 50,             // Max 120 requêtes/min par IP
+  MAX_CONCURRENT: 4,            // Max 30 connexions simultanées par IP
   BLOCK_DURATION_MS: 900000,     // Blocage 15 min si dépassement
   SUSPICIOUS_UA_PATTERNS: [
     /curl/i, /wget/i, /python-requests/i, /scrapy/i,
