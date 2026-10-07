@@ -31,21 +31,20 @@ svg{display:block}
 ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
 ::-webkit-scrollbar-track{background:#000}
 
+/* GPU acceleration — fix bug de reset au scroll rapide */
+.hero-mockup,.marquee-set,.fw-item,.big-card,.sec-card,.mock-bar,.compare-fill,.step,.pay-card,.plan,.carousel-track,.gate-glow{will-change:transform;transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+
 /* ============ SECURITY GATE ============ */
 #security-gate{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease, visibility .5s ease}
 #security-gate.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .gate-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);pointer-events:none}
-.gate-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:820px;height:820px;background:radial-gradient(circle,rgba(124,58,237,.24),transparent 62%);pointer-events:none;animation:pulseGlow 5s ease-in-out infinite}
-@keyframes pulseGlow{0%,100%{opacity:.8;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+.gate-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) translateZ(0);width:820px;height:820px;background:radial-gradient(circle,rgba(124,58,237,.24),transparent 62%);pointer-events:none}
 .gate-card{position:relative;background:linear-gradient(180deg,#101014 0%,#08080a 100%);border:1px solid rgba(124,58,237,.28);border-radius:var(--r-2xl);max-width:520px;width:100%;padding:38px 44px 30px;text-align:center;overflow:visible;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 40px 100px rgba(124,58,237,.28),0 0 90px rgba(124,58,237,.14);animation:gateIn .6s cubic-bezier(.4,0,.2,1) both}
 @keyframes gateIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
-.gate-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg, transparent 0deg, rgba(124,58,237,.10) 90deg, transparent 180deg, rgba(167,139,250,.10) 270deg, transparent 360deg);animation:rotateGlow 14s linear infinite;pointer-events:none;z-index:0;border-radius:var(--r-2xl)}
-@keyframes rotateGlow{to{transform:rotate(360deg)}}
 .gate-card > *{position:relative;z-index:1}
 .gate-logo{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:22px}
 .gate-logo svg{width:34px;height:34px}
-.gate-shield{width:72px;height:72px;margin:0 auto 20px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(124,58,237,.32),rgba(124,58,237,.08));border:1px solid rgba(167,139,250,.45);border-radius:24px;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 10px 28px rgba(124,58,237,.35);animation:shieldFloat 3s ease-in-out infinite}
-@keyframes shieldFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.gate-shield{width:72px;height:72px;margin:0 auto 20px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(124,58,237,.32),rgba(124,58,237,.08));border:1px solid rgba(167,139,250,.45);border-radius:24px;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 10px 28px rgba(124,58,237,.35)}
 .gate-shield svg{width:34px;height:34px;color:#c4b5fd}
 .gate-card h1{font-size:clamp(22px,3.2vw,27px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .gate-card p{font-size:.92rem;color:#a1a1aa;line-height:1.55;margin-bottom:6px;max-width:380px;margin-left:auto;margin-right:auto}
@@ -114,8 +113,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .pay-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;font-size:.76rem;font-weight:600;border:1px solid var(--line);border-radius:var(--r-sm);background:rgba(255,255,255,.025);transition:all .2s}
 .pay-badge:hover{border-color:rgba(167,139,250,.4);background:rgba(124,58,237,.1);transform:translateY(-2px)}
 .pay-badge svg{width:15px;height:15px;flex-shrink:0}
-.hero-mockup{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 40px 90px rgba(124,58,237,.16), 0 0 0 1px rgba(255,255,255,.02);animation:floatMock 6s ease-in-out infinite}
-@keyframes floatMock{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero-mockup{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 40px 90px rgba(124,58,237,.16), 0 0 0 1px rgba(255,255,255,.02)}
 .mock-terminal{background:#0a0a0c;padding:15px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem}
 .mock-terminal .dot{width:11px;height:11px;border-radius:50%}
 .mock-terminal .dot.r{background:#ff5f57}
@@ -184,14 +182,14 @@ body.gate-active > #top-banner{visibility:hidden}
 .marquee-set{display:flex;gap:14px;flex-shrink:0}
 .marquee-row.ltr .marquee-set{animation:scrollLeft 50s linear infinite}
 .marquee-row.rtl .marquee-set{animation:scrollRight 50s linear infinite}
-@keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-100%)}}
-@keyframes scrollRight{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+@keyframes scrollLeft{from{transform:translate3d(0,0,0)}to{transform:translate3d(-100%,0,0)}}
+@keyframes scrollRight{from{transform:translate3d(-100%,0,0)}to{transform:translate3d(0,0,0)}}
 .fw-item{width:76px;height:76px;flex-shrink:0;display:grid;place-items:center;border-radius:20px;background:#fff;transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;box-shadow:0 6px 20px rgba(0,0,0,.45)}
 .fw-item:hover{transform:translateY(-5px) scale(1.06);box-shadow:0 14px 32px rgba(124,58,237,.35);z-index:2}
 .fw-item img{width:40px;height:40px;object-fit:contain}
 .fw-item svg{width:40px;height:40px}
 
-/* ============ 4 CARTES (2 colonnes décalées, sans chevauchement) ============ */
+/* ============ 4 CARTES (2 colonnes décalées) ============ */
 .cards-2col{display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:768px){
   .cards-2col{grid-template-columns:1fr 1fr;gap:20px;align-items:start}
@@ -202,18 +200,15 @@ body.gate-active > #top-banner{visibility:hidden}
   .cards-col-a .big-card:nth-child(2){margin-top:20px}
   .cards-col-b .big-card:nth-child(2){margin-top:40px}
 }
-
-.big-card{padding:46px 40px;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--card);transition:all .3s;position:relative;overflow:hidden}
+.big-card{padding:46px 40px;border:1px solid var(--line);border-radius:var(--r-xl);background:var(--card);transition:background .3s,border-color .3s;position:relative;overflow:hidden}
 .big-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
-.big-card:hover{background:var(--card-2);border-color:rgba(167,139,250,.28);transform:translateY(-4px)}
+.big-card:hover{background:var(--card-2);border-color:rgba(167,139,250,.28)}
 .big-card:hover::before{opacity:1}
 .big-card h3{font-size:clamp(24px,2.6vw,36px);font-weight:600;letter-spacing:-.035em;line-height:1.1;margin-bottom:22px;color:#fff}
 .big-card p{font-size:.95rem;color:#a1a1aa;line-height:1.6;margin-bottom:22px}
 .big-card .btn-link{color:#a78bfa;font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:7px;transition:gap .2s}
 .big-card .btn-link:hover{gap:11px}
 .big-card .btn-link svg{width:13px;height:13px}
-
-/* Maquette interne des grandes cartes avec vrais logos */
 .mock-card-mini{margin-top:28px;border:1px solid rgba(255,255,255,.07);border-radius:var(--r-md);background:#08080a;padding:14px;font-family:'SF Mono',Menlo,monospace;font-size:.73rem}
 .mock-card-mini .row{display:flex;align-items:center;gap:10px;padding:8px 4px;color:#a1a1aa}
 .mock-card-mini .row + .row{border-top:1px solid rgba(255,255,255,.04)}
@@ -225,12 +220,12 @@ body.gate-active > #top-banner{visibility:hidden}
 .badge-green{background:rgba(34,197,94,.15);color:#4ade80}
 .badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
 
-/* ============ SÉCURITÉ — vrais logos ============ */
+/* ============ SÉCURITÉ ============ */
 .sec-grid{display:grid;grid-template-columns:1fr;gap:32px 24px;margin-top:80px}
 @media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){.sec-grid{grid-template-columns:repeat(3,1fr)}}
-.sec-card{display:flex;flex-direction:column;gap:18px;padding:32px 28px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);transition:all .3s}
-.sec-card:hover{background:var(--card-2);border-color:rgba(167,139,250,.25);transform:translateY(-4px)}
+.sec-card{display:flex;flex-direction:column;gap:18px;padding:32px 28px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);transition:background .3s,border-color .3s}
+.sec-card:hover{background:var(--card-2);border-color:rgba(167,139,250,.25)}
 .sec-icon{width:56px;height:56px;background:#fff;display:grid;place-items:center;border-radius:var(--r-md);position:relative;box-shadow:0 8px 22px rgba(0,0,0,.5);overflow:hidden;transition:transform .3s}
 .sec-card:hover .sec-icon{transform:scale(1.06) rotate(-3deg)}
 .sec-icon img{width:30px;height:30px;object-fit:contain}
@@ -255,8 +250,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .tab .tab-sub{font-size:.74rem;opacity:.7}
 .tab.on .tab-sub{opacity:.6}
 .carousel{position:relative;display:none}
-.carousel.on{display:block;animation:fadeUp .45s cubic-bezier(.4,0,.2,1) both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.carousel.on{display:block}
 .carousel-viewport{overflow:hidden;border:1px solid var(--line);border-radius:var(--r-xl)}
 .carousel-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .carousel-slide{min-width:100%;padding:0}
@@ -299,15 +293,13 @@ body.gate-active > #top-banner{visibility:hidden}
 #compare{padding:100px 24px;background:#000;border-top:1px solid var(--line)}
 .compare-inner{max-width:1400px;margin:0 auto}
 .compare-rows{display:flex;flex-direction:column;gap:14px;margin-top:26px}
-.compare-row{display:grid;grid-template-columns:130px 1fr 110px;gap:24px;align-items:center;padding:18px 20px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);transition:all .3s}
+.compare-row{display:grid;grid-template-columns:130px 1fr 110px;gap:24px;align-items:center;padding:18px 20px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);transition:background .3s}
 .compare-row:hover{background:var(--card-2)}
 .compare-row.gocenter{border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.06);box-shadow:0 8px 30px rgba(124,58,237,.14)}
 .compare-brand{font-size:.95rem;font-weight:500;color:#a1a1aa;display:flex;align-items:center;gap:10px}
 .compare-brand .dot-brand{width:11px;height:11px;border-radius:50%}
 .compare-bar{height:34px;background:rgba(255,255,255,.03);position:relative;overflow:hidden;border-radius:10px}
-.compare-fill{height:100%;transform-origin:left;transition:width 1s cubic-bezier(.4,0,.2,1);border-radius:10px}
-.compare-fill.animated{animation:barGrow 1.2s cubic-bezier(.4,0,.2,1) both}
-@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.compare-fill{height:100%;border-radius:10px}
 .compare-row.gocenter .compare-brand{color:#fff;font-weight:600}
 .compare-price{font-size:1.1rem;font-weight:600;color:#fff;text-align:right;font-family:'SF Mono',Menlo,monospace;letter-spacing:-.02em}
 .compare-row.gocenter .compare-price{color:#a78bfa}
@@ -326,9 +318,9 @@ body.gate-active > #top-banner{visibility:hidden}
 .pay-grid{display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:600px){.pay-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){.pay-grid{max-width:880px;margin:0 auto}}
-.pay-card{padding:40px 36px;border:1px solid var(--line);background:var(--card);border-radius:var(--r-xl);display:flex;flex-direction:column;gap:18px;transition:all .3s;position:relative;overflow:hidden}
+.pay-card{padding:40px 36px;border:1px solid var(--line);background:var(--card);border-radius:var(--r-xl);display:flex;flex-direction:column;gap:18px;transition:background .3s,border-color .3s;position:relative;overflow:hidden}
 .pay-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
-.pay-card:hover{border-color:rgba(167,139,250,.3);background:var(--card-2);transform:translateY(-5px)}
+.pay-card:hover{border-color:rgba(167,139,250,.3);background:var(--card-2)}
 .pay-card:hover::before{opacity:1}
 .pay-icon{width:66px;height:66px;border-radius:var(--r-lg);display:grid;place-items:center;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);transition:all .3s}
 .pay-card:hover .pay-icon{background:rgba(124,58,237,.2);border-color:rgba(167,139,250,.5);transform:scale(1.05)}
@@ -356,7 +348,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .faq-header .faq-desc{color:#a1a1aa;font-size:.95rem;max-width:380px;line-height:1.6;padding-bottom:8px}
 .faq-header .faq-desc a{color:#a78bfa;border-bottom:1px solid rgba(167,139,250,.4)}
 .faq-list{display:flex;flex-direction:column;gap:12px}
-.faq-item{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);transition:all .3s;overflow:hidden}
+.faq-item{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);transition:border-color .3s,background .3s;overflow:hidden}
 .faq-item:hover{border-color:rgba(255,255,255,.16)}
 .faq-item.open{border-color:rgba(167,139,250,.4);background:var(--card-2);box-shadow:0 10px 34px rgba(124,58,237,.14)}
 .faq-q{padding:28px 30px;font-size:clamp(18px,2vw,23px);font-weight:500;letter-spacing:-.02em;color:#fff;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;width:100%;text-align:left;transition:color .2s;line-height:1.3}
@@ -595,7 +587,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= 3 ÉTAPES (QUINCONCE) ================= -->
+<!-- ================= 3 ÉTAPES ================= -->
 <section class="section" id="features">
   <div class="section-inner">
     <h2 class="section-huge">Clique, clique, terminé.</h2>
@@ -821,15 +813,13 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= 4 CARTES (2 colonnes décalées, sans chevauchement) ================= -->
+<!-- ================= 4 CARTES ================= -->
 <section class="section">
   <div class="section-inner">
     <h2 class="section-huge">Déployez des serveurs <span class="accent-grad">sans aucune opération</span>.</h2>
     <div class="cards-2col">
 
-      <!-- Colonne gauche -->
       <div class="cards-col cards-col-a">
-
         <div class="big-card">
           <h3>Hébergement intuitif et réseau privé pour vos services web</h3>
           <p>Déployez en un clic vos serveurs web, bases de données, tâches cron et flux de travail. Réseau privé inclus.</p>
@@ -851,12 +841,9 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
             <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/docker" alt="Docker"></span><span class="lbl">512 GO DE RAM</span></div>
           </div>
         </div>
-
       </div>
 
-      <!-- Colonne droite (décalée vers le bas) -->
       <div class="cards-col cards-col-b">
-
         <div class="big-card">
           <h3>Aperçus complets pour chaque demande de fusion</h3>
           <p>Itérez rapidement grâce à des aperçus éphémères de l'architecture complète de votre application pour chaque modification.</p>
@@ -879,55 +866,47 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
             <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></span><span class="lbl">réplication 3 zones</span><span class="badge badge-purple">● Sync</span></div>
           </div>
         </div>
-
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ================= SÉCURITÉ (vrais logos) ================= -->
+<!-- ================= SÉCURITÉ ================= -->
 <section class="section" id="security">
   <div class="section-inner">
     <h2 class="section-huge">Restez sécurisé et résilient par défaut.<br><span class="muted" style="font-size:.6em;display:block;margin-top:16px;letter-spacing:-.03em">Concevoir des produits, pas la conformité.</span></h2>
     <div class="sec-grid">
-
       <div class="sec-card">
         <div class="sec-icon"><img src="https://cdn.simpleicons.org/wireguard" alt="WireGuard"></div>
         <h3>Réseautage privé</h3>
         <p>Sécurisez le trafic interne hors d'Internet public sans la complexité d'un VPC.</p>
       </div>
-
       <div class="sec-card">
         <div class="sec-icon"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></div>
         <h3>Protection DDoS intégrée</h3>
         <p>Protégez tous vos services contre les attaques sans configuration ni modules complémentaires.</p>
       </div>
-
       <div class="sec-card">
         <div class="sec-icon"><img src="https://cdn.simpleicons.org/letsencrypt" alt="Let's Encrypt"></div>
         <h3>Conformité gérée</h3>
         <p>Répondez aux exigences des normes SOC 2 Type 2, HIPAA, ISO 27001 et RGPD sans frais supplémentaires.</p>
       </div>
-
       <div class="sec-card">
         <div class="sec-icon"><img src="https://cdn.simpleicons.org/grafana" alt="Grafana"></div>
         <h3>Contrôles d'audit</h3>
         <p>Journalisation et surveillance intégrées des audits pour les événements de la plateforme.</p>
       </div>
-
       <div class="sec-card">
         <div class="sec-icon"><img src="https://cdn.simpleicons.org/hashicorp" alt="HashiCorp Vault"></div>
         <h3>Chiffrement au repos</h3>
         <p>Chiffrement AES-256 pour le stockage objet, les bases de données, les sauvegardes et les secrets.</p>
       </div>
-
       <div class="sec-card">
         <div class="sec-icon"><img src="https://cdn.simpleicons.org/auth0" alt="Auth0"></div>
         <h3>Identification unique de l'utilisateur</h3>
         <p>Contrôlez les services et les ressources grâce au contrôle d'accès basé sur les rôles.</p>
       </div>
-
     </div>
   </div>
 </section>
@@ -1362,7 +1341,7 @@ function createCarousel(id, offers){
   let currentIndex = 0;
   track.innerHTML = offers.map(function(o){ return '<div class="carousel-slide">' + buildPlan(o) + '</div>'; }).join('');
   function render(){
-    track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+    track.style.transform = 'translate3d(-' + (currentIndex * 100) + '%,0,0)';
     dotsEl.innerHTML = offers.map(function(_, i){ return '<button class="dot ' + (i === currentIndex ? 'active' : '') + '" data-index="' + i + '"></button>'; }).join('');
     counterEl.innerHTML = '<strong>' + String(currentIndex + 1).padStart(2, '0') + '</strong> / ' + String(offers.length).padStart(2, '0');
     dotsEl.querySelectorAll('.dot').forEach(function(dot){
@@ -1400,7 +1379,7 @@ createCarousel('cs', CS_OFFERS);
   });
 })();
 
-/* COMPARE */
+/* COMPARE — barres statiques, pas d'animation pour éviter les bugs au scroll */
 const COMPARE_SRV = [
   { brand:'GO CENTER', price:40.99, color:'#7c3aed', self:true },
   { brand:'Hetzner',   price:49.00, color:'#d50c2d' },
@@ -1420,28 +1399,11 @@ function renderCompare(id, data){
   if(!wrap) return;
   const max = Math.max.apply(null, data.map(function(d){ return d.price; }));
   wrap.innerHTML = data.map(function(d){
-    return '<div class="compare-row' + (d.self ? ' gocenter' : '') + '"><div class="compare-brand"><span class="dot-brand" style="background:' + d.color + '"></span>' + d.brand + '</div><div class="compare-bar"><div class="compare-fill" style="width:' + ((d.price / max) * 100) + '%;background:' + (d.self ? 'linear-gradient(90deg,#7c3aed,#a78bfa)' : d.color) + ';"></div></div><div class="compare-price">' + d.price.toFixed(2).replace('.', ',') + '€</div></div>';
+    return '<div class="compare-row' + (d.self ? ' gocenter' : '') + '"><div class="compare-brand"><span class="dot-brand" style="background:' + d.color + '"></span>' + d.brand + '</div><div class="compare-bar"><div class="compare-fill" style="width:' + ((d.price / max) * 100) + '%;background:' + (d.self ? 'linear-gradient(90deg,#7c3aed,#a78bfa)' : d.color) + ';transform:translateZ(0)"></div></div><div class="compare-price">' + d.price.toFixed(2).replace('.', ',') + '€</div></div>';
   }).join('');
 }
 renderCompare('compare-srv', COMPARE_SRV);
 renderCompare('compare-cs', COMPARE_CS);
-(function(){
-  let done = false;
-  function trigger(){
-    if(done) return;
-    const section = document.getElementById('compare');
-    if(!section) return;
-    const rect = section.getBoundingClientRect();
-    if(rect.top < window.innerHeight * 0.85 && rect.bottom > 0){
-      done = true;
-      document.querySelectorAll('.compare-fill').forEach(function(el, i){
-        setTimeout(function(){ el.classList.add('animated'); }, i * 80);
-      });
-    }
-  }
-  window.addEventListener('scroll', trigger, { passive: true });
-  trigger();
-})();
 
 /* FAQ */
 document.querySelectorAll('.faq-q').forEach(function(q){
