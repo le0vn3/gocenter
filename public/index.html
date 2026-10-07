@@ -45,7 +45,7 @@ svg{display:block}
 .gate-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);pointer-events:none}
 .gate-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:820px;height:820px;background:radial-gradient(circle,rgba(124,58,237,.24),transparent 62%);pointer-events:none;animation:pulseGlow 5s ease-in-out infinite}
 @keyframes pulseGlow{0%,100%{opacity:.8;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
-.gate-card{position:relative;background:linear-gradient(180deg,#101014 0%,#08080a 100%);border:1px solid rgba(124,58,237,.28);border-radius:var(--r-2xl);max-width:540px;width:100%;padding:54px 46px 42px;text-align:center;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 40px 100px rgba(124,58,237,.28),0 0 90px rgba(124,58,237,.14);animation:gateIn .6s cubic-bezier(.4,0,.2,1) both}
+.gate-card{position:relative;background:linear-gradient(180deg,#101014 0%,#08080a 100%);border:1px solid rgba(124,58,237,.28);border-radius:var(--r-2xl);max-width:580px;width:100%;padding:54px 46px 42px;text-align:center;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 40px 100px rgba(124,58,237,.28),0 0 90px rgba(124,58,237,.14);animation:gateIn .6s cubic-bezier(.4,0,.2,1) both}
 @keyframes gateIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .gate-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg, transparent 0deg, rgba(124,58,237,.10) 90deg, transparent 180deg, rgba(167,139,250,.10) 270deg, transparent 360deg);animation:rotateGlow 14s linear infinite;pointer-events:none;z-index:0}
 @keyframes rotateGlow{to{transform:rotate(360deg)}}
@@ -56,18 +56,20 @@ svg{display:block}
 @keyframes shieldFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 .gate-shield svg{width:40px;height:40px;color:#c4b5fd}
 .gate-card h1{font-size:clamp(24px,3.5vw,30px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin-bottom:14px;background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.gate-card p{font-size:.95rem;color:#a1a1aa;line-height:1.6;margin-bottom:30px;max-width:380px;margin-left:auto;margin-right:auto}
+.gate-card p{font-size:.95rem;color:#a1a1aa;line-height:1.6;margin-bottom:30px;max-width:400px;margin-left:auto;margin-right:auto}
 .gate-card p strong{color:#fff;font-weight:600}
-.cf-wrap{display:flex;justify-content:center;margin:0 auto 24px;padding:14px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:var(--r-lg);width:fit-content;overflow:hidden;box-shadow:0 4px 22px rgba(124,58,237,.14)}
-.cf-wrap iframe{border-radius:var(--r-sm) !important;display:block}
-.cf-turnstile{border-radius:var(--r-sm);overflow:hidden}
+
+/* CAPTCHA — plus grand, plus respirant, jamais coupé */
+.cf-wrap{display:flex;justify-content:center;align-items:center;margin:0 auto 26px;padding:20px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:var(--r-lg);width:100%;max-width:440px;min-height:110px;overflow:visible;box-shadow:0 6px 26px rgba(124,58,237,.14)}
+.cf-wrap iframe{border-radius:var(--r-sm) !important;display:block;max-width:100%}
+.cf-turnstile{border-radius:var(--r-sm);overflow:hidden;min-width:300px;display:flex;justify-content:center}
+
 .gate-status{display:flex;align-items:center;justify-content:center;gap:10px;font-size:.8rem;color:#71717a;padding-top:22px;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap}
 .gate-status > svg{width:14px;height:14px;color:#4ade80;flex-shrink:0}
 .gate-status .cf-brand{display:inline-flex;align-items:center;gap:6px;color:#f97316;font-weight:600}
 .gate-status .cf-brand svg{width:14px;height:14px;color:#f97316}
 .gate-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);padding:16px 20px;border-radius:var(--r-md);color:#fca5a5;font-size:.85rem;line-height:1.5;margin-bottom:24px}
 
-/* Masque le contenu tant que le gate est actif */
 body.gate-active{overflow:hidden}
 body.gate-active main,
 body.gate-active > header,
@@ -147,10 +149,14 @@ body.gate-active > #top-banner{visibility:hidden}
 .section-huge .muted{color:#71717a}
 .section-huge .accent-grad{background:linear-gradient(90deg,#7c3aed,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* ============ 3 ÉTAPES ============ */
-.steps-grid{display:grid;grid-template-columns:1fr;gap:40px;margin-top:80px}
-@media(min-width:768px){.steps-grid{grid-template-columns:repeat(3,1fr);gap:32px}}
-.step{display:flex;flex-direction:column;gap:18px}
+/* ============ 3 ÉTAPES — EN QUINCONCE ============ */
+.steps-grid{display:grid;grid-template-columns:1fr;gap:40px;margin-top:80px;align-items:start}
+@media(min-width:768px){
+  .steps-grid{grid-template-columns:repeat(3,1fr);gap:36px;align-items:start}
+  .step:nth-child(2){margin-top:80px}
+}
+.step{display:flex;flex-direction:column;gap:18px;transition:transform .3s}
+.step:hover{transform:translateY(-4px)}
 .step-num{width:46px;height:46px;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;display:grid;place-items:center;font-size:1.05rem;font-weight:700;border-radius:var(--r-md);box-shadow:0 8px 24px rgba(124,58,237,.35)}
 .step h3{font-size:clamp(22px,2.2vw,30px);font-weight:600;letter-spacing:-.03em;line-height:1.1;color:#fff}
 .step p{font-size:.95rem;color:#a1a1aa;line-height:1.55;letter-spacing:-.005em}
@@ -181,8 +187,8 @@ body.gate-active > #top-banner{visibility:hidden}
 .marquee-row{display:flex;width:max-content;gap:14px;margin-bottom:14px}
 .marquee-row:last-child{margin-bottom:0}
 .marquee-set{display:flex;gap:14px;flex-shrink:0}
-.marquee-row.ltr .marquee-set{animation:scrollLeft 45s linear infinite}
-.marquee-row.rtl .marquee-set{animation:scrollRight 45s linear infinite}
+.marquee-row.ltr .marquee-set{animation:scrollLeft 50s linear infinite}
+.marquee-row.rtl .marquee-set{animation:scrollRight 50s linear infinite}
 @keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 @keyframes scrollRight{from{transform:translateX(-100%)}to{transform:translateX(0)}}
 .fw-item{width:76px;height:76px;flex-shrink:0;display:grid;place-items:center;border-radius:20px;background:#fff;transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;box-shadow:0 6px 20px rgba(0,0,0,.45)}
@@ -385,12 +391,12 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 .footer-cf:hover{color:#f97316}
 .footer-cf svg{width:14px;height:14px;color:#f97316}
 
-/* ============ MODALES (légale + tech) ============ */
+/* ============ MODALES ============ */
 #legal-overlay,#tech-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
 #legal-overlay.on,#tech-overlay.on{display:flex;animation:fadeIn .2s ease both}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 #legal-modal,#tech-modal{background:var(--card);border:1px solid rgba(255,255,255,.1);max-width:860px;width:100%;position:relative;padding:54px 54px 46px;border-radius:var(--r-2xl);box-shadow:0 40px 100px rgba(124,58,237,.22);animation:slideUp .3s cubic-bezier(.4,0,.2,1) both}
-#tech-modal{max-width:960px}
+#tech-modal{max-width:1000px}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 #legal-modal .legal-label,#tech-modal .legal-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:#a78bfa;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:10px}
 #legal-modal .legal-label::before,#tech-modal .legal-label::before{content:'';width:24px;height:1px;background:#a78bfa}
@@ -412,7 +418,6 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 .legal-close:hover{background:#7c3aed;border-color:#7c3aed;transform:rotate(90deg)}
 .legal-close svg{width:16px;height:16px}
 
-/* ============ MODALE TECH ============ */
 #tech-modal .tech-body{max-height:64vh;overflow-y:auto;padding-right:14px}
 .tech-category{margin-bottom:38px}
 .tech-category:last-child{margin-bottom:0}
@@ -450,7 +455,8 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   .big-card{padding:36px 24px}
   .pay-card{padding:28px 24px}
   .footer-bottom{flex-direction:column;text-align:center}
-  .gate-card{padding:42px 24px 32px}
+  .gate-card{padding:42px 22px 32px;border-radius:26px}
+  .cf-wrap{padding:16px;min-height:96px}
   .fw-item{width:64px;height:64px;border-radius:16px}
   .fw-item img{width:34px;height:34px}
 }
@@ -485,7 +491,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
       <div class="cf-turnstile"
            data-sitekey="__TURNSTILE_SITE_KEY__"
            data-theme="dark"
-           data-size="flexible"
+           data-size="normal"
            data-callback="onTurnstileSuccess"
            data-error-callback="onTurnstileError"
            data-expired-callback="onTurnstileExpired"></div>
@@ -574,7 +580,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= 3 ÉTAPES ================= -->
+<!-- ================= 3 ÉTAPES (QUINCONCE) ================= -->
 <section class="section" id="features">
   <div class="section-inner">
     <h2 class="section-huge">Clique, clique, terminé.</h2>
@@ -621,7 +627,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= LOGOS ================= -->
+<!-- ================= LOGOS (3 RANGÉES, 60+ LOGOS) ================= -->
 <section class="section">
   <div class="section-inner">
     <div class="split-grid">
@@ -632,6 +638,8 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
       </div>
       <div class="split-visual">
         <div class="marquee-wrap">
+
+          <!-- RANGÉE 1 — LTR -->
           <div class="marquee-row ltr">
             <div class="marquee-set">
               <div class="fw-item"><img src="https://cdn.simpleicons.org/github" alt="GitHub"></div>
@@ -652,6 +660,12 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
               <div class="fw-item"><img src="https://cdn.simpleicons.org/angular" alt="Angular"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/php" alt="PHP"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/openjdk" alt="Java"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/typescript" alt="TypeScript"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/html5" alt="HTML5"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/css3" alt="CSS3"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/sass" alt="Sass"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind"></div>
             </div>
             <div class="marquee-set" aria-hidden="true">
               <div class="fw-item"><img src="https://cdn.simpleicons.org/github" alt=""></div>
@@ -672,8 +686,16 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
               <div class="fw-item"><img src="https://cdn.simpleicons.org/angular" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/php" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/openjdk" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/typescript" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/javascript" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/html5" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/css3" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/sass" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/tailwindcss" alt=""></div>
             </div>
           </div>
+
+          <!-- RANGÉE 2 — RTL -->
           <div class="marquee-row rtl">
             <div class="marquee-set">
               <div class="fw-item"><img src="https://cdn.simpleicons.org/ruby" alt="Ruby"></div>
@@ -682,7 +704,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
               <div class="fw-item"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/digitalocean" alt="DigitalOcean"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/linux" alt="Linux"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/archlinux" alt="Arch Linux"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/archlinux" alt="Arch"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/centos" alt="CentOS"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/ansible" alt="Ansible"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/terraform" alt="Terraform"></div>
@@ -694,6 +716,12 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
               <div class="fw-item"><img src="https://cdn.simpleicons.org/apache" alt="Apache"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/caddy" alt="Caddy"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/fedora" alt="Fedora"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/svelte" alt="Svelte"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/astro" alt="Astro"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nuxt" alt="Nuxt"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vite" alt="Vite"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/dotnet" alt=".NET"></div>
             </div>
             <div class="marquee-set" aria-hidden="true">
               <div class="fw-item"><img src="https://cdn.simpleicons.org/ruby" alt=""></div>
@@ -714,8 +742,71 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
               <div class="fw-item"><img src="https://cdn.simpleicons.org/apache" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/caddy" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/fedora" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/svelte" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/astro" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nextdotjs" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nuxt" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vite" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/dotnet" alt=""></div>
             </div>
           </div>
+
+          <!-- RANGÉE 3 — LTR -->
+          <div class="marquee-row ltr">
+            <div class="marquee-set">
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/django" alt="Django"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/flask" alt="Flask"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/fastapi" alt="FastAPI"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/symfony" alt="Symfony"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rails" alt="Rails"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/express" alt="Express"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/spring" alt="Spring"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/kotlin" alt="Kotlin"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/scala" alt="Scala"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/elixir" alt="Elixir"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/haskell" alt="Haskell"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/dart" alt="Dart"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/flutter" alt="Flutter"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/swift" alt="Swift"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/prisma" alt="Prisma"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/mariadb" alt="MariaDB"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/elasticsearch" alt="Elasticsearch"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rabbitmq" alt="RabbitMQ"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/apachekafka" alt="Kafka"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/jenkins" alt="Jenkins"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel"></div>
+            </div>
+            <div class="marquee-set" aria-hidden="true">
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/django" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/flask" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/fastapi" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/laravel" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/symfony" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rails" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/express" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/spring" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/kotlin" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/scala" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/elixir" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/haskell" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/dart" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/flutter" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/swift" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/graphql" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/prisma" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/supabase" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/mariadb" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/elasticsearch" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rabbitmq" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/apachekafka" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/jenkins" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vercel" alt=""></div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -961,7 +1052,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </div>
 
-<!-- ================= MODALE TECH (Afficher les modèles) ================= -->
+<!-- ================= MODALE TECH ================= -->
 <div id="tech-overlay" role="dialog" aria-modal="true">
   <div id="tech-modal">
     <button class="legal-close" id="tech-close-btn" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -996,6 +1087,13 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/ruby" alt="Ruby"></div><span>Ruby</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/bun" alt="Bun"></div><span>Bun</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/deno" alt="Deno"></div><span>Deno</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/typescript" alt="TypeScript"></div><span>TypeScript</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/kotlin" alt="Kotlin"></div><span>Kotlin</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/scala" alt="Scala"></div><span>Scala</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/elixir" alt="Elixir"></div><span>Elixir</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/swift" alt="Swift"></div><span>Swift</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/dart" alt="Dart"></div><span>Dart</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/dotnet" alt=".NET"></div><span>.NET</span></div>
         </div>
       </div>
 
@@ -1014,9 +1112,13 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
         <div class="tech-grid">
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></div><span>PostgreSQL</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL"></div><span>MySQL</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mariadb" alt="MariaDB"></div><span>MariaDB</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mongodb" alt="MongoDB"></div><span>MongoDB</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/redis" alt="Redis"></div><span>Redis</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/sqlite" alt="SQLite"></div><span>SQLite</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/elasticsearch" alt="Elasticsearch"></div><span>Elasticsearch</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase"></div><span>Supabase</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/prisma" alt="Prisma"></div><span>Prisma</span></div>
         </div>
       </div>
 
@@ -1030,12 +1132,25 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
       </div>
 
       <div class="tech-category">
-        <h3>Frameworks front-end</h3>
+        <h3>Frameworks &amp; runtimes web</h3>
         <div class="tech-grid">
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/react" alt="React"></div><span>React</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vuedotjs" alt="Vue.js"></div><span>Vue.js</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/angular" alt="Angular"></div><span>Angular</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/svelte" alt="Svelte"></div><span>Svelte</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/astro" alt="Astro"></div><span>Astro</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js"></div><span>Next.js</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nuxt" alt="Nuxt"></div><span>Nuxt</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/django" alt="Django"></div><span>Django</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/flask" alt="Flask"></div><span>Flask</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/fastapi" alt="FastAPI"></div><span>FastAPI</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel"></div><span>Laravel</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/symfony" alt="Symfony"></div><span>Symfony</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rails" alt="Rails"></div><span>Rails</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/express" alt="Express"></div><span>Express</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/spring" alt="Spring"></div><span>Spring</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/flutter" alt="Flutter"></div><span>Flutter</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL"></div><span>GraphQL</span></div>
         </div>
       </div>
 
@@ -1048,6 +1163,22 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/prometheus" alt="Prometheus"></div><span>Prometheus</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></div><span>Cloudflare</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/digitalocean" alt="DigitalOcean"></div><span>DigitalOcean</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rabbitmq" alt="RabbitMQ"></div><span>RabbitMQ</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/apachekafka" alt="Kafka"></div><span>Kafka</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/jenkins" alt="Jenkins"></div><span>Jenkins</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel"></div><span>Vercel</span></div>
+        </div>
+      </div>
+
+      <div class="tech-category">
+        <h3>Front-end tooling</h3>
+        <div class="tech-grid">
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vite" alt="Vite"></div><span>Vite</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript"></div><span>JavaScript</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/html5" alt="HTML5"></div><span>HTML5</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/css3" alt="CSS3"></div><span>CSS3</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/sass" alt="Sass"></div><span>Sass</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind"></div><span>Tailwind</span></div>
         </div>
       </div>
 
@@ -1057,7 +1188,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 
 <script>
 /* ============================================================
-   CONFIG — injecté par le serveur
+   CONFIG
    ============================================================ */
 const CONFIG = {
   DISCORD_URL: '__DISCORD_URL__',
@@ -1070,7 +1201,7 @@ const CONFIG = {
 };
 
 /* ============================================================
-   ICONS SVG — set d'icônes vectorielles (remplace les emojis)
+   ICONS SVG
    ============================================================ */
 const ICONS = {
   server: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><circle cx="7" cy="7.5" r="1"/><circle cx="7" cy="16.5" r="1"/></svg>',
@@ -1082,9 +1213,7 @@ const ICONS = {
   bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>'
 };
 
-/* ============================================================
-   ANTI-FLOOD client
-   ============================================================ */
+/* ANTI-FLOOD */
 (function antiFloodGuard(){
   const KEY_LOADS = 'gc_page_loads';
   const KEY_BLOCK = 'gc_blocked_until';
@@ -1117,9 +1246,7 @@ const ICONS = {
   }, { passive: true });
 })();
 
-/* ============================================================
-   SECURITY GATE — devant tout le contenu
-   ============================================================ */
+/* SECURITY GATE */
 (function initGate(){
   const gate = document.getElementById('security-gate');
   const verified = sessionStorage.getItem('gc_verified') === 'true';
@@ -1128,7 +1255,6 @@ const ICONS = {
     document.body.classList.remove('gate-active');
     setTimeout(() => { gate.style.display = 'none'; }, 500);
   } else {
-    // Body déjà en .gate-active (dans le HTML) → contenu masqué + scroll bloqué
     document.body.classList.add('gate-active');
   }
 })();
@@ -1161,9 +1287,7 @@ window.onTurnstileError = function(errCode){
 };
 window.onTurnstileExpired = function(){ sessionStorage.removeItem('gc_verified'); };
 
-/* ============================================================
-   OFFRES — données
-   ============================================================ */
+/* OFFRES */
 const SRV_OFFERS = [
   { name:'NEXA',    specs:[{i:'cpu',t:'<strong>2 cœurs</strong> CPU'},{i:'ram',t:'<strong>4 Go</strong> RAM'},{i:'disk',t:'<strong>60 Go</strong> NVMe'}],    price:8.99,   annual:'80,90',    tag:null },
   { name:'AERO',    specs:[{i:'cpu',t:'<strong>4 cœurs</strong> CPU'},{i:'ram',t:'<strong>8 Go</strong> RAM'},{i:'disk',t:'<strong>120 Go</strong> NVMe'}],   price:20.99,  annual:'188,90',   tag:null },
@@ -1244,9 +1368,7 @@ function createCarousel(id, offers){
 createCarousel('srv', SRV_OFFERS);
 createCarousel('cs', CS_OFFERS);
 
-/* ============================================================
-   ONGLETS
-   ============================================================ */
+/* ONGLETS */
 (function(){
   const tabs = document.querySelectorAll('.tab');
   const cSrv = document.getElementById('carousel-srv');
@@ -1266,9 +1388,7 @@ createCarousel('cs', CS_OFFERS);
   });
 })();
 
-/* ============================================================
-   COMPARATIF
-   ============================================================ */
+/* COMPARATIF */
 const COMPARE_SRV = [
   { brand:'GO CENTER', price:40.99, color:'#7c3aed', self:true },
   { brand:'Hetzner',   price:49.00, color:'#d50c2d' },
@@ -1317,9 +1437,7 @@ renderCompare('compare-cs', COMPARE_CS);
   trigger();
 })();
 
-/* ============================================================
-   FAQ
-   ============================================================ */
+/* FAQ */
 document.querySelectorAll('.faq-q').forEach(function(q){
   q.addEventListener('click', function(){
     const item = q.parentElement;
@@ -1329,307 +1447,168 @@ document.querySelectorAll('.faq-q').forEach(function(q){
   });
 });
 
-/* ============================================================
-   PAGES LÉGALES
-   ============================================================ */
+/* LEGAL */
 const LEGAL = {
   cgv: { label:'Conditions Générales de Vente', title:'CGV', body:`
     <h3>Préambule</h3>
     <p>Les présentes Conditions Générales de Vente (ci-après « CGV ») régissent la relation commerciale entre <strong>GO CENTER</strong> (« le Prestataire ») et toute personne physique ou morale (« le Client ») souscrivant à ses services.</p>
     <p>Elles s'appliquent à toute commande passée via notre serveur Discord. Le Client déclare avoir lu et accepté sans réserve l'intégralité des présentes avant validation.</p>
-
     <h3>Article 1 — Définitions</h3>
-    <ul>
-      <li><strong>Prestataire</strong> : GO CENTER.</li>
-      <li><strong>Client</strong> : personne souscrivant à un service.</li>
-      <li><strong>Service</strong> : serveur dédié ou espace Cloud Storage.</li>
-      <li><strong>KYC</strong> : vérification d'identité.</li>
-    </ul>
-
+    <ul><li><strong>Prestataire</strong> : GO CENTER.</li><li><strong>Client</strong> : personne souscrivant à un service.</li><li><strong>Service</strong> : serveur dédié ou espace Cloud Storage.</li><li><strong>KYC</strong> : vérification d'identité.</li></ul>
     <h3>Article 2 — Services</h3>
-    <ul>
-      <li>Serveurs dédiés : NEXA, AERO, VANTA, ORBIT, ATLAS, TITAN, QUANTUM</li>
-      <li>Cloud Storage S3 : NOVA, CORE, PULSE, PRIME, VECTOR, TITAN</li>
-      <li>Services annexes : réseau privé, anti-DDoS, sauvegardes, monitoring, support 24/7.</li>
-    </ul>
-
+    <ul><li>Serveurs dédiés : NEXA, AERO, VANTA, ORBIT, ATLAS, TITAN, QUANTUM</li><li>Cloud Storage S3 : NOVA, CORE, PULSE, PRIME, VECTOR, TITAN</li><li>Services annexes : réseau privé, anti-DDoS, sauvegardes, monitoring, support 24/7.</li></ul>
     <h3>Article 3 — Commande</h3>
     <p>La commande s'effectue exclusivement sur Discord via un ticket. Le Client sélectionne sa configuration, valide le devis, et procède au paiement. La commande devient ferme dès réception intégrale du paiement.</p>
-
     <h3>Article 4 — Tarifs et paiement</h3>
     <p>Les prix sont exprimés en euros, <strong>hors taxes (HT)</strong>. Moyens de paiement acceptés :</p>
-    <ul>
-      <li><strong>PayPal</strong> — paiement instantané, protection acheteur.</li>
-      <li><strong>Crypto-monnaies</strong> — BTC, ETH, USDT, USDC, LTC, autres sur demande.</li>
-    </ul>
+    <ul><li><strong>PayPal</strong> — paiement instantané, protection acheteur.</li><li><strong>Crypto-monnaies</strong> — BTC, ETH, USDT, USDC, LTC, autres sur demande.</li></ul>
     <p>Le défaut de paiement entraîne la suspension du service après relance restée sans réponse sous 48h.</p>
-
     <h3>Article 5 — Mise en service</h3>
     <p>Déploiement des serveurs dédiés sous 5 à 30 minutes après paiement. Buckets Cloud Storage disponibles immédiatement.</p>
-
     <h3>Article 6 — Obligations du Client</h3>
     <p>Le Client s'engage à ne pas utiliser les services pour : contenus illicites, attaques informatiques (DDoS, brute-force), hébergement de malwares, minage non autorisé, spam, contrefaçon. Il doit respecter la législation française et européenne, garantir la sécurité de ses accès, et se soumettre à toute demande KYC sous 48h.</p>
     <p><strong>Toute violation entraîne la suspension immédiate sans remboursement.</strong></p>
-
     <h3>Article 7 — Responsabilité</h3>
     <p>Le Prestataire est soumis à une obligation de moyens. Sa responsabilité est limitée au montant effectivement payé par le Client au cours des 12 derniers mois. Il ne peut être tenu responsable en cas de force majeure, usage frauduleux, mauvaise configuration, ou indisponibilité imputable à un tiers.</p>
-
     <h3>Article 8 — Droit de rétractation</h3>
     <p>Conformément à l'article <strong>L.221-28 du Code de la consommation</strong>, pas de rétractation pour services pleinement exécutés. Garantie commerciale satisfait ou remboursé de 7 jours accordée.</p>
-
     <h3>Article 9 — Résiliation</h3>
     <p>Sans engagement. Résiliation à tout moment via ticket. Effet en fin de période de facturation.</p>
-
     <h3>Article 10 — Propriété intellectuelle</h3>
     <p>La marque GO CENTER, ses logos, interfaces et code source sont la propriété exclusive du Prestataire. Toute reproduction constitue une contrefaçon sanctionnée par les articles <strong>L.335-2 et suivants du Code de la propriété intellectuelle</strong>.</p>
-
     <h3>Article 11 — Données personnelles</h3>
     <p>Traitement décrit dans notre Politique de confidentialité, conforme au RGPD.</p>
-
     <h3>Article 12 — Force majeure</h3>
     <p>Le Prestataire ne saurait être tenu responsable en cas d'événement de force majeure (art. 1218 Code civil).</p>
-
     <h3>Article 13 — Modification des CGV</h3>
     <p>Le Prestataire peut modifier ces CGV. Information via Discord 15 jours avant entrée en vigueur.</p>
-
     <h3>Article 14 — Droit applicable et juridiction</h3>
     <p>Droit français. Solution amiable prioritaire. Tribunaux français seuls compétents.</p>
   `},
-
   cgu: { label:"Conditions Générales d'Utilisation", title:'CGU', body:`
     <h3>Article 1 — Objet</h3>
     <p>Les présentes CGU définissent les conditions d'accès et d'utilisation des services GO CENTER.</p>
-
     <h3>Article 2 — Accès</h3>
     <p>Accès via Discord officiel et espace client dédié. L'utilisateur est seul responsable de la confidentialité de ses identifiants.</p>
-
     <h3>Article 3 — Usage acceptable</h3>
     <p>Il est <strong>strictement interdit</strong> d'utiliser nos services pour :</p>
-    <ul>
-      <li><strong>Contenus illicites</strong> : pédopornographie, apologie du terrorisme, incitation à la haine, contrefaçon, diffamation ;</li>
-      <li><strong>Attaques informatiques</strong> : DDoS, brute-force, scan massif, exploitation de failles ;</li>
-      <li><strong>Hébergement malveillant</strong> : botnets, malwares, ransomwares, phishing ;</li>
-      <li><strong>Minage cryptographique</strong> sans autorisation ;</li>
-      <li><strong>Spam</strong> ou envois non sollicités en masse ;</li>
-      <li><strong>Contournement</strong> des protections ou quotas ;</li>
-      <li><strong>Usurpation d'identité</strong> ;</li>
-      <li><strong>Violation</strong> de propriété intellectuelle.</li>
-    </ul>
+    <ul><li><strong>Contenus illicites</strong> : pédopornographie, apologie du terrorisme, incitation à la haine, contrefaçon, diffamation ;</li><li><strong>Attaques informatiques</strong> : DDoS, brute-force, scan massif, exploitation de failles ;</li><li><strong>Hébergement malveillant</strong> : botnets, malwares, ransomwares, phishing ;</li><li><strong>Minage cryptographique</strong> sans autorisation ;</li><li><strong>Spam</strong> ou envois non sollicités en masse ;</li><li><strong>Contournement</strong> des protections ou quotas ;</li><li><strong>Usurpation d'identité</strong> ;</li><li><strong>Violation</strong> de propriété intellectuelle.</li></ul>
     <p><strong>Toute violation entraîne résiliation immédiate sans remboursement et signalement aux autorités si requis.</strong></p>
-
     <h3>Article 4 — Contenus hébergés</h3>
     <p>Le Client est <strong>seul responsable</strong> des contenus hébergés et garantit le Prestataire contre toute réclamation de tiers.</p>
-
     <h3>Article 5 — Disponibilité</h3>
     <p>Disponibilité de <strong>99,9 %</strong> (voir SLA). Maintenance planifiée notifiée 48h à l'avance.</p>
-
     <h3>Article 6 — Suspension</h3>
     <p>GO CENTER peut suspendre ou résilier un compte en cas de : non-paiement, violation des CGU, usage frauduleux, comportement abusif, réquisition judiciaire.</p>
-
     <h3>Article 7 — Protection anti-DDoS</h3>
     <p>Accès protégé par <strong>Cloudflare</strong> (mitigation L3/L4/L7, WAF, rate limiting) et <strong>Turnstile</strong>. Contournement interdit.</p>
-
     <h3>Article 8 — Propriété intellectuelle</h3>
     <p>Contrefaçon sanctionnée par les articles <strong>L.335-2 et suivants du Code de la propriété intellectuelle</strong>.</p>
-
     <h3>Article 9 — Responsabilité</h3>
     <p>L'utilisateur indemnise GO CENTER de toute conséquence résultant d'un usage non conforme.</p>
-
     <h3>Article 10 — Modification</h3>
     <p>GO CENTER peut modifier ces CGU avec notification.</p>
-
     <h3>Article 11 — Droit applicable</h3>
     <p>Droit français. Tribunaux français compétents.</p>
   `},
-
   confidentialite: { label:'Politique de confidentialité', title:'Politique de confidentialité', body:`
     <h3>1. Responsable du traitement</h3>
     <p><strong>GO CENTER</strong>, joignable sur Discord.</p>
-
     <h3>2. Données collectées</h3>
-    <ul>
-      <li>Identifiant Discord, pseudo, email ;</li>
-      <li>Informations de facturation ;</li>
-      <li>Historique commandes / paiements ;</li>
-      <li>IP, logs de connexion, métadonnées ;</li>
-      <li>Contenu des tickets support ;</li>
-      <li>Token de vérification Turnstile.</li>
-    </ul>
-
+    <ul><li>Identifiant Discord, pseudo, email ;</li><li>Informations de facturation ;</li><li>Historique commandes / paiements ;</li><li>IP, logs de connexion, métadonnées ;</li><li>Contenu des tickets support ;</li><li>Token de vérification Turnstile.</li></ul>
     <h3>3. Finalités</h3>
-    <ul>
-      <li>Exécution du contrat ;</li>
-      <li>Gestion client et support ;</li>
-      <li>Facturation et obligations comptables ;</li>
-      <li>Lutte contre la fraude et sécurité ;</li>
-      <li>Amélioration des services.</li>
-    </ul>
-
+    <ul><li>Exécution du contrat ;</li><li>Gestion client et support ;</li><li>Facturation et obligations comptables ;</li><li>Lutte contre la fraude et sécurité ;</li><li>Amélioration des services.</li></ul>
     <h3>4. Base légale (RGPD art. 6)</h3>
-    <ul>
-      <li>Exécution du contrat (6.1.b) ;</li>
-      <li>Obligations légales (6.1.c) ;</li>
-      <li>Intérêt légitime sécurité (6.1.f) ;</li>
-      <li>Consentement cookies (6.1.a).</li>
-    </ul>
-
+    <ul><li>Exécution du contrat (6.1.b) ;</li><li>Obligations légales (6.1.c) ;</li><li>Intérêt légitime sécurité (6.1.f) ;</li><li>Consentement cookies (6.1.a).</li></ul>
     <h3>5. Durée de conservation</h3>
-    <ul>
-      <li>Compte : relation + 3 ans ;</li>
-      <li>Facturation : 10 ans ;</li>
-      <li>Logs : 12 mois max.</li>
-    </ul>
-
+    <ul><li>Compte : relation + 3 ans ;</li><li>Facturation : 10 ans ;</li><li>Logs : 12 mois max.</li></ul>
     <h3>6. Destinataires</h3>
     <p>Jamais revendues. Transmises aux sous-traitants (hébergeur, paiement, Cloudflare) dans le strict cadre du service.</p>
-
     <h3>7. Vos droits</h3>
     <p>Accès, rectification, effacement, limitation, portabilité, opposition, retrait du consentement. Contact : Discord. Réclamation CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a>).</p>
-
     <h3>8. Transferts hors UE</h3>
     <p>Données hébergées en France. Aucun transfert sans garanties appropriées (clauses contractuelles types).</p>
-
     <h3>9. Sécurité</h3>
     <p>Chiffrement, contrôle d'accès, journalisation, protection Cloudflare.</p>
   `},
-
   cookies: { label:'Politique des cookies', title:'Politique des cookies', body:`
     <h3>1. Qu'est-ce qu'un cookie ?</h3>
     <p>Fichier déposé sur votre terminal lors de la navigation pour conserver des informations.</p>
-
     <h3>2. Cookies utilisés</h3>
     <p><strong>Strictement nécessaires</strong> — fonctionnement du site (session, sécurité).</p>
     <p><strong>Analytiques</strong> — mesure d'audience anonymisée (consentement requis).</p>
     <p><strong>Sécurité (Cloudflare)</strong> — anti-DDoS, anti-bot, Turnstile. Strictement nécessaires.</p>
     <p><strong>Tiers</strong> — Discord, prestataire de paiement.</p>
-
     <h3>3. Gestion</h3>
     <p>Configurable dans votre navigateur. Refus possible mais altère l'expérience.</p>
     <p>Plus d'infos : <a href="https://www.cnil.fr/fr/cookies-et-autres-traceurs" target="_blank" rel="noopener">cnil.fr</a>.</p>
-
     <h3>4. Durée</h3>
     <p>Maximum 13 mois (recommandation CNIL).</p>
-
     <h3>5. Cloudflare Turnstile</h3>
     <p>Vérifie que vous êtes humain. Peut déposer un cookie technique et collecter IP/user-agent. Politique : <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com</a>.</p>
-
     <h3>6. Consentement</h3>
     <p>Navigation = acceptation des cookies strictement nécessaires et de sécurité.</p>
   `},
-
   mentions: { label:'Mentions légales', title:'Mentions légales', body:`
     <h3>Éditeur</h3>
     <p><strong>GO CENTER</strong> — Contact via Discord officiel.</p>
-
     <h3>Directeur de la publication</h3>
     <p>Le responsable légal de GO CENTER.</p>
-
     <h3>Hébergement</h3>
     <p>France, datacenters Tier III certifiés. Protection Cloudflare.</p>
-
     <h3>Propriété intellectuelle</h3>
     <p>Tout le contenu est propriété exclusive. Contrefaçon sanctionnée par les articles <strong>L.335-2 et suivants du Code de la propriété intellectuelle</strong>.</p>
-
     <h3>Responsabilité</h3>
     <p>GO CENTER ne peut garantir l'absence d'erreurs et décline toute responsabilité quant à l'usage des informations.</p>
-
     <h3>Liens hypertextes</h3>
     <p>Aucun contrôle sur les sites tiers liés (Discord, Cloudflare, prestataires).</p>
-
     <h3>Litiges</h3>
     <p>Droit français, tribunaux français compétents.</p>
-
     <h3>Signalement de contenu illicite</h3>
     <p>Contact via Discord. Traitement dans les plus brefs délais (LCEN).</p>
   `},
-
   remboursement: { label:'Politique de remboursement', title:'Politique de remboursement', body:`
     <h3>1. Garantie 7 jours</h3>
     <p><strong>Satisfait ou remboursé de 7 jours calendaires</strong> à compter de la mise en service, pour toute première commande.</p>
-
     <h3>2. Éligibilité</h3>
-    <ul>
-      <li>Demande dans les 7 jours ;</li>
-      <li>Pas de violation CGV/CGU ;</li>
-      <li>Usage non anormal du service.</li>
-    </ul>
-
+    <ul><li>Demande dans les 7 jours ;</li><li>Pas de violation CGV/CGU ;</li><li>Usage non anormal du service.</li></ul>
     <h3>3. Modalités</h3>
     <p>Demande par ticket Discord. Remboursement sous <strong>14 jours ouvrés</strong> sur le moyen de paiement initial (PayPal ou crypto).</p>
-
     <h3>4. Exclusions</h3>
-    <ul>
-      <li>Renouvellements ;</li>
-      <li>Configurations sur mesure ;</li>
-      <li>Services consommés au-delà du 1er mois ;</li>
-      <li>Frais de setup ;</li>
-      <li>Services suspendus pour violation.</li>
-    </ul>
-
+    <ul><li>Renouvellements ;</li><li>Configurations sur mesure ;</li><li>Services consommés au-delà du 1er mois ;</li><li>Frais de setup ;</li><li>Services suspendus pour violation.</li></ul>
     <h3>5. Droit de rétractation</h3>
     <p>Conformément à l'article <strong>L.221-28</strong>, pas de rétractation pour services pleinement exécutés. Garantie commerciale 7 jours plus favorable.</p>
-
     <h3>6. Litiges</h3>
     <p>Solution amiable prioritaire. Sinon médiateur de la consommation ou tribunaux français.</p>
   `},
-
   resiliation: { label:'Politique de résiliation', title:'Politique de résiliation', body:`
     <h3>1. Sans engagement</h3>
     <p>Résiliation à tout moment, sans pénalité.</p>
-
     <h3>2. Modalités</h3>
     <p>Ticket Discord ou tout autre moyen écrit accepté par le support.</p>
-
     <h3>3. Prise d'effet</h3>
     <p>Fin de la période de facturation en cours. Pas de remboursement au prorata (sauf garantie 7 jours).</p>
-
     <h3>4. Conservation des données</h3>
     <p>Conservées <strong>7 jours</strong> puis supprimées définitivement. Exportez avant.</p>
-
     <h3>5. Résiliation par GO CENTER</h3>
     <p>Possible sans indemnité en cas de violation CGV/CGU, non-paiement, usage illicite, ou réquisition judiciaire.</p>
-
     <h3>6. Restitution matériel</h3>
     <p>Services avec matériel physique : restitution aux frais du Client.</p>
   `},
-
   sla: { label:'SLA / Disponibilité', title:'SLA — Niveau de service', body:`
     <h3>1. Engagement</h3>
-    <ul>
-      <li><strong>99,9 %</strong> — serveurs dédiés & Cloud Storage standards ;</li>
-      <li><strong>99,95 %</strong> — offres Pro et supérieures.</li>
-    </ul>
-
+    <ul><li><strong>99,9 %</strong> — serveurs dédiés & Cloud Storage standards ;</li><li><strong>99,95 %</strong> — offres Pro et supérieures.</li></ul>
     <h3>2. Exclusions</h3>
-    <ul>
-      <li>Maintenance notifiée 48h avant ;</li>
-      <li>Indisponibilités imputables au Client ;</li>
-      <li>Force majeure ;</li>
-      <li>Pannes d'opérateurs tiers ;</li>
-      <li>Suspensions pour violation.</li>
-    </ul>
-
+    <ul><li>Maintenance notifiée 48h avant ;</li><li>Indisponibilités imputables au Client ;</li><li>Force majeure ;</li><li>Pannes d'opérateurs tiers ;</li><li>Suspensions pour violation.</li></ul>
     <h3>3. Compensation</h3>
-    <ul>
-      <li>99,0–99,9 % : <strong>10 %</strong> ;</li>
-      <li>95,0–99,0 % : <strong>25 %</strong> ;</li>
-      <li>&lt; 95,0 % : <strong>50 %</strong>.</li>
-    </ul>
+    <ul><li>99,0–99,9 % : <strong>10 %</strong> ;</li><li>95,0–99,0 % : <strong>25 %</strong> ;</li><li>&lt; 95,0 % : <strong>50 %</strong>.</li></ul>
     <p>Demande dans les 30 jours, via ticket Discord. Plafond 50% du montant mensuel.</p>
-
     <h3>4. Support 24/7 Discord</h3>
-    <ul>
-      <li>Standard : sous 4h ouvrées ;</li>
-      <li>Pro : sous 1h ;</li>
-      <li>Entreprise : sous 30 min.</li>
-    </ul>
-
+    <ul><li>Standard : sous 4h ouvrées ;</li><li>Pro : sous 1h ;</li><li>Entreprise : sous 30 min.</li></ul>
     <h3>5. Maintenance planifiée</h3>
     <p>Annoncée 48h à l'avance sur Discord.</p>
-
     <h3>6. Protection anti-DDoS</h3>
     <p>Cloudflare L3/L4/L7 + WAF + rate limiting + Turnstile anti-bot + <strong>anti-DDoS applicatif intégré</strong> (rate limiting IP, honeypot, blocage scanners).</p>
-
     <h3>7. Sauvegardes</h3>
     <p>Quotidiennes (rétention 7 jours) standards, toutes les 6h (rétention 30 jours) Pro+.</p>
   `}
@@ -1653,48 +1632,31 @@ function openLegal(key){
   document.body.style.overflow = 'hidden';
   modalBody.scrollTop = 0;
 }
-
 function closeLegal(){
   overlay.classList.remove('on');
   document.body.style.overflow = '';
 }
-
 document.querySelectorAll('[data-legal]').forEach(function(el){
   el.addEventListener('click', function(e){
     e.preventDefault();
     openLegal(el.dataset.legal);
   });
 });
-
 closeBtn.addEventListener('click', closeLegal);
 overlay.addEventListener('click', function(e){ if(e.target === overlay) closeLegal(); });
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape' && overlay.classList.contains('on')) closeLegal();
 });
 
-/* ============================================================
-   MODALE TECH — « Afficher les modèles »
-   ============================================================ */
+/* TECH MODAL */
 (function(){
   const techOverlay = document.getElementById('tech-overlay');
   const techCloseBtn = document.getElementById('tech-close-btn');
-
-  function openTech(){
-    techOverlay.classList.add('on');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeTech(){
-    techOverlay.classList.remove('on');
-    document.body.style.overflow = '';
-  }
-
+  function openTech(){ techOverlay.classList.add('on'); document.body.style.overflow = 'hidden'; }
+  function closeTech(){ techOverlay.classList.remove('on'); document.body.style.overflow = ''; }
   document.querySelectorAll('[data-tech]').forEach(function(el){
-    el.addEventListener('click', function(e){
-      e.preventDefault();
-      openTech();
-    });
+    el.addEventListener('click', function(e){ e.preventDefault(); openTech(); });
   });
-
   techCloseBtn.addEventListener('click', closeTech);
   techOverlay.addEventListener('click', function(e){ if(e.target === techOverlay) closeTech(); });
   document.addEventListener('keydown', function(e){
