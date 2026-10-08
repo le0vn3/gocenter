@@ -31,7 +31,7 @@ svg{display:block}
 ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
 ::-webkit-scrollbar-track{background:#000}
 
-/* GPU acceleration — fix bug de reset au scroll rapide */
+/* GPU acceleration */
 .hero-mockup,.marquee-set,.fw-item,.big-card,.sec-card,.mock-bar,.compare-fill,.step,.pay-card,.plan,.carousel-track,.gate-glow{will-change:transform;transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 
 /* ============ SECURITY GATE ============ */
@@ -39,7 +39,7 @@ svg{display:block}
 #security-gate.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .gate-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);pointer-events:none}
 .gate-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) translateZ(0);width:820px;height:820px;background:radial-gradient(circle,rgba(124,58,237,.24),transparent 62%);pointer-events:none}
-.gate-card{position:relative;background:linear-gradient(180deg,#101014 0%,#08080a 100%);border:1px solid rgba(124,58,237,.28);border-radius:var(--r-2xl);max-width:520px;width:100%;padding:38px 44px 30px;text-align:center;overflow:visible;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 40px 100px rgba(124,58,237,.28),0 0 90px rgba(124,58,237,.14);animation:gateIn .6s cubic-bezier(.4,0,.2,1) both}
+.gate-card{position:relative;background:linear-gradient(180deg,#101014 0%,#08080a 100%);border:1px solid rgba(124,58,237,.28);border-radius:var(--r-2xl);max-width:560px;width:100%;padding:38px 32px 30px;text-align:center;overflow:visible;box-shadow:0 0 0 1px rgba(255,255,255,.03) inset,0 40px 100px rgba(124,58,237,.28),0 0 90px rgba(124,58,237,.14);animation:gateIn .6s cubic-bezier(.4,0,.2,1) both}
 @keyframes gateIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .gate-card > *{position:relative;z-index:1}
 .gate-logo{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:22px}
@@ -47,15 +47,14 @@ svg{display:block}
 .gate-shield{width:72px;height:72px;margin:0 auto 20px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(124,58,237,.32),rgba(124,58,237,.08));border:1px solid rgba(167,139,250,.45);border-radius:24px;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 10px 28px rgba(124,58,237,.35)}
 .gate-shield svg{width:34px;height:34px;color:#c4b5fd}
 .gate-card h1{font-size:clamp(22px,3.2vw,27px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.gate-card p{font-size:.92rem;color:#a1a1aa;line-height:1.55;margin-bottom:0;max-width:380px;margin-left:auto;margin-right:auto}
+.gate-card p{font-size:.92rem;color:#a1a1aa;line-height:1.55;margin-bottom:0;max-width:400px;margin-left:auto;margin-right:auto;white-space:nowrap}
 .gate-card p strong{color:#fff;font-weight:600}
 
-/* CAPTCHA — juste sous la description, pas de chevauchement */
-.cf-wrap{display:flex;justify-content:center;align-items:center;margin:14px auto 0;padding:12px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:var(--r-lg);width:100%;max-width:380px;min-height:86px;overflow:visible;position:relative;z-index:5;box-shadow:0 6px 26px rgba(124,58,237,.14)}
+/* CAPTCHA — large, pas de chevauchement, pas de retour à la ligne du texte */
+.cf-wrap{display:flex;justify-content:center;align-items:center;margin:14px auto 0;padding:12px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:var(--r-lg);width:100%;max-width:420px;min-height:86px;overflow:visible;position:relative;z-index:5;box-shadow:0 6px 26px rgba(124,58,237,.14)}
 .cf-wrap iframe{border-radius:var(--r-sm) !important;display:block;max-width:100%}
 .cf-turnstile{border-radius:var(--r-sm);overflow:hidden;display:flex;justify-content:center;position:relative;z-index:6}
 
-/* Trait séparateur après le captcha */
 .gate-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,.5),transparent);margin:20px 0 16px}
 
 .gate-status{display:flex;align-items:center;justify-content:center;gap:10px;font-size:.78rem;color:#71717a;flex-wrap:wrap}
@@ -142,7 +141,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .section-huge .muted{color:#71717a}
 .section-huge .accent-grad{background:linear-gradient(90deg,#7c3aed,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* ============ 3 ÉTAPES — QUINCONCE ============ */
+/* ============ 3 ÉTAPES — numéro carré moins arrondi ============ */
 .steps-grid{display:grid;grid-template-columns:1fr;gap:40px;margin-top:80px;align-items:start}
 @media(min-width:768px){
   .steps-grid{grid-template-columns:repeat(3,1fr);gap:36px;align-items:start}
@@ -150,7 +149,7 @@ body.gate-active > #top-banner{visibility:hidden}
 }
 .step{display:flex;flex-direction:column;gap:18px;transition:transform .3s}
 .step:hover{transform:translateY(-4px)}
-.step-num{width:46px;height:46px;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;display:grid;place-items:center;font-size:1.05rem;font-weight:700;border-radius:var(--r-md);box-shadow:0 8px 24px rgba(124,58,237,.35)}
+.step-num{width:46px;height:46px;background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;display:grid;place-items:center;font-size:1.05rem;font-weight:700;border-radius:10px;box-shadow:0 8px 24px rgba(124,58,237,.35)}
 .step h3{font-size:clamp(22px,2.2vw,30px);font-weight:600;letter-spacing:-.03em;line-height:1.1;color:#fff}
 .step p{font-size:.95rem;color:#a1a1aa;line-height:1.55;letter-spacing:-.005em}
 .step-visual{margin-top:16px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);padding:20px;min-height:230px}
@@ -189,7 +188,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .fw-item img{width:40px;height:40px;object-fit:contain}
 .fw-item svg{width:40px;height:40px}
 
-/* ============ 4 CARTES (2 colonnes décalées) ============ */
+/* ============ 4 CARTES ============ */
 .cards-2col{display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:768px){
   .cards-2col{grid-template-columns:1fr 1fr;gap:20px;align-items:start}
@@ -226,7 +225,7 @@ body.gate-active > #top-banner{visibility:hidden}
 @media(min-width:1024px){.sec-grid{grid-template-columns:repeat(3,1fr)}}
 .sec-card{display:flex;flex-direction:column;gap:18px;padding:32px 28px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);transition:background .3s,border-color .3s}
 .sec-card:hover{background:var(--card-2);border-color:rgba(167,139,250,.25)}
-.sec-icon{width:56px;height:56px;background:#fff;display:grid;place-items:center;border-radius:var(--r-md);position:relative;box-shadow:0 8px 22px rgba(0,0,0,.5);overflow:hidden;transition:transform .3s}
+.sec-icon{width:56px;height:56px;background:#fff;display:grid;place-items:center;border-radius:14px;position:relative;box-shadow:0 8px 22px rgba(0,0,0,.5);overflow:hidden;transition:transform .3s}
 .sec-card:hover .sec-icon{transform:scale(1.06) rotate(-3deg)}
 .sec-icon img{width:30px;height:30px;object-fit:contain}
 .sec-card h3{font-size:1.15rem;font-weight:600;letter-spacing:-.02em;color:#fff;line-height:1.3}
@@ -459,6 +458,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   .footer-bottom{flex-direction:column;text-align:center}
   .gate-card{padding:32px 20px 26px;border-radius:24px}
   .cf-wrap{padding:10px;min-height:80px;margin-top:10px}
+  .gate-card p{white-space:normal}
   .fw-item{width:64px;height:64px;border-radius:16px}
   .fw-item img{width:34px;height:34px}
   .fw-item svg{width:34px;height:34px}
@@ -490,7 +490,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
       </svg>
     </div>
     <h1>Vérification de sécurité</h1>
-    <p>Vérifiez que vous êtes bien un <strong>humain</strong>.</p>
+    <p>Confirmez que vous êtes <strong>humain</strong>.</p>
 
     <div class="cf-wrap" id="cf-wrap">
       <div class="cf-turnstile"
@@ -1221,14 +1221,12 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 </div>
 
 <script>
-/* CONFIG */
 const CONFIG = {
   DISCORD_URL: '__DISCORD_URL__',
   TURNSTILE_SITE_KEY: '__TURNSTILE_SITE_KEY__',
   SECURITY: { MAX_PAGE_LOADS_PER_HOUR: 50, MAX_CLICKS_PER_10S: 25, BLOCK_DURATION_MS: 3600000 }
 };
 
-/* ICONS */
 const ICONS = {
   cpu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="10" y="10" width="4" height="4" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>',
   ram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 7V5M10 7V5M14 7V5M18 7V5M6 17v2M10 17v2M14 17v2M18 17v2"/></svg>',
@@ -1237,7 +1235,6 @@ const ICONS = {
   bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>'
 };
 
-/* ANTI-FLOOD */
 (function antiFloodGuard(){
   const KEY_LOADS = 'gc_page_loads';
   const KEY_BLOCK = 'gc_blocked_until';
@@ -1270,7 +1267,6 @@ const ICONS = {
   }, { passive: true });
 })();
 
-/* GATE */
 (function initGate(){
   const gate = document.getElementById('security-gate');
   if(sessionStorage.getItem('gc_verified') === 'true'){
@@ -1308,7 +1304,6 @@ window.onTurnstileError = function(errCode){
 };
 window.onTurnstileExpired = function(){ sessionStorage.removeItem('gc_verified'); };
 
-/* OFFRES */
 const SRV_OFFERS = [
   { name:'NEXA',    specs:[{i:'cpu',t:'<strong>2 cœurs</strong> CPU'},{i:'ram',t:'<strong>4 Go</strong> RAM'},{i:'disk',t:'<strong>60 Go</strong> NVMe'}],    price:8.99,   annual:'80,90',    tag:null },
   { name:'AERO',    specs:[{i:'cpu',t:'<strong>4 cœurs</strong> CPU'},{i:'ram',t:'<strong>8 Go</strong> RAM'},{i:'disk',t:'<strong>120 Go</strong> NVMe'}],   price:20.99,  annual:'188,90',   tag:null },
@@ -1364,7 +1359,6 @@ function createCarousel(id, offers){
 createCarousel('srv', SRV_OFFERS);
 createCarousel('cs', CS_OFFERS);
 
-/* TABS */
 (function(){
   const tabs = document.querySelectorAll('.tab');
   const cSrv = document.getElementById('carousel-srv');
@@ -1379,7 +1373,6 @@ createCarousel('cs', CS_OFFERS);
   });
 })();
 
-/* COMPARE */
 const COMPARE_SRV = [
   { brand:'GO CENTER', price:40.99, color:'#7c3aed', self:true },
   { brand:'Hetzner',   price:49.00, color:'#d50c2d' },
@@ -1405,7 +1398,6 @@ function renderCompare(id, data){
 renderCompare('compare-srv', COMPARE_SRV);
 renderCompare('compare-cs', COMPARE_CS);
 
-/* FAQ */
 document.querySelectorAll('.faq-q').forEach(function(q){
   q.addEventListener('click', function(){
     const item = q.parentElement;
@@ -1415,7 +1407,6 @@ document.querySelectorAll('.faq-q').forEach(function(q){
   });
 });
 
-/* LEGAL */
 const LEGAL = {
   cgv: { label:'Conditions Générales de Vente', title:'CGV', body:`
     <h3>Préambule</h3><p>Les présentes Conditions Générales de Vente (ci-après « CGV ») régissent la relation commerciale entre <strong>GO CENTER</strong> (« le Prestataire ») et toute personne physique ou morale (« le Client ») souscrivant à ses services.</p>
@@ -1534,7 +1525,6 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'Escape' && overlay.classList.contains('on')) closeLegal();
 });
 
-/* TECH MODAL */
 (function(){
   const techOverlay = document.getElementById('tech-overlay');
   const techCloseBtn = document.getElementById('tech-close-btn');
