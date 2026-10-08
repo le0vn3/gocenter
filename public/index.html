@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#000000">
 <title>GO CENTER — Serveurs dédiés & Cloud Storage</title>
 <meta name="description" content="GO CENTER — Serveurs dédiés et cloud storage S3-compatible. Meilleurs prix, paiement sécurisé.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='8' y='20' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Crect x='8' y='44' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Crect x='8' y='68' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Ccircle cx='78' cy='30' r='4' fill='%2334d9a4'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='8' y='20' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Crect x='8' y='44' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Crect x='8' y='68' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Ccircle cx='78' cy='30' r='4' fill='%23a78bfa'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +20,7 @@
   --line:rgba(255,255,255,.08);
   --card:#0a0a0c;--card-2:#0f0f13;
   --accent:#7c3aed;--accent-2:#a78bfa;
+  --logo:#a78bfa;
 }
 html{font-size:15px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#000;color:#fff;-webkit-font-smoothing:antialiased;min-height:100dvh;overflow-x:hidden;line-height:1.5}
@@ -52,6 +53,17 @@ svg{display:block}
 .carousel-viewport{background:rgba(255,255,255,.02)}
 .carousel-slide{background:transparent;border:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 
+/* ============ LOGOS MONOCHROMES — une seule couleur partout ============ */
+.fw-item img,.sec-icon img,.tech-item .tech-logo img,.mock-card-mini .row .lg img{
+  filter:none;
+}
+.fw-item img,.fw-item svg,
+.sec-icon img,.sec-icon svg,
+.tech-item .tech-logo img,.tech-item .tech-logo svg,
+.mock-card-mini .row .lg img,.mock-card-mini .row .lg svg{
+  color:var(--logo);
+}
+
 /* ============ SECURITY GATE ============ */
 #security-gate{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease, visibility .5s ease}
 #security-gate.hidden{opacity:0;visibility:hidden;pointer-events:none}
@@ -72,9 +84,9 @@ svg{display:block}
 .cf-turnstile{border-radius:var(--r-sm);overflow:hidden;display:flex;justify-content:center;position:relative;z-index:6}
 .gate-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,.5),transparent);margin:20px 0 16px}
 .gate-status{display:flex;align-items:center;justify-content:center;gap:10px;font-size:.78rem;color:#71717a;flex-wrap:wrap}
-.gate-status > svg{width:14px;height:14px;color:#4ade80;flex-shrink:0}
-.gate-status .cf-brand{display:inline-flex;align-items:center;gap:6px;color:#f97316;font-weight:600}
-.gate-status .cf-brand svg{width:14px;height:14px;color:#f97316}
+.gate-status > svg{width:14px;height:14px;color:#a78bfa;flex-shrink:0}
+.gate-status .cf-brand{display:inline-flex;align-items:center;gap:6px;color:#a78bfa;font-weight:600}
+.gate-status .cf-brand svg{width:14px;height:14px;color:#a78bfa}
 .gate-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);padding:16px 20px;border-radius:var(--r-md);color:#fca5a5;font-size:.85rem;line-height:1.5;margin-top:18px}
 body.gate-active{overflow:hidden}
 body.gate-active main,
@@ -124,7 +136,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .hero-pay-badges{display:flex;gap:8px;flex-wrap:wrap}
 .pay-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;font-size:.76rem;font-weight:600;border-radius:var(--r-sm);transition:all .2s}
 .pay-badge:hover{border-color:rgba(167,139,250,.4);background:rgba(124,58,237,.1);transform:translateY(-2px)}
-.pay-badge svg{width:15px;height:15px;flex-shrink:0}
+.pay-badge svg{width:15px;height:15px;flex-shrink:0;color:var(--logo)}
 .hero-mockup{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 40px 90px rgba(124,58,237,.16), 0 0 0 1px rgba(255,255,255,.02)}
 .mock-terminal{padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem}
 .mock-terminal .dot{width:11px;height:11px;border-radius:50%}
@@ -196,8 +208,8 @@ body.gate-active > #top-banner{visibility:hidden}
 .marquee-row.rtl .marquee-set{animation:scrollRight 50s linear infinite}
 @keyframes scrollLeft{from{transform:translate3d(0,0,0)}to{transform:translate3d(-100%,0,0)}}
 @keyframes scrollRight{from{transform:translate3d(-100%,0,0)}to{transform:translate3d(0,0,0)}}
-.fw-item{width:76px;height:76px;flex-shrink:0;display:grid;place-items:center;border-radius:20px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,.12);transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s, background .3s;box-shadow:0 6px 20px rgba(0,0,0,.45)}
-.fw-item:hover{transform:translateY(-5px) scale(1.06);box-shadow:0 14px 32px rgba(124,58,237,.35);background:rgba(255,255,255,.1);z-index:2}
+.fw-item{width:76px;height:76px;flex-shrink:0;display:grid;place-items:center;border-radius:20px;background:rgba(124,58,237,.08);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(167,139,250,.18);transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s, background .3s;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+.fw-item:hover{transform:translateY(-5px) scale(1.06);box-shadow:0 14px 32px rgba(124,58,237,.35);background:rgba(124,58,237,.16);border-color:rgba(167,139,250,.4);z-index:2}
 .fw-item img{width:40px;height:40px;object-fit:contain}
 .fw-item svg{width:40px;height:40px}
 
@@ -224,7 +236,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .mock-card-mini .row{display:flex;align-items:center;gap:10px;padding:8px 4px;color:#a1a1aa}
 .mock-card-mini .row + .row{border-top:1px solid rgba(255,255,255,.04)}
 .mock-card-mini .row .badge{padding:3px 9px;border-radius:var(--r-xs);font-size:.62rem;font-weight:600;white-space:nowrap}
-.mock-card-mini .row .lg{width:26px;height:26px;flex-shrink:0;background:rgba(255,255,255,.9);border-radius:8px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.mock-card-mini .row .lg{width:26px;height:26px;flex-shrink:0;background:rgba(124,58,237,.16);border:1px solid rgba(167,139,250,.24);border-radius:8px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.5)}
 .mock-card-mini .row .lg img{width:16px;height:16px;object-fit:contain}
 .mock-card-mini .row .lbl{flex:1;color:#d4d4d8;font-weight:500}
 .mock-card-mini .row .head{font-size:.62rem;color:#71717a;letter-spacing:.08em;font-weight:600}
@@ -236,7 +248,6 @@ body.gate-active > #top-banner{visibility:hidden}
 @media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){
   .sec-grid{grid-template-columns:repeat(3,1fr);gap:36px 24px}
-  /* Décalage très prononcé : aucune carte n'est sur la même ligne */
   .sec-grid .sec-card:nth-child(1){margin-top:0}
   .sec-grid .sec-card:nth-child(2){margin-top:110px}
   .sec-grid .sec-card:nth-child(3){margin-top:40px}
@@ -245,15 +256,14 @@ body.gate-active > #top-banner{visibility:hidden}
   .sec-grid .sec-card:nth-child(6){margin-top:130px}
 }
 @media(min-width:600px) and (max-width:1023px){
-  /* Sur tablette : décalage léger mais visible */
   .sec-grid .sec-card:nth-child(odd){margin-top:0}
   .sec-grid .sec-card:nth-child(even){margin-top:60px}
 }
 .sec-card{display:flex;flex-direction:column;gap:18px;padding:32px 28px;border-radius:var(--r-lg);transition:background .3s,border-color .3s;position:relative;overflow:hidden}
 .sec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
 .sec-card:hover::before{opacity:1}
-.sec-icon{width:56px;height:56px;background:rgba(255,255,255,.9);display:grid;place-items:center;border-radius:14px;position:relative;box-shadow:0 8px 22px rgba(0,0,0,.5);overflow:hidden;transition:transform .3s}
-.sec-card:hover .sec-icon{transform:scale(1.06) rotate(-3deg)}
+.sec-icon{width:56px;height:56px;background:rgba(124,58,237,.14);border:1px solid rgba(167,139,250,.28);display:grid;place-items:center;border-radius:14px;position:relative;box-shadow:0 8px 22px rgba(124,58,237,.18);overflow:hidden;transition:transform .3s,background .3s,border-color .3s}
+.sec-card:hover .sec-icon{transform:scale(1.06) rotate(-3deg);background:rgba(124,58,237,.24);border-color:rgba(167,139,250,.5)}
 .sec-icon img{width:30px;height:30px;object-fit:contain}
 .sec-card h3{font-size:1.15rem;font-weight:600;letter-spacing:-.02em;color:#fff;line-height:1.3}
 .sec-card p{font-size:.9rem;color:#a1a1aa;line-height:1.55;letter-spacing:-.005em}
@@ -347,9 +357,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .pay-card:hover::before{opacity:1}
 .pay-icon{width:66px;height:66px;border-radius:var(--r-lg);display:grid;place-items:center;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);transition:all .3s}
 .pay-card:hover .pay-icon{background:rgba(124,58,237,.2);border-color:rgba(167,139,250,.5);transform:scale(1.05)}
-.pay-icon svg{width:30px;height:30px;color:#a78bfa}
-.pay-icon.paypal svg{color:#0070ba}
-.pay-icon.crypto svg{color:#f7931a}
+.pay-icon svg{width:30px;height:30px;color:var(--logo)}
 .pay-card h3{font-size:1.25rem;font-weight:600;color:#fff;letter-spacing:-.02em;line-height:1.3}
 .pay-card p{font-size:.9rem;color:#a1a1aa;line-height:1.6;margin:0}
 .pay-card .pay-tag{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:6px 12px;border-radius:var(--r-xs);margin-top:auto;width:fit-content}
@@ -412,8 +420,8 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 .footer-social{display:flex;gap:20px;align-items:center}
 .footer-social a:hover{color:#fff}
 .footer-cf{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:#71717a;transition:color .2s}
-.footer-cf:hover{color:#f97316}
-.footer-cf svg{width:14px;height:14px;color:#f97316}
+.footer-cf:hover{color:#a78bfa}
+.footer-cf svg{width:14px;height:14px;color:var(--logo)}
 
 /* ============ MODALES ============ */
 #legal-overlay,#tech-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
@@ -448,7 +456,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 .tech-category h3::before{content:'';width:20px;height:1px;background:#a78bfa}
 .tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px}
 .tech-item{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 12px;border-radius:var(--r-md);transition:all .25s}
-.tech-item .tech-logo{width:46px;height:46px;display:grid;place-items:center;background:rgba(255,255,255,.9);border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.4);overflow:hidden}
+.tech-item .tech-logo{width:46px;height:46px;display:grid;place-items:center;background:rgba(124,58,237,.14);border:1px solid rgba(167,139,250,.24);border-radius:14px;box-shadow:0 4px 14px rgba(124,58,237,.15);overflow:hidden}
 .tech-item .tech-logo img{width:26px;height:26px;object-fit:contain}
 .tech-item .tech-logo svg{width:26px;height:26px}
 .tech-item span{font-size:.76rem;font-weight:500;color:#d4d4d8;text-align:center;letter-spacing:-.005em;line-height:1.3}
@@ -500,7 +508,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
         <rect x="8" y="20" width="84" height="20" rx="6" fill="#7c3aed"/>
         <rect x="8" y="44" width="84" height="20" rx="6" fill="#7c3aed"/>
         <rect x="8" y="68" width="84" height="20" rx="6" fill="#7c3aed"/>
-        <circle cx="78" cy="30" r="5" fill="#34d9a4"/>
+        <circle cx="78" cy="30" r="5" fill="#a78bfa"/>
       </svg>
       <span>GO CENTER</span>
     </div>
@@ -549,9 +557,9 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
         <rect x="8" y="20" width="84" height="20" rx="6" fill="#7c3aed"/>
         <rect x="8" y="44" width="84" height="20" rx="6" fill="#7c3aed"/>
         <rect x="8" y="68" width="84" height="20" rx="6" fill="#7c3aed"/>
-        <circle cx="78" cy="30" r="5" fill="#34d9a4"/>
+        <circle cx="78" cy="30" r="5" fill="#a78bfa"/>
         <circle cx="78" cy="54" r="5" fill="#a78bfa"/>
-        <circle cx="78" cy="78" r="5" fill="#7c3aed"/>
+        <circle cx="78" cy="78" r="5" fill="#a78bfa"/>
       </svg>
       <span>GO CENTER</span>
     </a>
@@ -584,8 +592,8 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
       <div class="hero-pay">
         <span class="hero-pay-label">Paiement</span>
         <div class="hero-pay-badges">
-          <span class="pay-badge"><svg viewBox="0 0 24 24" fill="currentColor" style="color:#0070ba"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>PayPal</span>
-          <span class="pay-badge"><svg viewBox="0 0 24 24" fill="currentColor" style="color:#f7931a"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.328-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-.01-.003-1.815-.45-.35 1.407s.975.225.955.238c.535.136.63.486.615.766l-.62 2.485c.04.007.086.02.14.04l-.144-.036-.87 3.48c-.066.163-.233.407-.607.314.015.02-.955-.238-.955-.238l-.66 1.508 1.71.425c.32.08.634.163.942.24l-.54 2.19 1.32.33.54-2.165c.36.1.71.19 1.05.276l-.54 2.15 1.32.33.54-2.18c2.22.42 3.89.25 4.596-1.757.566-1.617-.03-2.55-1.198-3.16.85-.196 1.492-.756 1.66-1.91z"/></svg>Crypto</span>
+          <span class="pay-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg>PayPal</span>
+          <span class="pay-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.328-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-.01-.003-1.815-.45-.35 1.407s.975.225.955.238c.535.136.63.486.615.766l-.62 2.485c.04.007.086.02.14.04l-.144-.036-.87 3.48c-.066.163-.233.407-.607.314.015.02-.955-.238-.955-.238l-.66 1.508 1.71.425c.32.08.634.163.942.24l-.54 2.19 1.32.33.54-2.165c.36.1.71.19 1.05.276l-.54 2.15 1.32.33.54-2.18c2.22.42 3.89.25 4.596-1.757.566-1.617-.03-2.55-1.198-3.16.85-.196 1.492-.756 1.66-1.91z"/></svg>Crypto</span>
         </div>
       </div>
     </div>
@@ -668,164 +676,164 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
         <div class="marquee-wrap">
           <div class="marquee-row ltr">
             <div class="marquee-set">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/github" alt="GitHub"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/docker" alt="Docker"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/kubernetes" alt="Kubernetes"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/python" alt="Python"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/go" alt="Go"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/rust" alt="Rust"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/ubuntu" alt="Ubuntu"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/debian" alt="Debian"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/nginx" alt="Nginx"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/redis" alt="Redis"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/mongodb" alt="MongoDB"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/react" alt="React"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/vuedotjs" alt="Vue.js"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/angular" alt="Angular"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/php" alt="PHP"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/openjdk" alt="Java"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/typescript" alt="TypeScript"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/html5" alt="HTML5"></div>
-              <div class="fw-item"><svg viewBox="0 0 24 24" width="40" height="40" fill="#1572B6" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/sass" alt="Sass"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/github/a78bfa" alt="GitHub"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/docker/a78bfa" alt="Docker"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/kubernetes/a78bfa" alt="Kubernetes"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/python/a78bfa" alt="Python"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nodedotjs/a78bfa" alt="Node.js"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/go/a78bfa" alt="Go"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rust/a78bfa" alt="Rust"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/ubuntu/a78bfa" alt="Ubuntu"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/debian/a78bfa" alt="Debian"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nginx/a78bfa" alt="Nginx"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/postgresql/a78bfa" alt="PostgreSQL"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/redis/a78bfa" alt="Redis"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/mongodb/a78bfa" alt="MongoDB"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/react/a78bfa" alt="React"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vuedotjs/a78bfa" alt="Vue.js"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/angular/a78bfa" alt="Angular"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/php/a78bfa" alt="PHP"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/openjdk/a78bfa" alt="Java"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/typescript/a78bfa" alt="TypeScript"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/javascript/a78bfa" alt="JavaScript"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/html5/a78bfa" alt="HTML5"></div>
+              <div class="fw-item"><svg viewBox="0 0 24 24" width="40" height="40" fill="#a78bfa" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/sass/a78bfa" alt="Sass"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/tailwindcss/a78bfa" alt="Tailwind"></div>
             </div>
             <div class="marquee-set" aria-hidden="true">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/github" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/docker" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/kubernetes" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/python" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/nodedotjs" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/go" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/rust" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/ubuntu" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/debian" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/nginx" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/postgresql" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/redis" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/mongodb" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/react" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/vuedotjs" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/angular" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/php" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/openjdk" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/typescript" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/javascript" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/html5" alt=""></div>
-              <div class="fw-item"><svg viewBox="0 0 24 24" width="40" height="40" fill="#1572B6" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/sass" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/tailwindcss" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/github/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/docker/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/kubernetes/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/python/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nodedotjs/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/go/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rust/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/ubuntu/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/debian/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nginx/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/postgresql/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/redis/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/mongodb/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/react/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vuedotjs/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/angular/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/php/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/openjdk/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/typescript/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/javascript/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/html5/a78bfa" alt=""></div>
+              <div class="fw-item"><svg viewBox="0 0 24 24" width="40" height="40" fill="#a78bfa" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/sass/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/tailwindcss/a78bfa" alt=""></div>
             </div>
           </div>
           <div class="marquee-row rtl">
             <div class="marquee-set">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/ruby" alt="Ruby"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/bun" alt="Bun"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/deno" alt="Deno"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/digitalocean" alt="DigitalOcean"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/linux" alt="Linux"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/archlinux" alt="Arch"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/centos" alt="CentOS"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/ansible" alt="Ansible"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/terraform" alt="Terraform"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/gitlab" alt="GitLab"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/grafana" alt="Grafana"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/prometheus" alt="Prometheus"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/sqlite" alt="SQLite"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/apache" alt="Apache"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/caddy" alt="Caddy"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/fedora" alt="Fedora"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/svelte" alt="Svelte"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/astro" alt="Astro"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/nuxt" alt="Nuxt"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/vite" alt="Vite"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/dotnet" alt=".NET"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/ruby/a78bfa" alt="Ruby"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/bun/a78bfa" alt="Bun"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/deno/a78bfa" alt="Deno"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt="Cloudflare"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/digitalocean/a78bfa" alt="DigitalOcean"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/linux/a78bfa" alt="Linux"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/archlinux/a78bfa" alt="Arch"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/centos/a78bfa" alt="CentOS"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/ansible/a78bfa" alt="Ansible"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/terraform/a78bfa" alt="Terraform"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/gitlab/a78bfa" alt="GitLab"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/grafana/a78bfa" alt="Grafana"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/prometheus/a78bfa" alt="Prometheus"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/mysql/a78bfa" alt="MySQL"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/sqlite/a78bfa" alt="SQLite"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/apache/a78bfa" alt="Apache"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/caddy/a78bfa" alt="Caddy"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/fedora/a78bfa" alt="Fedora"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/svelte/a78bfa" alt="Svelte"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/astro/a78bfa" alt="Astro"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nextdotjs/a78bfa" alt="Next.js"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nuxt/a78bfa" alt="Nuxt"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vite/a78bfa" alt="Vite"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/dotnet/a78bfa" alt=".NET"></div>
             </div>
             <div class="marquee-set" aria-hidden="true">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/ruby" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/bun" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/deno" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/cloudflare" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/digitalocean" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/linux" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/archlinux" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/centos" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/ansible" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/terraform" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/gitlab" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/grafana" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/prometheus" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/mysql" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/sqlite" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/apache" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/caddy" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/fedora" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/svelte" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/astro" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/nextdotjs" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/nuxt" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/vite" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/dotnet" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/ruby/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/bun/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/deno/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/digitalocean/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/linux/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/archlinux/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/centos/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/ansible/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/terraform/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/gitlab/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/grafana/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/prometheus/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/mysql/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/sqlite/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/apache/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/caddy/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/fedora/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/svelte/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/astro/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nextdotjs/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/nuxt/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vite/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/dotnet/a78bfa" alt=""></div>
             </div>
           </div>
           <div class="marquee-row ltr">
             <div class="marquee-set">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/django" alt="Django"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/flask" alt="Flask"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/fastapi" alt="FastAPI"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/symfony" alt="Symfony"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/rails" alt="Rails"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/express" alt="Express"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/spring" alt="Spring"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/kotlin" alt="Kotlin"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/scala" alt="Scala"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/elixir" alt="Elixir"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/dart" alt="Dart"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/flutter" alt="Flutter"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/swift" alt="Swift"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/prisma" alt="Prisma"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/mariadb" alt="MariaDB"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/elasticsearch" alt="Elasticsearch"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/rabbitmq" alt="RabbitMQ"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/apachekafka" alt="Kafka"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/jenkins" alt="Jenkins"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/netlify" alt="Netlify"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/django/a78bfa" alt="Django"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/flask/a78bfa" alt="Flask"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/fastapi/a78bfa" alt="FastAPI"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/laravel/a78bfa" alt="Laravel"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/symfony/a78bfa" alt="Symfony"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rails/a78bfa" alt="Rails"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/express/a78bfa" alt="Express"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/spring/a78bfa" alt="Spring"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/kotlin/a78bfa" alt="Kotlin"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/scala/a78bfa" alt="Scala"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/elixir/a78bfa" alt="Elixir"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/dart/a78bfa" alt="Dart"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/flutter/a78bfa" alt="Flutter"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/swift/a78bfa" alt="Swift"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/graphql/a78bfa" alt="GraphQL"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/prisma/a78bfa" alt="Prisma"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/supabase/a78bfa" alt="Supabase"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/mariadb/a78bfa" alt="MariaDB"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/elasticsearch/a78bfa" alt="Elasticsearch"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rabbitmq/a78bfa" alt="RabbitMQ"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/apachekafka/a78bfa" alt="Kafka"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/jenkins/a78bfa" alt="Jenkins"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vercel/a78bfa" alt="Vercel"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/netlify/a78bfa" alt="Netlify"></div>
             </div>
             <div class="marquee-set" aria-hidden="true">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/django" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/flask" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/fastapi" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/laravel" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/symfony" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/rails" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/express" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/spring" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/kotlin" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/scala" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/elixir" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/dart" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/flutter" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/swift" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/graphql" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/prisma" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/supabase" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/mariadb" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/elasticsearch" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/rabbitmq" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/apachekafka" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/jenkins" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/vercel" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/netlify" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/django/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/flask/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/fastapi/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/laravel/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/symfony/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rails/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/express/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/spring/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/kotlin/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/scala/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/elixir/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/dart/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/flutter/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/swift/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/graphql/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/prisma/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/supabase/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/mariadb/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/elasticsearch/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rabbitmq/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/apachekafka/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/jenkins/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/vercel/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/netlify/a78bfa" alt=""></div>
             </div>
           </div>
         </div>
@@ -846,9 +854,9 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <p>Déployez en un clic vos serveurs web, bases de données, tâches cron et flux de travail. Réseau privé inclus.</p>
           <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
           <div class="mock-card-mini">
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/nginx" alt="Nginx"></span><span class="lbl">web-server</span><span class="badge badge-green">● Live</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></span><span class="lbl">database-postgres</span><span class="badge badge-purple">● Pro</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/redis" alt="Redis"></span><span class="lbl">worker-queue</span><span class="badge badge-green">● Live</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/nginx/a78bfa" alt="Nginx"></span><span class="lbl">web-server</span><span class="badge badge-green">● Live</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/postgresql/a78bfa" alt="PostgreSQL"></span><span class="lbl">database-postgres</span><span class="badge badge-purple">● Pro</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/redis/a78bfa" alt="Redis"></span><span class="lbl">worker-queue</span><span class="badge badge-green">● Live</span></div>
           </div>
         </div>
 
@@ -858,8 +866,8 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <a href="#offers" class="btn-link">Documentation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
           <div class="mock-card-mini">
             <div class="row"><span class="head">CONFIGURATION DE CALCUL</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/kubernetes" alt="Kubernetes"></span><span class="lbl">64 CŒURS DE PROCESSEUR</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/docker" alt="Docker"></span><span class="lbl">512 GO DE RAM</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/kubernetes/a78bfa" alt="Kubernetes"></span><span class="lbl">64 CŒURS DE PROCESSEUR</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/docker/a78bfa" alt="Docker"></span><span class="lbl">512 GO DE RAM</span></div>
           </div>
         </div>
       </div>
@@ -870,10 +878,10 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <p>Itérez rapidement grâce à des aperçus éphémères de l'architecture complète de votre application pour chaque modification.</p>
           <a href="#offers" class="btn-link">Documentation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
           <div class="mock-card-mini">
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/github" alt="GitHub"></span><span class="lbl" style="color:#a78bfa">PR #129 → aperçu actif</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel"></span><span class="lbl">web — disponible</span><span class="badge badge-green">✓</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js"></span><span class="lbl">api — disponible</span><span class="badge badge-green">✓</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></span><span class="lbl">database — disponible</span><span class="badge badge-green">✓</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/github/a78bfa" alt="GitHub"></span><span class="lbl" style="color:#a78bfa">PR #129 → aperçu actif</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/vercel/a78bfa" alt="Vercel"></span><span class="lbl">web — disponible</span><span class="badge badge-green">✓</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/nodedotjs/a78bfa" alt="Node.js"></span><span class="lbl">api — disponible</span><span class="badge badge-green">✓</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/postgresql/a78bfa" alt="PostgreSQL"></span><span class="lbl">database — disponible</span><span class="badge badge-green">✓</span></div>
           </div>
         </div>
 
@@ -882,9 +890,9 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <p>Stockez, versionnez et servez vos fichiers via une API S3 standard. Trafic illimité, requêtes illimitées dès 250 Go, réplication multi-zones et restauration point-in-time incluses.</p>
           <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
           <div class="mock-card-mini">
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/amazonaws" alt="AWS S3"></span><span class="lbl">bucket-media — 480 Go</span><span class="badge badge-green">● Actif</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/minio" alt="MinIO"></span><span class="lbl">bucket-backups — 1,2 To</span><span class="badge badge-green">● Actif</span></div>
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></span><span class="lbl">réplication 3 zones</span><span class="badge badge-purple">● Sync</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/amazonaws/a78bfa" alt="AWS S3"></span><span class="lbl">bucket-media — 480 Go</span><span class="badge badge-green">● Actif</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/minio/a78bfa" alt="MinIO"></span><span class="lbl">bucket-backups — 1,2 To</span><span class="badge badge-green">● Actif</span></div>
+            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt="Cloudflare"></span><span class="lbl">réplication 3 zones</span><span class="badge badge-purple">● Sync</span></div>
           </div>
         </div>
       </div>
@@ -899,32 +907,32 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
     <h2 class="section-huge">Restez sécurisé et résilient par défaut.<br><span class="muted" style="font-size:.6em;display:block;margin-top:16px;letter-spacing:-.03em">Concevoir des produits, pas la conformité.</span></h2>
     <div class="sec-grid">
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/wireguard" alt="WireGuard"></div>
+        <div class="sec-icon"><img src="https://cdn.simpleicons.org/wireguard/a78bfa" alt="WireGuard"></div>
         <h3>Réseautage privé</h3>
         <p>Sécurisez le trafic interne hors d'Internet public sans la complexité d'un VPC.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></div>
+        <div class="sec-icon"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt="Cloudflare"></div>
         <h3>Protection DDoS intégrée</h3>
         <p>Protégez tous vos services contre les attaques sans configuration ni modules complémentaires.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/letsencrypt" alt="Let's Encrypt"></div>
+        <div class="sec-icon"><img src="https://cdn.simpleicons.org/letsencrypt/a78bfa" alt="Let's Encrypt"></div>
         <h3>Conformité gérée</h3>
         <p>Répondez aux exigences des normes SOC 2 Type 2, HIPAA, ISO 27001 et RGPD sans frais supplémentaires.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/grafana" alt="Grafana"></div>
+        <div class="sec-icon"><img src="https://cdn.simpleicons.org/grafana/a78bfa" alt="Grafana"></div>
         <h3>Contrôles d'audit</h3>
         <p>Journalisation et surveillance intégrées des audits pour les événements de la plateforme.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/hashicorp" alt="HashiCorp Vault"></div>
+        <div class="sec-icon"><img src="https://cdn.simpleicons.org/hashicorp/a78bfa" alt="HashiCorp Vault"></div>
         <h3>Chiffrement au repos</h3>
         <p>Chiffrement AES-256 pour le stockage objet, les bases de données, les sauvegardes et les secrets.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/auth0" alt="Auth0"></div>
+        <div class="sec-icon"><img src="https://cdn.simpleicons.org/auth0/a78bfa" alt="Auth0"></div>
         <h3>Identification unique de l'utilisateur</h3>
         <p>Contrôlez les services et les ressources grâce au contrôle d'accès basé sur les rôles.</p>
       </div>
@@ -1006,13 +1014,13 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
     </div>
     <div class="pay-grid">
       <div class="pay-card">
-        <div class="pay-icon paypal"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg></div>
+        <div class="pay-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/></svg></div>
         <h3>PayPal</h3>
         <p>Paiement instantané via votre compte PayPal ou carte bancaire. Protection acheteur incluse, aucun frais supplémentaires.</p>
         <span class="pay-tag fast">Instantané</span>
       </div>
       <div class="pay-card">
-        <div class="pay-icon crypto"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.328-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-.01-.003-1.815-.45-.35 1.407s.975.225.955.238c.535.136.63.486.615.766l-.62 2.485c.04.007.086.02.14.04l-.144-.036-.87 3.48c-.066.163-.233.407-.607.314.015.02-.955-.238-.955-.238l-.66 1.508 1.71.425c.32.08.634.163.942.24l-.54 2.19 1.32.33.54-2.165c.36.1.71.19 1.05.276l-.54 2.15 1.32.33.54-2.18c2.22.42 3.89.25 4.596-1.757.566-1.617-.03-2.55-1.198-3.16.85-.196 1.492-.756 1.66-1.91z"/></svg></div>
+        <div class="pay-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.328-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-.01-.003-1.815-.45-.35 1.407s.975.225.955.238c.535.136.63.486.615.766l-.62 2.485c.04.007.086.02.14.04l-.144-.036-.87 3.48c-.066.163-.233.407-.607.314.015.02-.955-.238-.955-.238l-.66 1.508 1.71.425c.32.08.634.163.942.24l-.54 2.19 1.32.33.54-2.165c.36.1.71.19 1.05.276l-.54 2.15 1.32.33.54-2.18c2.22.42 3.89.25 4.596-1.757.566-1.617-.03-2.55-1.198-3.16.85-.196 1.492-.756 1.66-1.91z"/></svg></div>
         <h3>Crypto-monnaies</h3>
         <p>BTC, ETH, USDT, USDC, LTC et plus encore. Paiement anonyme et international, sans frais de conversion.</p>
         <span class="pay-tag popular-tag">Populaire</span>
@@ -1072,7 +1080,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
             <rect x="8" y="20" width="84" height="20" rx="6" fill="#7c3aed"/>
             <rect x="8" y="44" width="84" height="20" rx="6" fill="#7c3aed"/>
             <rect x="8" y="68" width="84" height="20" rx="6" fill="#7c3aed"/>
-            <circle cx="78" cy="30" r="5" fill="#34d9a4"/>
+            <circle cx="78" cy="30" r="5" fill="#a78bfa"/>
           </svg>
           GO CENTER
         </div>
@@ -1118,122 +1126,122 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
       <div class="tech-category">
         <h3>Systèmes d'exploitation</h3>
         <div class="tech-grid">
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/ubuntu" alt="Ubuntu"></div><span>Ubuntu</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/debian" alt="Debian"></div><span>Debian</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/centos" alt="CentOS"></div><span>CentOS</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/fedora" alt="Fedora"></div><span>Fedora</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/archlinux" alt="Arch Linux"></div><span>Arch Linux</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/linux" alt="Linux"></div><span>Linux</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/windows" alt="Windows Server"></div><span>Windows Server</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/proxmox" alt="Proxmox"></div><span>Proxmox</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/ubuntu/a78bfa" alt="Ubuntu"></div><span>Ubuntu</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/debian/a78bfa" alt="Debian"></div><span>Debian</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/centos/a78bfa" alt="CentOS"></div><span>CentOS</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/fedora/a78bfa" alt="Fedora"></div><span>Fedora</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/archlinux/a78bfa" alt="Arch Linux"></div><span>Arch Linux</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/linux/a78bfa" alt="Linux"></div><span>Linux</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/windows/a78bfa" alt="Windows Server"></div><span>Windows Server</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/proxmox/a78bfa" alt="Proxmox"></div><span>Proxmox</span></div>
         </div>
       </div>
 
       <div class="tech-category">
         <h3>Runtimes &amp; langages</h3>
         <div class="tech-grid">
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/python" alt="Python"></div><span>Python</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js"></div><span>Node.js</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/go" alt="Go"></div><span>Go</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rust" alt="Rust"></div><span>Rust</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/php" alt="PHP"></div><span>PHP</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/openjdk" alt="Java"></div><span>Java</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/ruby" alt="Ruby"></div><span>Ruby</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/bun" alt="Bun"></div><span>Bun</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/deno" alt="Deno"></div><span>Deno</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/typescript" alt="TypeScript"></div><span>TypeScript</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/kotlin" alt="Kotlin"></div><span>Kotlin</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/scala" alt="Scala"></div><span>Scala</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/elixir" alt="Elixir"></div><span>Elixir</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/swift" alt="Swift"></div><span>Swift</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/dart" alt="Dart"></div><span>Dart</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/dotnet" alt=".NET"></div><span>.NET</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/python/a78bfa" alt="Python"></div><span>Python</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nodedotjs/a78bfa" alt="Node.js"></div><span>Node.js</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/go/a78bfa" alt="Go"></div><span>Go</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rust/a78bfa" alt="Rust"></div><span>Rust</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/php/a78bfa" alt="PHP"></div><span>PHP</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/openjdk/a78bfa" alt="Java"></div><span>Java</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/ruby/a78bfa" alt="Ruby"></div><span>Ruby</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/bun/a78bfa" alt="Bun"></div><span>Bun</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/deno/a78bfa" alt="Deno"></div><span>Deno</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/typescript/a78bfa" alt="TypeScript"></div><span>TypeScript</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/kotlin/a78bfa" alt="Kotlin"></div><span>Kotlin</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/scala/a78bfa" alt="Scala"></div><span>Scala</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/elixir/a78bfa" alt="Elixir"></div><span>Elixir</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/swift/a78bfa" alt="Swift"></div><span>Swift</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/dart/a78bfa" alt="Dart"></div><span>Dart</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/dotnet/a78bfa" alt=".NET"></div><span>.NET</span></div>
         </div>
       </div>
 
       <div class="tech-category">
         <h3>Conteneurs &amp; orchestration</h3>
         <div class="tech-grid">
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/docker" alt="Docker"></div><span>Docker</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/kubernetes" alt="Kubernetes"></div><span>Kubernetes</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/ansible" alt="Ansible"></div><span>Ansible</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/terraform" alt="Terraform"></div><span>Terraform</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/docker/a78bfa" alt="Docker"></div><span>Docker</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/kubernetes/a78bfa" alt="Kubernetes"></div><span>Kubernetes</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/ansible/a78bfa" alt="Ansible"></div><span>Ansible</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/terraform/a78bfa" alt="Terraform"></div><span>Terraform</span></div>
         </div>
       </div>
 
       <div class="tech-category">
         <h3>Bases de données</h3>
         <div class="tech-grid">
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL"></div><span>PostgreSQL</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mysql" alt="MySQL"></div><span>MySQL</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mariadb" alt="MariaDB"></div><span>MariaDB</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mongodb" alt="MongoDB"></div><span>MongoDB</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/redis" alt="Redis"></div><span>Redis</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/sqlite" alt="SQLite"></div><span>SQLite</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/elasticsearch" alt="Elasticsearch"></div><span>Elasticsearch</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase"></div><span>Supabase</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/prisma" alt="Prisma"></div><span>Prisma</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/postgresql/a78bfa" alt="PostgreSQL"></div><span>PostgreSQL</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mysql/a78bfa" alt="MySQL"></div><span>MySQL</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mariadb/a78bfa" alt="MariaDB"></div><span>MariaDB</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/mongodb/a78bfa" alt="MongoDB"></div><span>MongoDB</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/redis/a78bfa" alt="Redis"></div><span>Redis</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/sqlite/a78bfa" alt="SQLite"></div><span>SQLite</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/elasticsearch/a78bfa" alt="Elasticsearch"></div><span>Elasticsearch</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/supabase/a78bfa" alt="Supabase"></div><span>Supabase</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/prisma/a78bfa" alt="Prisma"></div><span>Prisma</span></div>
         </div>
       </div>
 
       <div class="tech-category">
         <h3>Serveurs web &amp; reverse proxy</h3>
         <div class="tech-grid">
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nginx" alt="Nginx"></div><span>Nginx</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/apache" alt="Apache"></div><span>Apache</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/caddy" alt="Caddy"></div><span>Caddy</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nginx/a78bfa" alt="Nginx"></div><span>Nginx</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/apache/a78bfa" alt="Apache"></div><span>Apache</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/caddy/a78bfa" alt="Caddy"></div><span>Caddy</span></div>
         </div>
       </div>
 
       <div class="tech-category">
         <h3>Frameworks &amp; runtimes web</h3>
         <div class="tech-grid">
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/react" alt="React"></div><span>React</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vuedotjs" alt="Vue.js"></div><span>Vue.js</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/angular" alt="Angular"></div><span>Angular</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/svelte" alt="Svelte"></div><span>Svelte</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/astro" alt="Astro"></div><span>Astro</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js"></div><span>Next.js</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nuxt" alt="Nuxt"></div><span>Nuxt</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/django" alt="Django"></div><span>Django</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/flask" alt="Flask"></div><span>Flask</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/fastapi" alt="FastAPI"></div><span>FastAPI</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/laravel" alt="Laravel"></div><span>Laravel</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/symfony" alt="Symfony"></div><span>Symfony</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rails" alt="Rails"></div><span>Rails</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/express" alt="Express"></div><span>Express</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/spring" alt="Spring"></div><span>Spring</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/flutter" alt="Flutter"></div><span>Flutter</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/graphql" alt="GraphQL"></div><span>GraphQL</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/react/a78bfa" alt="React"></div><span>React</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vuedotjs/a78bfa" alt="Vue.js"></div><span>Vue.js</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/angular/a78bfa" alt="Angular"></div><span>Angular</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/svelte/a78bfa" alt="Svelte"></div><span>Svelte</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/astro/a78bfa" alt="Astro"></div><span>Astro</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nextdotjs/a78bfa" alt="Next.js"></div><span>Next.js</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/nuxt/a78bfa" alt="Nuxt"></div><span>Nuxt</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/django/a78bfa" alt="Django"></div><span>Django</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/flask/a78bfa" alt="Flask"></div><span>Flask</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/fastapi/a78bfa" alt="FastAPI"></div><span>FastAPI</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/laravel/a78bfa" alt="Laravel"></div><span>Laravel</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/symfony/a78bfa" alt="Symfony"></div><span>Symfony</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rails/a78bfa" alt="Rails"></div><span>Rails</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/express/a78bfa" alt="Express"></div><span>Express</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/spring/a78bfa" alt="Spring"></div><span>Spring</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/flutter/a78bfa" alt="Flutter"></div><span>Flutter</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/graphql/a78bfa" alt="GraphQL"></div><span>GraphQL</span></div>
         </div>
       </div>
 
       <div class="tech-category">
         <h3>DevOps &amp; monitoring</h3>
         <div class="tech-grid">
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/github" alt="GitHub"></div><span>GitHub</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/gitlab" alt="GitLab"></div><span>GitLab</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/grafana" alt="Grafana"></div><span>Grafana</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/prometheus" alt="Prometheus"></div><span>Prometheus</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></div><span>Cloudflare</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/digitalocean" alt="DigitalOcean"></div><span>DigitalOcean</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rabbitmq" alt="RabbitMQ"></div><span>RabbitMQ</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/apachekafka" alt="Kafka"></div><span>Kafka</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/jenkins" alt="Jenkins"></div><span>Jenkins</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel"></div><span>Vercel</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/netlify" alt="Netlify"></div><span>Netlify</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/github/a78bfa" alt="GitHub"></div><span>GitHub</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/gitlab/a78bfa" alt="GitLab"></div><span>GitLab</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/grafana/a78bfa" alt="Grafana"></div><span>Grafana</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/prometheus/a78bfa" alt="Prometheus"></div><span>Prometheus</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt="Cloudflare"></div><span>Cloudflare</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/digitalocean/a78bfa" alt="DigitalOcean"></div><span>DigitalOcean</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rabbitmq/a78bfa" alt="RabbitMQ"></div><span>RabbitMQ</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/apachekafka/a78bfa" alt="Kafka"></div><span>Kafka</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/jenkins/a78bfa" alt="Jenkins"></div><span>Jenkins</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vercel/a78bfa" alt="Vercel"></div><span>Vercel</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/netlify/a78bfa" alt="Netlify"></div><span>Netlify</span></div>
         </div>
       </div>
 
       <div class="tech-category">
         <h3>Front-end tooling</h3>
         <div class="tech-grid">
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vite" alt="Vite"></div><span>Vite</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/javascript" alt="JavaScript"></div><span>JavaScript</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/html5" alt="HTML5"></div><span>HTML5</span></div>
-          <div class="tech-item"><div class="tech-logo"><svg viewBox="0 0 24 24" width="26" height="26" fill="#1572B6"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div><span>CSS3</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/sass" alt="Sass"></div><span>Sass</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind"></div><span>Tailwind</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/vite/a78bfa" alt="Vite"></div><span>Vite</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/javascript/a78bfa" alt="JavaScript"></div><span>JavaScript</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/html5/a78bfa" alt="HTML5"></div><span>HTML5</span></div>
+          <div class="tech-item"><div class="tech-logo"><svg viewBox="0 0 24 24" width="26" height="26" fill="#a78bfa"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg></div><span>CSS3</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/sass/a78bfa" alt="Sass"></div><span>Sass</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/tailwindcss/a78bfa" alt="Tailwind"></div><span>Tailwind</span></div>
         </div>
       </div>
 
@@ -1396,16 +1404,16 @@ createCarousel('cs', CS_OFFERS);
 
 const COMPARE_SRV = [
   { brand:'GO CENTER', price:40.99, color:'#7c3aed', self:true },
-  { brand:'Hetzner',   price:49.00, color:'#d50c2d' },
-  { brand:'Contabo',   price:54.99, color:'#00b8a9' },
-  { brand:'OVH',       price:59.99, color:'#3b5998' },
+  { brand:'Hetzner',   price:49.00, color:'#a78bfa' },
+  { brand:'Contabo',   price:54.99, color:'#a78bfa' },
+  { brand:'OVH',       price:59.99, color:'#a78bfa' },
   { brand:'Scaleway',  price:69.99, color:'#a78bfa' }
 ];
 const COMPARE_CS = [
   { brand:'GO CENTER', price:12.99, color:'#7c3aed', self:true },
-  { brand:'Hetzner',   price:17.90, color:'#d50c2d' },
-  { brand:'Contabo',   price:19.99, color:'#00b8a9' },
-  { brand:'OVH',       price:24.99, color:'#3b5998' },
+  { brand:'Hetzner',   price:17.90, color:'#a78bfa' },
+  { brand:'Contabo',   price:19.99, color:'#a78bfa' },
+  { brand:'OVH',       price:24.99, color:'#a78bfa' },
   { brand:'Scaleway',  price:29.99, color:'#a78bfa' }
 ];
 function renderCompare(id, data){
@@ -1413,7 +1421,7 @@ function renderCompare(id, data){
   if(!wrap) return;
   const max = Math.max.apply(null, data.map(function(d){ return d.price; }));
   wrap.innerHTML = data.map(function(d){
-    return '<div class="compare-row' + (d.self ? ' gocenter' : '') + '"><div class="compare-brand"><span class="dot-brand" style="background:' + d.color + '"></span>' + d.brand + '</div><div class="compare-bar"><div class="compare-fill" style="width:' + ((d.price / max) * 100) + '%;background:' + (d.self ? 'linear-gradient(90deg,#7c3aed,#a78bfa)' : d.color) + ';transform:translateZ(0)"></div></div><div class="compare-price">' + d.price.toFixed(2).replace('.', ',') + '€</div></div>';
+    return '<div class="compare-row' + (d.self ? ' gocenter' : '') + '"><div class="compare-brand"><span class="dot-brand" style="background:' + d.color + '"></span>' + d.brand + '</div><div class="compare-bar"><div class="compare-fill" style="width:' + ((d.price / max) * 100) + '%;background:' + (d.self ? 'linear-gradient(90deg,#7c3aed,#a78bfa)' : 'rgba(167,139,250,.45)') + ';transform:translateZ(0)"></div></div><div class="compare-price">' + d.price.toFixed(2).replace('.', ',') + '€</div></div>';
   }).join('');
 }
 renderCompare('compare-srv', COMPARE_SRV);
