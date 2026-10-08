@@ -18,9 +18,6 @@
 :root{
   --r-xs:8px;--r-sm:12px;--r-md:16px;--r-lg:22px;--r-xl:28px;--r-2xl:34px;
   --line:rgba(255,255,255,.08);
-  --glass:rgba(255,255,255,.03);
-  --glass-2:rgba(255,255,255,.05);
-  --glass-border:rgba(255,255,255,.09);
   --card:#0a0a0c;--card-2:#0f0f13;
   --accent:#7c3aed;--accent-2:#a78bfa;
 }
@@ -38,19 +35,22 @@ svg{display:block}
 /* GPU acceleration */
 .hero-mockup,.marquee-set,.fw-item,.big-card,.sec-card,.mock-bar,.compare-fill,.step,.pay-card,.plan,.carousel-track,.gate-glow,.mock-card-mini,.mock-terminal,.hero-pay-badges,.pay-badge{will-change:transform;transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 
-/* ============ GLASS EFFECT (global) ============ */
-.glass,.big-card,.sec-card,.pay-card,.faq-item,.mock-card-mini,.mock-terminal,.mock-panel,.step-visual,.plan,.compare-row,.tabs,.carousel-viewport,.gate-card,.hero-mockup,.pay-badge,.btn-link{
+/* ============ GLASS EFFECT GLOBAL — appliqué partout ============ */
+.big-card,.sec-card,.pay-card,.faq-item,.mock-card-mini,.mock-terminal,.mock-panel,.step-visual,.plan,.compare-row,.tabs,.carousel-viewport,.gate-card,.hero-mockup,.pay-badge,.btn-link,.tech-item,.carousel-slide{
   background:rgba(255,255,255,.025);
   backdrop-filter:blur(24px) saturate(160%);
   -webkit-backdrop-filter:blur(24px) saturate(160%);
   border:1px solid rgba(255,255,255,.08);
 }
-.big-card:hover,.sec-card:hover,.pay-card:hover,.faq-item:hover{
+.big-card:hover,.sec-card:hover,.pay-card:hover,.faq-item:hover,.tech-item:hover{
   background:rgba(255,255,255,.045);
   border-color:rgba(167,139,250,.32);
 }
 .faq-item.open{background:rgba(167,139,250,.06);border-color:rgba(167,139,250,.4)}
 .compare-row.gocenter{background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.4)}
+.plan{background:rgba(255,255,255,.02)}
+.carousel-viewport{background:rgba(255,255,255,.02)}
+.carousel-slide{background:transparent;border:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 
 /* ============ SECURITY GATE ============ */
 #security-gate{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease, visibility .5s ease}
@@ -67,20 +67,15 @@ svg{display:block}
 .gate-card h1{font-size:clamp(22px,3.2vw,27px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .gate-card p{font-size:.92rem;color:#a1a1aa;line-height:1.55;margin-bottom:0;max-width:440px;margin-left:auto;margin-right:auto}
 .gate-card p strong{color:#fff;font-weight:600}
-
-/* CAPTCHA — décalé vers le bas, plus proche de la description, large et centré */
 .cf-wrap{display:flex;justify-content:center;align-items:center;margin:18px auto 0;padding:14px;background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:var(--r-lg);width:100%;max-width:400px;min-height:92px;overflow:visible;position:relative;z-index:5;box-shadow:0 6px 26px rgba(124,58,237,.14);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .cf-wrap iframe{border-radius:var(--r-sm) !important;display:block;max-width:100%}
 .cf-turnstile{border-radius:var(--r-sm);overflow:hidden;display:flex;justify-content:center;position:relative;z-index:6}
-
 .gate-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(124,58,237,.5),transparent);margin:20px 0 16px}
-
 .gate-status{display:flex;align-items:center;justify-content:center;gap:10px;font-size:.78rem;color:#71717a;flex-wrap:wrap}
 .gate-status > svg{width:14px;height:14px;color:#4ade80;flex-shrink:0}
 .gate-status .cf-brand{display:inline-flex;align-items:center;gap:6px;color:#f97316;font-weight:600}
 .gate-status .cf-brand svg{width:14px;height:14px;color:#f97316}
 .gate-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);padding:16px 20px;border-radius:var(--r-md);color:#fca5a5;font-size:.85rem;line-height:1.5;margin-top:18px}
-
 body.gate-active{overflow:hidden}
 body.gate-active main,
 body.gate-active > header,
@@ -236,18 +231,23 @@ body.gate-active > #top-banner{visibility:hidden}
 .badge-green{background:rgba(34,197,94,.15);color:#4ade80}
 .badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
 
-/* ============ SÉCURITÉ — disposition irrégulière ============ */
+/* ============ SÉCURITÉ — quinconce très irrégulier ============ */
 .sec-grid{display:grid;grid-template-columns:1fr;gap:28px 24px;margin-top:80px;align-items:start}
 @media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){
-  .sec-grid{grid-template-columns:repeat(3,1fr)}
-  /* quinconce irrégulier */
+  .sec-grid{grid-template-columns:repeat(3,1fr);gap:36px 24px}
+  /* Décalage très prononcé : aucune carte n'est sur la même ligne */
   .sec-grid .sec-card:nth-child(1){margin-top:0}
-  .sec-grid .sec-card:nth-child(2){margin-top:60px}
-  .sec-grid .sec-card:nth-child(3){margin-top:20px}
-  .sec-grid .sec-card:nth-child(4){margin-top:-20px}
-  .sec-grid .sec-card:nth-child(5){margin-top:50px}
-  .sec-grid .sec-card:nth-child(6){margin-top:10px}
+  .sec-grid .sec-card:nth-child(2){margin-top:110px}
+  .sec-grid .sec-card:nth-child(3){margin-top:40px}
+  .sec-grid .sec-card:nth-child(4){margin-top:150px}
+  .sec-grid .sec-card:nth-child(5){margin-top:20px}
+  .sec-grid .sec-card:nth-child(6){margin-top:130px}
+}
+@media(min-width:600px) and (max-width:1023px){
+  /* Sur tablette : décalage léger mais visible */
+  .sec-grid .sec-card:nth-child(odd){margin-top:0}
+  .sec-grid .sec-card:nth-child(even){margin-top:60px}
 }
 .sec-card{display:flex;flex-direction:column;gap:18px;padding:32px 28px;border-radius:var(--r-lg);transition:background .3s,border-color .3s;position:relative;overflow:hidden}
 .sec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
@@ -265,9 +265,9 @@ body.gate-active > #top-banner{visibility:hidden}
 .offers-header h2{font-size:clamp(32px,4vw,54px);font-weight:600;letter-spacing:-.04em;line-height:1.05;color:#fff}
 .offers-header p{font-size:.95rem;color:#a1a1aa;max-width:400px}
 .tabs{display:flex;gap:8px;padding:8px;border-radius:var(--r-lg);margin-bottom:36px}
-.tab{flex:1;padding:18px 22px;background:transparent;color:#a1a1aa;font-size:.95rem;font-weight:500;letter-spacing:-.005em;display:flex;align-items:center;gap:13px;transition:all .25s;cursor:pointer;text-align:left;border-radius:var(--r-md)}
-.tab:hover{background:rgba(255,255,255,.05);color:#fff}
-.tab.on{background:rgba(255,255,255,.95);color:#000;box-shadow:0 6px 22px rgba(255,255,255,.12)}
+.tab{flex:1;padding:18px 22px;background:transparent;color:#a1a1aa;font-size:.95rem;font-weight:500;letter-spacing:-.005em;display:flex;align-items:center;gap:13px;transition:all .25s;cursor:pointer;text-align:left;border-radius:var(--r-md);border:1px solid transparent}
+.tab:hover{background:rgba(255,255,255,.05);color:#fff;border-color:rgba(255,255,255,.1)}
+.tab.on{background:rgba(255,255,255,.95);color:#000;border-color:rgba(255,255,255,.95);box-shadow:0 6px 22px rgba(255,255,255,.15)}
 .tab .tab-ico{width:38px;height:38px;display:grid;place-items:center;background:rgba(255,255,255,.06);border-radius:var(--r-sm);flex-shrink:0;color:#a78bfa;transition:all .25s}
 .tab .tab-ico svg{width:19px;height:19px}
 .tab.on .tab-ico{background:rgba(124,58,237,.12);color:#7c3aed}
@@ -279,8 +279,8 @@ body.gate-active > #top-banner{visibility:hidden}
 .carousel.on{display:block}
 .carousel-viewport{overflow:hidden;border-radius:var(--r-xl)}
 .carousel-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.carousel-slide{min-width:100%;padding:0}
-.plan{padding:56px 52px;display:grid;grid-template-columns:1fr;gap:40px;border-radius:var(--r-xl);border-top:none;border-left:none;border-right:none}
+.carousel-slide{min-width:100%;padding:0;background:transparent;border:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.plan{padding:56px 52px;display:grid;grid-template-columns:1fr;gap:40px;border-radius:var(--r-xl)}
 @media(min-width:768px){.plan{grid-template-columns:1fr 1fr;gap:60px;align-items:start}}
 .plan-left h3{font-size:clamp(36px,4vw,56px);font-weight:600;letter-spacing:-.045em;line-height:1;margin-bottom:28px;color:#fff;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .plan-tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:7px 13px;border-radius:var(--r-xs)}
@@ -447,8 +447,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 .tech-category h3{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:#a78bfa;margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .tech-category h3::before{content:'';width:20px;height:1px;background:#a78bfa}
 .tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px}
-.tech-item{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 12px;border:1px solid rgba(255,255,255,.08);border-radius:var(--r-md);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .25s}
-.tech-item:hover{border-color:rgba(167,139,250,.4);background:rgba(124,58,237,.1);transform:translateY(-3px)}
+.tech-item{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 12px;border-radius:var(--r-md);transition:all .25s}
 .tech-item .tech-logo{width:46px;height:46px;display:grid;place-items:center;background:rgba(255,255,255,.9);border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.4);overflow:hidden}
 .tech-item .tech-logo img{width:26px;height:26px;object-fit:contain}
 .tech-item .tech-logo svg{width:26px;height:26px}
@@ -894,7 +893,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= SÉCURITÉ ================= -->
+<!-- ================= SÉCURITÉ (quinconce très irrégulier) ================= -->
 <section class="section" id="security">
   <div class="section-inner">
     <h2 class="section-huge">Restez sécurisé et résilient par défaut.<br><span class="muted" style="font-size:.6em;display:block;margin-top:16px;letter-spacing:-.03em">Concevoir des produits, pas la conformité.</span></h2>
