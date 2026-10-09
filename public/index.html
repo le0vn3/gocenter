@@ -53,9 +53,9 @@ svg{display:block}
 
 /* ============ TOUS LES LOGOS EN VIOLET ============ */
 .fw-item img,.fw-item svg,
-.sec-icon img,.sec-icon svg,
-.tech-item .tech-logo img,.tech-item .tech-logo svg,
-.mock-card-mini .row .lg img,.mock-card-mini .row .lg svg,
+.sec-icon svg,
+.tech-item .tech-logo svg,
+.mock-card-mini .row .lg svg,
 .pay-badge svg,.pay-icon svg,
 .footer-cf svg,
 .gate-status > svg,.gate-status .cf-brand svg{
@@ -235,34 +235,26 @@ body.gate-active > #top-banner{visibility:hidden}
 .mock-card-mini .row + .row{border-top:1px solid rgba(255,255,255,.04)}
 .mock-card-mini .row .badge{padding:3px 9px;border-radius:var(--r-xs);font-size:.62rem;font-weight:600;white-space:nowrap}
 .mock-card-mini .row .lg{width:26px;height:26px;flex-shrink:0;background:rgba(124,58,237,.16);border:1px solid rgba(167,139,250,.24);border-radius:8px;display:grid;place-items:center}
-.mock-card-mini .row .lg img{width:16px;height:16px;object-fit:contain}
+.mock-card-mini .row .lg svg{width:16px;height:16px}
 .mock-card-mini .row .lbl{flex:1;color:#d4d4d8;font-weight:500}
 .mock-card-mini .row .head{font-size:.62rem;color:#71717a;letter-spacing:.08em;font-weight:600}
 .badge-green{background:rgba(167,139,250,.18);color:#a78bfa}
 .badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
 
-/* ============ SÉCURITÉ ============ */
-.sec-grid{display:grid;grid-template-columns:1fr;gap:28px 24px;margin-top:80px;align-items:start}
+/* ============ SÉCURITÉ — DISPOSITION RÉGULIÈRE ============ */
+.sec-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:80px;align-items:start}
 @media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){
-  .sec-grid{grid-template-columns:repeat(3,1fr);gap:36px 24px}
-  .sec-grid .sec-card:nth-child(1){margin-top:0}
-  .sec-grid .sec-card:nth-child(2){margin-top:110px}
-  .sec-grid .sec-card:nth-child(3){margin-top:40px}
-  .sec-grid .sec-card:nth-child(4){margin-top:150px}
-  .sec-grid .sec-card:nth-child(5){margin-top:20px}
-  .sec-grid .sec-card:nth-child(6){margin-top:130px}
+  .sec-grid{grid-template-columns:repeat(3,1fr);gap:24px}
+  /* Toutes les cartes alignées sur la même ligne */
+  .sec-grid .sec-card{margin-top:0}
 }
-@media(min-width:600px) and (max-width:1023px){
-  .sec-grid .sec-card:nth-child(odd){margin-top:0}
-  .sec-grid .sec-card:nth-child(even){margin-top:60px}
-}
-.sec-card{display:flex;flex-direction:column;gap:18px;padding:32px 28px;border-radius:var(--r-lg);transition:background .3s,border-color .3s;position:relative;overflow:hidden;background:#000}
+.sec-card{display:flex;flex-direction:column;gap:18px;padding:32px 28px;border-radius:var(--r-lg);transition:border-color .3s;position:relative;overflow:hidden;background:#000}
 .sec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
 .sec-card:hover::before{opacity:1}
 .sec-icon{width:56px;height:56px;background:rgba(124,58,237,.14);border:1px solid rgba(167,139,250,.28);display:grid;place-items:center;border-radius:14px;position:relative;overflow:hidden;transition:transform .3s,background .3s,border-color .3s}
 .sec-card:hover .sec-icon{transform:scale(1.06) rotate(-3deg);background:rgba(124,58,237,.24);border-color:rgba(167,139,250,.5)}
-.sec-icon img{width:30px;height:30px;object-fit:contain}
+.sec-icon svg{width:30px;height:30px;color:var(--logo)}
 .sec-card h3{font-size:1.15rem;font-weight:600;letter-spacing:-.02em;color:#fff;line-height:1.3}
 .sec-card p{font-size:.9rem;color:#a1a1aa;line-height:1.55;letter-spacing:-.005em}
 
@@ -456,8 +448,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 .tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px}
 .tech-item{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 12px;border-radius:var(--r-md);transition:all .25s;background:#000}
 .tech-item .tech-logo{width:46px;height:46px;display:grid;place-items:center;background:rgba(124,58,237,.14);border:1px solid rgba(167,139,250,.24);border-radius:14px;overflow:hidden}
-.tech-item .tech-logo img{width:26px;height:26px;object-fit:contain}
-.tech-item .tech-logo svg{width:26px;height:26px}
+.tech-item .tech-logo svg{width:26px;height:26px;color:var(--logo)}
 .tech-item span{font-size:.76rem;font-weight:500;color:#d4d4d8;text-align:center;letter-spacing:-.005em;line-height:1.3}
 
 @media(max-width:640px){
@@ -468,7 +459,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   .tech-grid{grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px}
   .tech-item{padding:14px 8px}
   .tech-item .tech-logo{width:38px;height:38px;border-radius:12px}
-  .tech-item .tech-logo img{width:22px;height:22px}
+  .tech-item .tech-logo svg{width:22px;height:22px}
   .tech-item span{font-size:.7rem}
 }
 
@@ -490,8 +481,8 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   .fw-item img{width:34px;height:34px}
   .fw-item svg{width:34px;height:34px}
   .sec-icon{width:48px;height:48px}
-  .sec-icon img{width:26px;height:26px}
-  .sec-grid .sec-card:nth-child(n){margin-top:0}
+  .sec-icon svg{width:26px;height:26px}
+  .sec-grid .sec-card{margin-top:0}
 }
 </style>
 </head>
@@ -729,7 +720,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           </div>
           <div class="marquee-row rtl">
             <div class="marquee-set">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/ruby/a78bfa" alt="Ruby"></div>
+              <div class="fw-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="40" height="40"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/bun/a78bfa" alt="Bun"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/deno/a78bfa" alt="Deno"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt="Cloudflare"></div>
@@ -755,7 +746,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
               <div class="fw-item"><img src="https://cdn.simpleicons.org/dotnet/a78bfa" alt=".NET"></div>
             </div>
             <div class="marquee-set" aria-hidden="true">
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/ruby/a78bfa" alt=""></div>
+              <div class="fw-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="40" height="40"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/bun/a78bfa" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/deno/a78bfa" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt=""></div>
@@ -889,7 +880,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <p>Stockez, versionnez et servez vos fichiers via une API S3 standard. Trafic illimité, requêtes illimitées dès 250 Go, réplication multi-zones et restauration point-in-time incluses.</p>
           <a href="#offers" class="btn-link">En savoir plus <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
           <div class="mock-card-mini">
-            <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/amazonaws/a78bfa" alt="AWS S3"></span><span class="lbl">bucket-media — 480 Go</span><span class="badge badge-green">● Actif</span></div>
+            <div class="row"><span class="lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></span><span class="lbl">bucket-media — 480 Go</span><span class="badge badge-green">● Actif</span></div>
             <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/minio/a78bfa" alt="MinIO"></span><span class="lbl">bucket-backups — 1,2 To</span><span class="badge badge-green">● Actif</span></div>
             <div class="row"><span class="lg"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt="Cloudflare"></span><span class="lbl">réplication 3 zones</span><span class="badge badge-purple">● Sync</span></div>
           </div>
@@ -906,32 +897,44 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
     <h2 class="section-huge">Restez sécurisé et résilient par défaut.<br><span class="muted" style="font-size:.6em;display:block;margin-top:16px;letter-spacing:-.03em">Concevoir des produits, pas la conformité.</span></h2>
     <div class="sec-grid">
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/wireguard/a78bfa" alt="WireGuard"></div>
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
         <h3>Réseautage privé</h3>
         <p>Sécurisez le trafic interne hors d'Internet public sans la complexité d'un VPC.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/cloudflare/a78bfa" alt="Cloudflare"></div>
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+        </div>
         <h3>Protection DDoS intégrée</h3>
         <p>Protégez tous vos services contre les attaques sans configuration ni modules complémentaires.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/letsencrypt/a78bfa" alt="Let's Encrypt"></div>
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
         <h3>Conformité gérée</h3>
         <p>Répondez aux exigences des normes SOC 2 Type 2, HIPAA, ISO 27001 et RGPD sans frais supplémentaires.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/grafana/a78bfa" alt="Grafana"></div>
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+        </div>
         <h3>Contrôles d'audit</h3>
         <p>Journalisation et surveillance intégrées des audits pour les événements de la plateforme.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/vault/a78bfa" alt="HashiCorp Vault"></div>
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        </div>
         <h3>Chiffrement au repos</h3>
         <p>Chiffrement AES-256 pour le stockage objet, les bases de données, les sauvegardes et les secrets.</p>
       </div>
       <div class="sec-card">
-        <div class="sec-icon"><img src="https://cdn.simpleicons.org/auth0/a78bfa" alt="Auth0"></div>
+        <div class="sec-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+        </div>
         <h3>Identification unique de l'utilisateur</h3>
         <p>Contrôlez les services et les ressources grâce au contrôle d'accès basé sur les rôles.</p>
       </div>
@@ -1131,7 +1134,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/fedora/a78bfa" alt="Fedora"></div><span>Fedora</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/archlinux/a78bfa" alt="Arch Linux"></div><span>Arch Linux</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/linux/a78bfa" alt="Linux"></div><span>Linux</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/windows/a78bfa" alt="Windows Server"></div><span>Windows Server</span></div>
+          <div class="tech-item"><div class="tech-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><span>Windows Server</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/proxmox/a78bfa" alt="Proxmox"></div><span>Proxmox</span></div>
         </div>
       </div>
