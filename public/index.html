@@ -241,13 +241,22 @@ body.gate-active > #top-banner{visibility:hidden}
 .badge-green{background:rgba(167,139,250,.18);color:#a78bfa}
 .badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
 
-/* ============ SÉCURITÉ — DISPOSITION RÉGULIÈRE ============ */
-.sec-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:80px;align-items:start}
+/* ============ SÉCURITÉ — QUINCONCE TRÈS IRRÉGULIER ============ */
+.sec-grid{display:grid;grid-template-columns:1fr;gap:28px 24px;margin-top:80px;align-items:start}
 @media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){
-  .sec-grid{grid-template-columns:repeat(3,1fr);gap:24px}
-  /* Toutes les cartes alignées sur la même ligne */
-  .sec-grid .sec-card{margin-top:0}
+  .sec-grid{grid-template-columns:repeat(3,1fr);gap:36px 24px}
+  /* Décalage très prononcé : aucune carte n'est sur la même ligne */
+  .sec-grid .sec-card:nth-child(1){margin-top:0}
+  .sec-grid .sec-card:nth-child(2){margin-top:120px}
+  .sec-grid .sec-card:nth-child(3){margin-top:50px}
+  .sec-grid .sec-card:nth-child(4){margin-top:160px}
+  .sec-grid .sec-card:nth-child(5){margin-top:30px}
+  .sec-grid .sec-card:nth-child(6){margin-top:140px}
+}
+@media(min-width:600px) and (max-width:1023px){
+  .sec-grid .sec-card:nth-child(odd){margin-top:0}
+  .sec-grid .sec-card:nth-child(even){margin-top:70px}
 }
 .sec-card{display:flex;flex-direction:column;gap:18px;padding:32px 28px;border-radius:var(--r-lg);transition:border-color .3s;position:relative;overflow:hidden;background:#000}
 .sec-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7c3aed,transparent);opacity:0;transition:opacity .3s}
@@ -315,17 +324,17 @@ body.gate-active > #top-banner{visibility:hidden}
 .carousel-counter strong{color:#fff;font-weight:600}
 @media(max-width:768px){.plan{padding:40px 28px}.tabs{flex-direction:column;padding:6px}.tab{padding:15px;flex-direction:row;justify-content:center}.tab .tab-sub{display:none}}
 
-/* ============ COMPARATIF ============ */
+/* ============ COMPARATIF — TOUTES LES BARRES VIOLET ============ */
 #compare{padding:100px 24px;background:#000;border-top:1px solid var(--line)}
 .compare-inner{max-width:1400px;margin:0 auto}
 .compare-rows{display:flex;flex-direction:column;gap:14px;margin-top:26px}
 .compare-row{display:grid;grid-template-columns:130px 1fr 110px;gap:24px;align-items:center;padding:18px 20px;border-radius:var(--r-lg);transition:border-color .3s;background:#000}
 .compare-brand{font-size:.95rem;font-weight:500;color:#a1a1aa;display:flex;align-items:center;gap:10px}
 .compare-brand .dot-brand{width:11px;height:11px;border-radius:50%;background:#a78bfa !important}
-.compare-bar{height:34px;background:rgba(167,139,250,.05);position:relative;overflow:hidden;border-radius:10px}
-.compare-fill{height:100%;border-radius:10px;background:linear-gradient(90deg, rgba(167,139,250,.55), rgba(167,139,250,.85)) !important}
+.compare-bar{height:34px;background:rgba(167,139,250,.12);position:relative;overflow:hidden;border-radius:10px}
+.compare-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#7c3aed,#a78bfa) !important}
 .compare-row.gocenter .compare-brand{color:#fff;font-weight:600}
-.compare-row.gocenter .compare-fill{background:linear-gradient(90deg,#7c3aed,#a78bfa) !important}
+.compare-row.gocenter .compare-bar{background:rgba(124,58,237,.18)}
 .compare-price{font-size:1.1rem;font-weight:600;color:#fff;text-align:right;font-family:'SF Mono',Menlo,monospace;letter-spacing:-.02em}
 .compare-row.gocenter .compare-price{color:#a78bfa}
 @media(max-width:600px){.compare-row{grid-template-columns:86px 1fr 84px;gap:12px;padding:14px}.compare-brand{font-size:.78rem}.compare-price{font-size:.9rem}.compare-bar{height:26px}}
@@ -449,6 +458,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
 .tech-item{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 12px;border-radius:var(--r-md);transition:all .25s;background:#000}
 .tech-item .tech-logo{width:46px;height:46px;display:grid;place-items:center;background:rgba(124,58,237,.14);border:1px solid rgba(167,139,250,.24);border-radius:14px;overflow:hidden}
 .tech-item .tech-logo svg{width:26px;height:26px;color:var(--logo)}
+.tech-item .tech-logo img{width:26px;height:26px;object-fit:contain}
 .tech-item span{font-size:.76rem;font-weight:500;color:#d4d4d8;text-align:center;letter-spacing:-.005em;line-height:1.3}
 
 @media(max-width:640px){
@@ -460,6 +470,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   .tech-item{padding:14px 8px}
   .tech-item .tech-logo{width:38px;height:38px;border-radius:12px}
   .tech-item .tech-logo svg{width:22px;height:22px}
+  .tech-item .tech-logo img{width:22px;height:22px}
   .tech-item span{font-size:.7rem}
 }
 
@@ -482,7 +493,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   .fw-item svg{width:34px;height:34px}
   .sec-icon{width:48px;height:48px}
   .sec-icon svg{width:26px;height:26px}
-  .sec-grid .sec-card{margin-top:0}
+  .sec-grid .sec-card:nth-child(n){margin-top:0}
 }
 </style>
 </head>
@@ -1423,10 +1434,7 @@ function renderCompare(id, data){
   if(!wrap) return;
   const max = Math.max.apply(null, data.map(function(d){ return d.price; }));
   wrap.innerHTML = data.map(function(d){
-    const fill = d.self
-      ? 'linear-gradient(90deg,#7c3aed,#a78bfa)'
-      : 'linear-gradient(90deg,rgba(167,139,250,.55),rgba(167,139,250,.85))';
-    return '<div class="compare-row' + (d.self ? ' gocenter' : '') + '"><div class="compare-brand"><span class="dot-brand"></span>' + d.brand + '</div><div class="compare-bar"><div class="compare-fill" style="width:' + ((d.price / max) * 100) + '%;background:' + fill + ';transform:translateZ(0)"></div></div><div class="compare-price">' + d.price.toFixed(2).replace('.', ',') + '€</div></div>';
+    return '<div class="compare-row' + (d.self ? ' gocenter' : '') + '"><div class="compare-brand"><span class="dot-brand"></span>' + d.brand + '</div><div class="compare-bar"><div class="compare-fill" style="width:' + ((d.price / max) * 100) + '%;transform:translateZ(0)"></div></div><div class="compare-price">' + d.price.toFixed(2).replace('.', ',') + '€</div></div>';
   }).join('');
 }
 renderCompare('compare-srv', COMPARE_SRV);
