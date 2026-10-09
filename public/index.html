@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#000000">
 <title>GO CENTER — Serveurs dédiés & Cloud Storage</title>
 <meta name="description" content="GO CENTER — Serveurs dédiés et cloud storage S3-compatible. Meilleurs prix, paiement sécurisé.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='8' y='20' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Crect x='8' y='44' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Crect x='8' y='68' width='84' height='20' rx='6' fill='%237c3aed'/%3E%3Ccircle cx='78' cy='30' r='4' fill='%23a78bfa'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='8' y='20' width='84' height='20' rx='6' fill='%23a78bfa'/%3E%3Crect x='8' y='44' width='84' height='20' rx='6' fill='%23a78bfa'/%3E%3Crect x='8' y='68' width='84' height='20' rx='6' fill='%23a78bfa'/%3E%3Ccircle cx='78' cy='30' r='4' fill='%23a78bfa'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +36,7 @@ svg{display:block}
 /* GPU acceleration */
 .hero-mockup,.marquee-set,.fw-item,.big-card,.sec-card,.mock-bar,.compare-fill,.step,.pay-card,.plan,.carousel-track,.gate-glow,.mock-card-mini,.mock-terminal,.hero-pay-badges,.pay-badge{will-change:transform;transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 
-/* ============ GLASS EFFECT GLOBAL — appliqué partout ============ */
+/* ============ GLASS EFFECT GLOBAL ============ */
 .big-card,.sec-card,.pay-card,.faq-item,.mock-card-mini,.mock-terminal,.mock-panel,.step-visual,.plan,.compare-row,.tabs,.carousel-viewport,.gate-card,.hero-mockup,.pay-badge,.btn-link,.tech-item,.carousel-slide{
   background:rgba(255,255,255,.025);
   backdrop-filter:blur(24px) saturate(160%);
@@ -53,15 +53,18 @@ svg{display:block}
 .carousel-viewport{background:rgba(255,255,255,.02)}
 .carousel-slide{background:transparent;border:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 
-/* ============ LOGOS MONOCHROMES — une seule couleur partout ============ */
-.fw-item img,.sec-icon img,.tech-item .tech-logo img,.mock-card-mini .row .lg img{
-  filter:none;
-}
+/* ============ TOUS LES LOGOS EN VIOLET ============ */
 .fw-item img,.fw-item svg,
 .sec-icon img,.sec-icon svg,
 .tech-item .tech-logo img,.tech-item .tech-logo svg,
-.mock-card-mini .row .lg img,.mock-card-mini .row .lg svg{
+.mock-card-mini .row .lg img,.mock-card-mini .row .lg svg,
+.pay-badge svg,.pay-icon svg,
+.footer-cf svg,
+.gate-status > svg,.gate-status .cf-brand svg{
   color:var(--logo);
+}
+.fw-item img,.sec-icon img,.tech-item .tech-logo img,.mock-card-mini .row .lg img{
+  filter:none;
 }
 
 /* ============ SECURITY GATE ============ */
@@ -75,7 +78,7 @@ svg{display:block}
 .gate-logo{display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:22px}
 .gate-logo svg{width:34px;height:34px}
 .gate-shield{width:72px;height:72px;margin:0 auto 20px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(124,58,237,.32),rgba(124,58,237,.08));border:1px solid rgba(167,139,250,.45);border-radius:24px;position:relative;box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 10px 28px rgba(124,58,237,.35)}
-.gate-shield svg{width:34px;height:34px;color:#c4b5fd}
+.gate-shield svg{width:34px;height:34px;color:#a78bfa}
 .gate-card h1{font-size:clamp(22px,3.2vw,27px);font-weight:600;letter-spacing:-.03em;line-height:1.2;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .gate-card p{font-size:.92rem;color:#a1a1aa;line-height:1.55;margin-bottom:0;max-width:440px;margin-left:auto;margin-right:auto}
 .gate-card p strong{color:#fff;font-weight:600}
@@ -136,20 +139,20 @@ body.gate-active > #top-banner{visibility:hidden}
 .hero-pay-badges{display:flex;gap:8px;flex-wrap:wrap}
 .pay-badge{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;font-size:.76rem;font-weight:600;border-radius:var(--r-sm);transition:all .2s}
 .pay-badge:hover{border-color:rgba(167,139,250,.4);background:rgba(124,58,237,.1);transform:translateY(-2px)}
-.pay-badge svg{width:15px;height:15px;flex-shrink:0;color:var(--logo)}
+.pay-badge svg{width:15px;height:15px;flex-shrink:0;color:var(--logo) !important}
 .hero-mockup{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 40px 90px rgba(124,58,237,.16), 0 0 0 1px rgba(255,255,255,.02)}
 .mock-terminal{padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.82rem}
 .mock-terminal .dot{width:11px;height:11px;border-radius:50%}
 .mock-terminal .dot.r{background:#ff5f57}
 .mock-terminal .dot.y{background:#febc2e}
-.mock-terminal .dot.g{background:#28c840}
+.mock-terminal .dot.g{background:#a78bfa}
 .mock-terminal .title{margin-left:12px;color:#71717a;font-size:.78rem}
 .mock-body{padding:24px}
 .mock-line{display:flex;align-items:center;gap:10px;font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.85rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}
 .mock-line:last-child{border-bottom:none}
 .mock-prompt{color:#a78bfa;font-weight:600}
 .mock-cmd{color:#e5e5e5}
-.mock-ok{color:#28c840;margin-left:auto;font-size:.78rem}
+.mock-ok{color:#a78bfa;margin-left:auto;font-size:.78rem}
 .mock-time{color:#52525b;font-size:.72rem;margin-left:12px}
 .mock-label{font-size:.68rem;color:#71717a;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;font-weight:600}
 .mock-panels{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
@@ -187,8 +190,8 @@ body.gate-active > #top-banner{visibility:hidden}
 .mock-form-row label{color:#71717a;min-width:100px;font-weight:500}
 .mock-form-input{flex:1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:9px 13px;font-family:'SF Mono',Menlo,monospace;font-size:.78rem;color:#e5e5e5;border-radius:var(--r-xs);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .mock-logs{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:.74rem;line-height:1.9;color:#a1a1aa}
-.mock-logs .ok{color:#4ade80}
-.mock-logs .warn{color:#fbbf24}
+.mock-logs .ok{color:#a78bfa}
+.mock-logs .warn{color:#a78bfa}
 .mock-logs .dim{color:#52525b}
 
 /* ============ LOGOS ============ */
@@ -240,10 +243,10 @@ body.gate-active > #top-banner{visibility:hidden}
 .mock-card-mini .row .lg img{width:16px;height:16px;object-fit:contain}
 .mock-card-mini .row .lbl{flex:1;color:#d4d4d8;font-weight:500}
 .mock-card-mini .row .head{font-size:.62rem;color:#71717a;letter-spacing:.08em;font-weight:600}
-.badge-green{background:rgba(34,197,94,.15);color:#4ade80}
+.badge-green{background:rgba(167,139,250,.18);color:#a78bfa}
 .badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
 
-/* ============ SÉCURITÉ — quinconce très irrégulier ============ */
+/* ============ SÉCURITÉ ============ */
 .sec-grid{display:grid;grid-template-columns:1fr;gap:28px 24px;margin-top:80px;align-items:start}
 @media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){
@@ -296,7 +299,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .plan-tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:7px 13px;border-radius:var(--r-xs)}
 .plan-tag.popular{background:#7c3aed;color:#fff;box-shadow:0 6px 18px rgba(124,58,237,.4)}
 .plan-tag.best{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.4)}
-.plan-tag.new{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.3)}
+.plan-tag.new{background:rgba(167,139,250,.15);color:#a78bfa;border:1px solid rgba(167,139,250,.3)}
 .plan-specs{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
 .plan-spec{display:flex;align-items:center;gap:14px;font-size:1rem;color:#d4d4d8}
 .plan-spec .ico{width:44px;height:44px;background:rgba(124,58,237,.1);color:#a78bfa;display:grid;place-items:center;border-radius:var(--r-md);flex-shrink:0;border:1px solid rgba(124,58,237,.16)}
@@ -306,7 +309,7 @@ body.gate-active > #top-banner{visibility:hidden}
 .plan-price{font-size:clamp(60px,8vw,110px);font-weight:700;letter-spacing:-.05em;line-height:1;color:#fff;margin-bottom:8px;display:flex;align-items:baseline;gap:6px}
 .plan-price .per{font-size:1.1rem;font-weight:400;color:#71717a;letter-spacing:-.01em}
 .plan-annual{font-size:.9rem;color:#a1a1aa;margin-bottom:30px;min-height:24px;display:flex;align-items:center;gap:8px}
-.plan-annual .badge{background:rgba(34,197,94,.12);color:#4ade80;padding:4px 11px;border-radius:var(--r-xs);font-size:.72rem;font-weight:700;letter-spacing:.03em}
+.plan-annual .badge{background:rgba(167,139,250,.12);color:#a78bfa;padding:4px 11px;border-radius:var(--r-xs);font-size:.72rem;font-weight:700;letter-spacing:.03em}
 .btn-plan{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:20px 32px;background:#fff;color:#000;font-size:1rem;font-weight:600;letter-spacing:-.005em;transition:all .2s;width:100%;border-radius:var(--r-md)}
 .btn-plan:hover{background:#e5e5e5;transform:translateY(-2px)}
 .btn-plan svg{width:16px;height:16px}
@@ -319,8 +322,8 @@ body.gate-active > #top-banner{visibility:hidden}
 .carousel-info{display:flex;align-items:center;gap:20px;font-size:.88rem;color:#71717a}
 .carousel-dots{display:flex;gap:7px}
 .dot{width:26px;height:4px;background:rgba(255,255,255,.15);border:none;padding:0;cursor:pointer;transition:all .25s;border-radius:4px}
-.dot.active{background:#fff;width:38px}
-.dot:hover:not(.active){background:rgba(255,255,255,.4)}
+.dot.active{background:#a78bfa;width:38px}
+.dot:hover:not(.active){background:rgba(167,139,250,.5)}
 .carousel-counter{font-family:'SF Mono',Menlo,monospace;font-size:.78rem}
 .carousel-counter strong{color:#fff;font-weight:600}
 @media(max-width:768px){.plan{padding:40px 28px}.tabs{flex-direction:column;padding:6px}.tab{padding:15px;flex-direction:row;justify-content:center}.tab .tab-sub{display:none}}
@@ -331,10 +334,11 @@ body.gate-active > #top-banner{visibility:hidden}
 .compare-rows{display:flex;flex-direction:column;gap:14px;margin-top:26px}
 .compare-row{display:grid;grid-template-columns:130px 1fr 110px;gap:24px;align-items:center;padding:18px 20px;border-radius:var(--r-lg);transition:background .3s}
 .compare-brand{font-size:.95rem;font-weight:500;color:#a1a1aa;display:flex;align-items:center;gap:10px}
-.compare-brand .dot-brand{width:11px;height:11px;border-radius:50%}
-.compare-bar{height:34px;background:rgba(255,255,255,.03);position:relative;overflow:hidden;border-radius:10px}
-.compare-fill{height:100%;border-radius:10px}
+.compare-brand .dot-brand{width:11px;height:11px;border-radius:50%;background:#a78bfa !important}
+.compare-bar{height:34px;background:rgba(167,139,250,.05);position:relative;overflow:hidden;border-radius:10px}
+.compare-fill{height:100%;border-radius:10px;background:linear-gradient(90deg, rgba(167,139,250,.55), rgba(167,139,250,.85)) !important}
 .compare-row.gocenter .compare-brand{color:#fff;font-weight:600}
+.compare-row.gocenter .compare-fill{background:linear-gradient(90deg,#7c3aed,#a78bfa) !important}
 .compare-price{font-size:1.1rem;font-weight:600;color:#fff;text-align:right;font-family:'SF Mono',Menlo,monospace;letter-spacing:-.02em}
 .compare-row.gocenter .compare-price{color:#a78bfa}
 @media(max-width:600px){.compare-row{grid-template-columns:86px 1fr 84px;gap:12px;padding:14px}.compare-brand{font-size:.78rem}.compare-price{font-size:.9rem}.compare-bar{height:26px}}
@@ -357,11 +361,11 @@ body.gate-active > #top-banner{visibility:hidden}
 .pay-card:hover::before{opacity:1}
 .pay-icon{width:66px;height:66px;border-radius:var(--r-lg);display:grid;place-items:center;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);transition:all .3s}
 .pay-card:hover .pay-icon{background:rgba(124,58,237,.2);border-color:rgba(167,139,250,.5);transform:scale(1.05)}
-.pay-icon svg{width:30px;height:30px;color:var(--logo)}
+.pay-icon svg{width:30px;height:30px;color:var(--logo) !important}
 .pay-card h3{font-size:1.25rem;font-weight:600;color:#fff;letter-spacing:-.02em;line-height:1.3}
 .pay-card p{font-size:.9rem;color:#a1a1aa;line-height:1.6;margin:0}
 .pay-card .pay-tag{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:6px 12px;border-radius:var(--r-xs);margin-top:auto;width:fit-content}
-.pay-tag.fast{background:rgba(34,197,94,.12);color:#4ade80}
+.pay-tag.fast{background:rgba(167,139,250,.12);color:#a78bfa}
 .pay-tag.popular-tag{background:rgba(167,139,250,.15);color:#a78bfa}
 .pay-note{margin-top:40px;padding:26px 28px;border:1px solid var(--line);background:rgba(124,58,237,.05);border-radius:var(--r-lg);display:flex;align-items:flex-start;gap:16px;font-size:.88rem;color:#a1a1aa;line-height:1.65;max-width:880px;margin-left:auto;margin-right:auto;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .pay-note svg{width:22px;height:22px;color:#a78bfa;flex-shrink:0;margin-top:2px}
@@ -505,9 +509,9 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   <div class="gate-card">
     <div class="gate-logo">
       <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="20" width="84" height="20" rx="6" fill="#7c3aed"/>
-        <rect x="8" y="44" width="84" height="20" rx="6" fill="#7c3aed"/>
-        <rect x="8" y="68" width="84" height="20" rx="6" fill="#7c3aed"/>
+        <rect x="8" y="20" width="84" height="20" rx="6" fill="#a78bfa"/>
+        <rect x="8" y="44" width="84" height="20" rx="6" fill="#a78bfa"/>
+        <rect x="8" y="68" width="84" height="20" rx="6" fill="#a78bfa"/>
         <circle cx="78" cy="30" r="5" fill="#a78bfa"/>
       </svg>
       <span>GO CENTER</span>
@@ -554,9 +558,9 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   <div class="nav-left">
     <a class="nav-brand" href="#">
       <svg class="nav-brand-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="20" width="84" height="20" rx="6" fill="#7c3aed"/>
-        <rect x="8" y="44" width="84" height="20" rx="6" fill="#7c3aed"/>
-        <rect x="8" y="68" width="84" height="20" rx="6" fill="#7c3aed"/>
+        <rect x="8" y="20" width="84" height="20" rx="6" fill="#a78bfa"/>
+        <rect x="8" y="44" width="84" height="20" rx="6" fill="#a78bfa"/>
+        <rect x="8" y="68" width="84" height="20" rx="6" fill="#a78bfa"/>
         <circle cx="78" cy="30" r="5" fill="#a78bfa"/>
         <circle cx="78" cy="54" r="5" fill="#a78bfa"/>
         <circle cx="78" cy="78" r="5" fill="#a78bfa"/>
@@ -901,7 +905,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
   </div>
 </section>
 
-<!-- ================= SÉCURITÉ (quinconce très irrégulier) ================= -->
+<!-- ================= SÉCURITÉ ================= -->
 <section class="section" id="security">
   <div class="section-inner">
     <h2 class="section-huge">Restez sécurisé et résilient par défaut.<br><span class="muted" style="font-size:.6em;display:block;margin-top:16px;letter-spacing:-.03em">Concevoir des produits, pas la conformité.</span></h2>
@@ -1077,9 +1081,9 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--line)}
       <div class="footer-brand-col">
         <div class="footer-brand">
           <svg class="footer-brand-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <rect x="8" y="20" width="84" height="20" rx="6" fill="#7c3aed"/>
-            <rect x="8" y="44" width="84" height="20" rx="6" fill="#7c3aed"/>
-            <rect x="8" y="68" width="84" height="20" rx="6" fill="#7c3aed"/>
+            <rect x="8" y="20" width="84" height="20" rx="6" fill="#a78bfa"/>
+            <rect x="8" y="44" width="84" height="20" rx="6" fill="#a78bfa"/>
+            <rect x="8" y="68" width="84" height="20" rx="6" fill="#a78bfa"/>
             <circle cx="78" cy="30" r="5" fill="#a78bfa"/>
           </svg>
           GO CENTER
@@ -1403,25 +1407,28 @@ createCarousel('cs', CS_OFFERS);
 })();
 
 const COMPARE_SRV = [
-  { brand:'GO CENTER', price:40.99, color:'#7c3aed', self:true },
-  { brand:'Hetzner',   price:49.00, color:'#a78bfa' },
-  { brand:'Contabo',   price:54.99, color:'#a78bfa' },
-  { brand:'OVH',       price:59.99, color:'#a78bfa' },
-  { brand:'Scaleway',  price:69.99, color:'#a78bfa' }
+  { brand:'GO CENTER', price:40.99, self:true },
+  { brand:'Hetzner',   price:49.00 },
+  { brand:'Contabo',   price:54.99 },
+  { brand:'OVH',       price:59.99 },
+  { brand:'Scaleway',  price:69.99 }
 ];
 const COMPARE_CS = [
-  { brand:'GO CENTER', price:12.99, color:'#7c3aed', self:true },
-  { brand:'Hetzner',   price:17.90, color:'#a78bfa' },
-  { brand:'Contabo',   price:19.99, color:'#a78bfa' },
-  { brand:'OVH',       price:24.99, color:'#a78bfa' },
-  { brand:'Scaleway',  price:29.99, color:'#a78bfa' }
+  { brand:'GO CENTER', price:12.99, self:true },
+  { brand:'Hetzner',   price:17.90 },
+  { brand:'Contabo',   price:19.99 },
+  { brand:'OVH',       price:24.99 },
+  { brand:'Scaleway',  price:29.99 }
 ];
 function renderCompare(id, data){
   const wrap = document.getElementById(id);
   if(!wrap) return;
   const max = Math.max.apply(null, data.map(function(d){ return d.price; }));
   wrap.innerHTML = data.map(function(d){
-    return '<div class="compare-row' + (d.self ? ' gocenter' : '') + '"><div class="compare-brand"><span class="dot-brand" style="background:' + d.color + '"></span>' + d.brand + '</div><div class="compare-bar"><div class="compare-fill" style="width:' + ((d.price / max) * 100) + '%;background:' + (d.self ? 'linear-gradient(90deg,#7c3aed,#a78bfa)' : 'rgba(167,139,250,.45)') + ';transform:translateZ(0)"></div></div><div class="compare-price">' + d.price.toFixed(2).replace('.', ',') + '€</div></div>';
+    const fill = d.self
+      ? 'linear-gradient(90deg,#7c3aed,#a78bfa)'
+      : 'linear-gradient(90deg,rgba(167,139,250,.55),rgba(167,139,250,.85))';
+    return '<div class="compare-row' + (d.self ? ' gocenter' : '') + '"><div class="compare-brand"><span class="dot-brand"></span>' + d.brand + '</div><div class="compare-bar"><div class="compare-fill" style="width:' + ((d.price / max) * 100) + '%;background:' + fill + ';transform:translateZ(0)"></div></div><div class="compare-price">' + d.price.toFixed(2).replace('.', ',') + '€</div></div>';
   }).join('');
 }
 renderCompare('compare-srv', COMPARE_SRV);
