@@ -17,7 +17,6 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
   --r-xs:8px;--r-sm:12px;--r-md:16px;--r-lg:22px;--r-xl:28px;--r-2xl:34px;
-  /* TOUTES LES LIGNES EN VIOLET */
   --line:rgba(167,139,250,.22);
   --border:rgba(167,139,250,.22);
   --border-strong:rgba(167,139,250,.38);
@@ -36,10 +35,8 @@ svg{display:block}
 ::-webkit-scrollbar-thumb:hover{background:rgba(167,139,250,.5)}
 ::-webkit-scrollbar-track{background:#000}
 
-/* GPU acceleration */
 .hero-mockup,.marquee-set,.fw-item,.big-card,.sec-card,.mock-bar,.compare-fill,.step,.pay-card,.plan,.carousel-track,.gate-glow,.mock-card-mini,.mock-terminal,.hero-pay-badges,.pay-badge{will-change:transform;transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 
-/* ============ CARTES : FOND NOIR PUR + BORDURE VIOLETTE ============ */
 .big-card,.sec-card,.pay-card,.faq-item,.mock-card-mini,.mock-terminal,.mock-panel,.step-visual,.plan,.compare-row,.tabs,.carousel-viewport,.gate-card,.hero-mockup,.pay-badge,.btn-link,.tech-item,.carousel-slide{
   background:#000;
   border:1px solid var(--border);
@@ -54,7 +51,6 @@ svg{display:block}
 .carousel-viewport{background:#000}
 .carousel-slide{background:transparent;border:none}
 
-/* ============ TOUS LES LOGOS EN VIOLET ============ */
 .fw-item img,.fw-item svg,
 .sec-icon svg,
 .tech-item .tech-logo svg,
@@ -65,7 +61,6 @@ svg{display:block}
   color:var(--logo);
 }
 
-/* ============ SECURITY GATE ============ */
 #security-gate{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .5s ease, visibility .5s ease}
 #security-gate.hidden{opacity:0;visibility:hidden;pointer-events:none}
 .gate-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(167,139,250,.06) 1px, transparent 1px),linear-gradient(90deg, rgba(167,139,250,.06) 1px, transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 85%);pointer-events:none}
@@ -95,11 +90,9 @@ body.gate-active > header,
 body.gate-active > footer,
 body.gate-active > #top-banner{visibility:hidden}
 
-/* ============ BANNIÈRE ============ */
 #top-banner{background:linear-gradient(90deg,#4c1d95,#7c3aed,#4c1d95);color:#fff;padding:11px 20px;text-align:center;font-size:.82rem;font-weight:500;letter-spacing:-.005em}
 #top-banner a{text-decoration:underline;text-underline-offset:3px;font-weight:600}
 
-/* ============ NAVBAR ============ */
 #navbar{height:72px;padding:0 24px;background:rgba(0,0,0,.7);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid var(--border)}
 .nav-left{display:flex;align-items:center;gap:40px;height:100%}
 .nav-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;letter-spacing:-.02em}
@@ -114,7 +107,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .btn-nav-white:hover{background:#e5e5e5;transform:translateY(-1px)}
 @media(max-width:900px){.nav-links,.nav-migrate{display:none}}
 
-/* ============ HERO ============ */
 #hero{position:relative;padding:100px 24px;overflow:hidden;background:#000}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(167,139,250,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(167,139,250,.05) 1px, transparent 1px);background-size:66px 66px;mask-image:radial-gradient(ellipse 70% 90% at 70% 50%, black 30%, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 70% 90% at 70% 50%, black 30%, transparent 80%);pointer-events:none}
 .hero-glow{position:absolute;top:-20%;right:-10%;width:640px;height:640px;background:radial-gradient(circle,rgba(124,58,237,.22),transparent 62%);pointer-events:none}
@@ -160,14 +152,12 @@ body.gate-active > #top-banner{visibility:hidden}
 .mock-bars{display:flex;align-items:flex-end;gap:4px;height:40px}
 .mock-bar{flex:1;background:linear-gradient(180deg,#a78bfa,#7c3aed);border-radius:4px;opacity:.85}
 
-/* ============ SECTIONS ============ */
 .section{position:relative;padding:110px 24px;background:#000;border-top:1px solid var(--border)}
 .section-inner{max-width:1400px;margin:0 auto}
 .section-huge{font-size:clamp(40px,6vw,80px);font-weight:600;letter-spacing:-.045em;line-height:1.03;color:#fff;margin-bottom:60px;max-width:900px}
 .section-huge .muted{color:#71717a}
 .section-huge .accent-grad{background:linear-gradient(90deg,#7c3aed,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* ============ 3 ÉTAPES ============ */
 .steps-grid{display:grid;grid-template-columns:1fr;gap:40px;margin-top:80px;align-items:start}
 @media(min-width:768px){
   .steps-grid{grid-template-columns:repeat(3,1fr);gap:36px;align-items:start}
@@ -192,7 +182,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .mock-logs .warn{color:#a78bfa}
 .mock-logs .dim{color:#52525b}
 
-/* ============ LOGOS ============ */
 .split-grid{display:grid;grid-template-columns:1fr;gap:60px;align-items:center}
 @media(min-width:900px){.split-grid{grid-template-columns:1fr 1.2fr;gap:80px}}
 .split-text h2{font-size:clamp(32px,4vw,54px);font-weight:600;letter-spacing:-.04em;line-height:1.05;margin-bottom:28px;color:#fff}
@@ -214,7 +203,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .fw-item img{width:40px;height:40px;object-fit:contain}
 .fw-item svg{width:40px;height:40px}
 
-/* ============ 4 CARTES ============ */
 .cards-2col{display:grid;grid-template-columns:1fr;gap:20px}
 @media(min-width:768px){
   .cards-2col{grid-template-columns:1fr 1fr;gap:20px;align-items:start}
@@ -244,7 +232,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .badge-green{background:rgba(167,139,250,.18);color:#a78bfa}
 .badge-purple{background:rgba(124,58,237,.2);color:#a78bfa}
 
-/* ============ SÉCURITÉ — QUINCONCE TRÈS IRRÉGULIER ============ */
 .sec-grid{display:grid;grid-template-columns:1fr;gap:28px 24px;margin-top:80px;align-items:start}
 @media(min-width:600px){.sec-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){
@@ -269,7 +256,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .sec-card h3{font-size:1.15rem;font-weight:600;letter-spacing:-.02em;color:#fff;line-height:1.3}
 .sec-card p{font-size:.9rem;color:#a1a1aa;line-height:1.55;letter-spacing:-.005em}
 
-/* ============ OFFRES ============ */
 #offers{padding:100px 24px;background:#000;border-top:1px solid var(--border)}
 .offers-inner{max-width:1400px;margin:0 auto}
 .offers-header{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:44px;flex-wrap:wrap}
@@ -326,7 +312,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .carousel-counter strong{color:#fff;font-weight:600}
 @media(max-width:768px){.plan{padding:40px 28px}.tabs{flex-direction:column;padding:6px}.tab{padding:15px;flex-direction:row;justify-content:center}.tab .tab-sub{display:none}}
 
-/* ============ COMPARATIF — TOUTES LES BARRES VIOLET ============ */
 #compare{padding:100px 24px;background:#000;border-top:1px solid var(--border)}
 .compare-inner{max-width:1400px;margin:0 auto}
 .compare-rows{display:flex;flex-direction:column;gap:14px;margin-top:26px}
@@ -341,7 +326,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .compare-row.gocenter .compare-price{color:#a78bfa}
 @media(max-width:600px){.compare-row{grid-template-columns:86px 1fr 84px;gap:12px;padding:14px}.compare-brand{font-size:.78rem}.compare-price{font-size:.9rem}.compare-bar{height:26px}}
 
-/* ============ PAIEMENT ============ */
 #payment{padding:100px 24px;background:#000;border-top:1px solid var(--border);position:relative;overflow:hidden}
 #payment::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:820px;height:620px;background:radial-gradient(ellipse,rgba(124,58,237,.09),transparent 65%);pointer-events:none}
 .payment-inner{max-width:1400px;margin:0 auto;position:relative}
@@ -369,7 +353,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .pay-note svg{width:22px;height:22px;color:#a78bfa;flex-shrink:0;margin-top:2px}
 .pay-note strong{color:#fff;font-weight:600}
 
-/* ============ FAQ ============ */
 #faq{padding:120px 24px;background:#000;border-top:1px solid var(--border);position:relative;overflow:hidden}
 #faq::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:620px;height:620px;background:radial-gradient(circle,rgba(124,58,237,.09),transparent 60%);pointer-events:none}
 .faq-inner{max-width:1100px;margin:0 auto;position:relative}
@@ -395,7 +378,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .faq-item.open .faq-a{max-height:700px}
 @media(max-width:768px){.faq-q{padding:22px 20px;font-size:1.05rem;gap:16px}.faq-q .chev{width:34px;height:34px}.faq-q .chev::before{width:11px}.faq-q .chev::after{height:11px}.faq-a-inner{padding:0 20px 24px 20px;font-size:.92rem}}
 
-/* ============ CTA FINAL ============ */
 #final-cta{padding:140px 24px;background:#000;position:relative;overflow:hidden;border-top:1px solid var(--border)}
 .final-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(167,139,250,.06) 1px, transparent 1px),linear-gradient(90deg, rgba(167,139,250,.06) 1px, transparent 1px);background-size:66px 66px;mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 60% 80% at 50% 50%, black, transparent 80%)}
 .final-inner{max-width:900px;margin:0 auto;position:relative;z-index:1;text-align:center}
@@ -405,7 +387,6 @@ body.gate-active > #top-banner{visibility:hidden}
 .btn-final:hover{background:#e5e5e5;transform:translateY(-2px)}
 .btn-final svg{width:16px;height:16px}
 
-/* ============ FOOTER ============ */
 footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--border)}
 .footer-inner{max-width:1400px;margin:0 auto}
 .footer-top{display:grid;grid-template-columns:1fr;gap:60px;margin-bottom:60px}
@@ -425,7 +406,6 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--border)
 .footer-cf:hover{color:#a78bfa}
 .footer-cf svg{width:14px;height:14px;color:var(--logo)}
 
-/* ============ MODALES ============ */
 #legal-overlay,#tech-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
 #legal-overlay.on,#tech-overlay.on{display:flex;animation:fadeIn .2s ease both}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -792,7 +772,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--border)
               <div class="fw-item"><img src="https://cdn.simpleicons.org/fastapi/a78bfa" alt="FastAPI"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/laravel/a78bfa" alt="Laravel"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/symfony/a78bfa" alt="Symfony"></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/rails/a78bfa" alt="Rails"></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rubyonrails/a78bfa" alt="Ruby on Rails"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/express/a78bfa" alt="Express"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/spring/a78bfa" alt="Spring"></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/kotlin/a78bfa" alt="Kotlin"></div>
@@ -818,7 +798,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--border)
               <div class="fw-item"><img src="https://cdn.simpleicons.org/fastapi/a78bfa" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/laravel/a78bfa" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/symfony/a78bfa" alt=""></div>
-              <div class="fw-item"><img src="https://cdn.simpleicons.org/rails/a78bfa" alt=""></div>
+              <div class="fw-item"><img src="https://cdn.simpleicons.org/rubyonrails/a78bfa" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/express/a78bfa" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/spring/a78bfa" alt=""></div>
               <div class="fw-item"><img src="https://cdn.simpleicons.org/kotlin/a78bfa" alt=""></div>
@@ -1223,7 +1203,7 @@ footer{padding:80px 24px 40px;background:#000;border-top:1px solid var(--border)
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/fastapi/a78bfa" alt="FastAPI"></div><span>FastAPI</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/laravel/a78bfa" alt="Laravel"></div><span>Laravel</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/symfony/a78bfa" alt="Symfony"></div><span>Symfony</span></div>
-          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rails/a78bfa" alt="Rails"></div><span>Rails</span></div>
+          <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/rubyonrails/a78bfa" alt="Ruby on Rails"></div><span>Rails</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/express/a78bfa" alt="Express"></div><span>Express</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/spring/a78bfa" alt="Spring"></div><span>Spring</span></div>
           <div class="tech-item"><div class="tech-logo"><img src="https://cdn.simpleicons.org/flutter/a78bfa" alt="Flutter"></div><span>Flutter</span></div>
